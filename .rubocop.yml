@@ -1,0 +1,17 @@
+require:
+  - rubocop-rails
+  - rubocop-minitest
+
+AllCops:
+  Exclude:
+    - '**/Gemfile'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'

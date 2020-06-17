@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+horticulture:
+  title: Horticulture
+  description: This department looks after plants and grass in Lotus Boulevard.

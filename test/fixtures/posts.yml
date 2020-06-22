@@ -1,0 +1,17 @@
+plantation:
+  title: Plantation of new trees in Lotus Boulevard
+  publication_state: draft
+  visibility_state: members
+  department: horticulture
+
+lotus:
+  title: Setting up a lotus pond in Lotus Boulevard
+  publication_state: finished
+  visibility_state: members
+  department: horticulture
+
+nursery:
+  title: We are setting up a nursery near kids play area
+  publication_state: finished
+  visibility_state: visitors
+  department: horticulture

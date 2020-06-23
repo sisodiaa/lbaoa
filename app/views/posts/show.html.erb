@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Publication State:</strong>
+  <%= @post.publication_state %>
+</p>
+
+<p>
+  <strong>Visibility:</strong>
+  <%= @post.visibility_state %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @post.department.title %>
+</p>
+
+<%= link_to 'Edit', edit_cms_post_path(@post) %> |
+<%= link_to 'Back', cms_posts_path %>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  scope path: '/cms', as: 'cms' do
-    resources :departments
+  namespace :cms do
+    resources :departments, except: :destroy
     resources :posts
   end
 end

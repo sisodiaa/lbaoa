@@ -11,21 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :department_id %>
-    <%= form.select(
+    <%= form.collection_select(
           :department_id,
-          Department.all.collect { |p| [ p.title, p.id ] },
-          include_blank: true
+          Department.all, :id, :title,
+          {prompt: "Select Department"},
+          class: "form-control"
     )%>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

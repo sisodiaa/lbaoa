@@ -23,3 +23,7 @@ document.addEventListener("turbolinks:load", () => {
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+String.prototype.titleize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};

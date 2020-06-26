@@ -1,24 +1,49 @@
-<%= form_with(model: ['cms', department], local: true) do |form| %>
+<%= form_with(
+  model: ['cms', department],
+  local: true,
+  data: { controller: 'form-validation-error' }
+) do |form| %>
   <% if department.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(department.errors.count, "error") %> prohibited this department from being saved:</h2>
-
-      <ul>
-        <% department.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <% department.errors.messages.each do |attribute, error_messages| %>
+        <div
+          data-target="form-validation-error.error"
+          data-error-attribute="<%= attribute %>"
+        >
+          <% error_messages.each do |error_message| %>
+            <div data-error-message="<%= error_message %>"></div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
+
+    <template id="invalidFeedback">
+      <div class="invalid-feedback"></div>
+    </template>
   <% end %>
 
   <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "form-control" %>
+    <%= form.text_field(
+      :title,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'title'
+      }
+    ) %>
   </div>
 
   <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.text_area(
+      :description,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'description'
+      }
+    ) %>
   </div>
 
   <div class="actions">

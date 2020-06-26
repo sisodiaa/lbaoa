@@ -33,4 +33,15 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert_text 'New description'
     click_on 'Back'
   end
+
+  test 'updating a Department with insufficient data show validation errors' do
+    visit cms_departments_url
+    click_on 'Edit', match: :first
+
+    fill_in 'Description', with: ''
+    click_on 'Update Department'
+
+    assert_selector '.is-invalid'
+    assert_selector '.invalid-feedback', text: "Description can't be blank"
+  end
 end

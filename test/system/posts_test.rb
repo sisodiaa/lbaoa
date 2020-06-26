@@ -27,6 +27,17 @@ class PostsTest < ApplicationSystemTestCase
     click_on 'Back'
   end
 
+  test 'creating a Post with insufficient data shows validation errors' do
+    visit cms_posts_url
+    click_on 'New Post'
+
+    click_on 'Create Post'
+
+    assert_selector '.is-invalid', count: 2
+    assert_selector '.invalid-feedback', count: 2
+    assert_selector '.invalid-feedback', text: "Title can't be blank"
+  end
+
   test 'updating a Post' do
     visit cms_posts_url
     click_on 'Edit', match: :first

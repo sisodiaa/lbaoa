@@ -1,19 +1,39 @@
-<%= form_with(model: ['cms', post], local: true) do |form| %>
+<%= form_with(
+  model: ['cms', post],
+  local: true,
+  data: { controller: 'form-validation-error' }
+) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-        <% post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <% post.errors.messages.each do |attribute, error_messages| %>
+        <div
+          data-target="form-validation-error.error"
+          data-error-attribute="<%= attribute %>"
+        >
+          <% error_messages.each do |error_message| %>
+            <div data-error-message="<%= error_message %>"></div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
+
+    <template id="invalidFeedback">
+      <div class="invalid-feedback"></div>
+    </template>
   <% end %>
+
+  <br />
 
   <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "form-control" %>
+    <%= form.text_field(
+      :title,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'title'
+      }
+    ) %>
   </div>
 
   <div class="form-group">
@@ -22,7 +42,11 @@
           :department_id,
           Department.all, :id, :title,
           {prompt: "Select Department"},
-          class: "form-control"
+          class: "form-control",
+          data: {
+            target: 'form-validation-error.attribute',
+            form_attribute: 'department'
+          }
     )%>
   </div>
 

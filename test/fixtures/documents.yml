@@ -1,0 +1,9 @@
+image:
+  annotation: A square placeholder image
+  documentable: plantation
+  documentable_type: Post
+
+pdf:
+  annotation: A cheatsheet for Vim editor
+  documentable: plantation
+  documentable_type: Post

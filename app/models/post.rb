@@ -3,6 +3,8 @@ class Post < ApplicationRecord
 
   belongs_to :department, inverse_of: :posts
 
+  has_many :documents, as: :documentable, dependent: :destroy
+
   enum publication_state: {
     draft: 0,
     finished: 1

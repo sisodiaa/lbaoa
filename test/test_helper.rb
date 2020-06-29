@@ -2,6 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 require 'minitest/autorun'
+require_relative './remove_uploaded_files'
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers

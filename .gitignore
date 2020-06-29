@@ -41,3 +41,6 @@ yarn-debug.log*
 
 # Ignore ternjs port number
 .tern-port
+
+# Ignore high quality file in fixtures
+/test/fixtures/files/flower-hq.jpg

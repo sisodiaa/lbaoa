@@ -44,3 +44,6 @@ yarn-debug.log*
 
 # Ignore high quality file in fixtures
 /test/fixtures/files/flower-hq.jpg
+
+# Ignore .DS_Store
+.DS_Store

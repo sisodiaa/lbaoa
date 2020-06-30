@@ -35,6 +35,7 @@ module CMS
         }
       end
 
+      assert @draft_post.documents.last.attachment.attached?
       assert_equal ActiveStorage::Attachment.count, 1
       assert_redirected_to cms_post_documents_url(@draft_post)
     end

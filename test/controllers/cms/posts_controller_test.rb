@@ -26,7 +26,8 @@ module CMS
         post cms_posts_url, params: {
           post: {
             department_id: @department.id,
-            title: 'New title of a new post'
+            title: 'New title of a new post',
+            content: '<h1><em>Rich text</em> using HTML</h1>'
           }
         }
       end

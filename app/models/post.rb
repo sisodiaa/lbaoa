@@ -5,6 +5,8 @@ class Post < ApplicationRecord
 
   has_many :documents, as: :documentable, dependent: :destroy
 
+  has_rich_text :content
+
   enum publication_state: {
     draft: 0,
     finished: 1
@@ -16,6 +18,7 @@ class Post < ApplicationRecord
   }
 
   validates :title, presence: true, length: { maximum: 256 }
+  validates :content, presence: true
 
   aasm(
     :publication,

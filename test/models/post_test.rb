@@ -21,6 +21,11 @@ class PostTest < ActiveSupport::TestCase
     assert_not @draft_post.valid?, 'Title is longer than 256 words'
   end
 
+  test 'that content is present' do
+    @draft_post.content = ''
+    assert_not @draft_post.valid?, 'Content is missing'
+  end
+
   test 'that publish event changes the publication_state' do
     assert @draft_post.draft?
     assert_not @draft_post.finished?

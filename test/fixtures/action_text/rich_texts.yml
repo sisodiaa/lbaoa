@@ -1,0 +1,13 @@
+# one:
+#   record: name_of_fixture (ClassOfFixture)
+#   name: content
+#   body: <p>In a <i>million</i> stars!</p>
+
+plantation:
+  record: plantation (Post)
+  name: content
+  body: |-
+    <h1>Planting new trees in Lotus Boulevard<h1>
+    <br>
+    <p>We are happy to announce that we will plant Mango, and Guava tress.<p>
+    <p>Please ask your kids to come and learn about plantation of trees.</p>

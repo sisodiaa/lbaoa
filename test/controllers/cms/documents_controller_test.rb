@@ -11,11 +11,19 @@ module CMS
     end
 
     test 'should get index' do
+      @draft_post.documents.each do |document|
+        attach_file_to_record document.attachment
+      end
+
       get cms_post_documents_url(@draft_post)
       assert_response :success
     end
 
     test 'should not create document without attachment' do
+      @draft_post.documents.each do |document|
+        attach_file_to_record document.attachment
+      end
+
       assert_difference('Document.count', 0) do
         post cms_post_documents_url(@draft_post), params: {
           document: {
@@ -41,6 +49,12 @@ module CMS
     end
 
     test 'should not create document for large files' do
+      @draft_post.documents.each do |document|
+        attach_file_to_record document.attachment
+      end
+
+      assert_equal ActiveStorage::Attachment.count, 2
+
       assert_difference('Document.count', 0) do
         post cms_post_documents_url(@draft_post), params: {
           document: {
@@ -53,7 +67,7 @@ module CMS
         }
       end
 
-      assert_equal ActiveStorage::Attachment.count, 0
+      assert_equal ActiveStorage::Attachment.count, 2
     end
 
     test 'should destroy a document' do

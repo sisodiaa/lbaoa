@@ -1,9 +1,10 @@
 module CMS
   class DocumentsController < ApplicationController
     before_action :set_documentable
+    before_action :set_documents, except: :destroy
 
     def index
-      @documents = @documentable.documents.with_attached_attachment
+      @document = @documentable.documents.new
     end
 
     def create
@@ -28,6 +29,10 @@ module CMS
 
     def set_documentable
       @documentable = Post.find(params[:post_id])
+    end
+
+    def set_documents
+      @documents = @documentable.documents.with_attached_attachment
     end
 
     def document_params

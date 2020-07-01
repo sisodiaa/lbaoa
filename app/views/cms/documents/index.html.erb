@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Attachments for <%= @documentable.title %></h3>
+
+<div class="row">
+  <div class="pod col-12 col-lg-8 rounded order-2 order-lg-1">
+    <%= render 'form', document: @document %>
+  </div>
+  <div class="pod col-12 col-lg-4 rounded order-1 order-lg-2">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        File size should not be more than 5 MB
+      </li>
+      <li class="list-group-item">
+        Supported file formats are .jpeg, .jpg, .png, .pdf
+      </li>
+      <li class="list-group-item">Annotation is optional</li>
+      <li class="list-group-item">
+        Annotation, if present, should not be more than 50 characters
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row d-flex justify-content-between justify-content-lg-start">
+  <%= render @documents %>
+</div>

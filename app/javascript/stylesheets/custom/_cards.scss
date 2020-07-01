@@ -1,0 +1,21 @@
+.card__attachment {
+	width: 49%;
+}
+
+@include media-breakpoint-up(md) {
+	.card__attachment {
+		width: 47.5%;
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.card__attachment {
+		width: 32.5%;
+	}
+}
+
+@include media-breakpoint-up(xl) {
+	.card__attachment {
+		width: 24.25%;
+	}
+}

@@ -4,11 +4,12 @@ module CMS
   class PostsControllerTest < ActionDispatch::IntegrationTest
     setup do
       @draft_post = posts(:plantation)
+      @finished_post = posts(:lotus)
       @department = departments(:horticulture)
     end
 
     teardown do
-      @draft_post = @department = nil
+      @draft_post = @finished_post = @department = nil
     end
 
     test 'should get index' do
@@ -65,6 +66,28 @@ module CMS
       end
 
       assert_redirected_to cms_posts_url
+    end
+
+    test 'should not update finished post' do
+      patch cms_post_url(@finished_post), params: {
+        post: {
+          title: 'Updating the title of the post'
+        }
+      }
+
+      assert_redirected_to cms_post_url(@finished_post)
+      assert_equal 'This operation is not allowed on finished post',
+                   flash[:notice]
+    end
+
+    test 'should not destroy finished post' do
+      assert_difference('Post.count', 0) do
+        delete cms_post_url(@finished_post)
+      end
+
+      assert_redirected_to cms_post_url(@finished_post)
+      assert_equal 'This operation is not allowed on finished post',
+                   flash[:notice]
     end
   end
 end

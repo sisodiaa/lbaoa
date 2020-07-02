@@ -11,3 +11,11 @@ plantation:
     <br>
     <p>We are happy to announce that we will plant Mango, and Guava tress.</p>
     <p>Please ask your kids to come and learn about plantation of trees.</p>
+
+lotus:
+  record: lotus (Post)
+  name: content
+  body: |-
+    <h1>Lotus flowers in Lotus Boulevard</h1>
+    <br>
+    <p>Enjoy tranquility in LB.</p>

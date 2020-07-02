@@ -69,4 +69,15 @@ class PostTest < ActiveSupport::TestCase
       @public_post.visibility_state = :members
     end
   end
+
+  test 'that finished post is not editable' do
+    @finished_post.title = 'Changed title of finished post'
+    assert_not @finished_post.valid?, 'Finished post is being modified'
+  end
+
+  test 'that finished post can not be destroyed' do
+    assert_difference('Post.count', 0) do
+      assert_raise(ActiveRecord::RecordNotDestroyed) { @finished_post.destroy! }
+    end
+  end
 end

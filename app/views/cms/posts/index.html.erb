@@ -18,20 +18,26 @@
         <% @posts.each do |post| %>
           <tr>
             <td><%= post.title %></td>
-            <td><%= post.publication_state %></td>
+            <td style="text-transform: capitalize;">
+              <%= post.publication_state %>
+            </td>
             <td><%= post.department.title %></td>
-            <td><%= link_to 'Show', cms_post_path(post) %></td>
-            <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
-            <td>
-              <%= link_to 'Destroy',
-                          cms_post_path(post),
-                          method: :delete,
-                          data: { confirm: 'Are you sure?' }
-              %>
-            </td>
-            <td>
-              <%= link_to 'Manage attachments', cms_post_documents_path(post) %>
-            </td>
+            <% if post.draft? %>
+              <td><%= link_to 'Show', cms_post_path(post) %></td>
+              <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
+              <td>
+                <%= link_to 'Destroy',
+                            cms_post_path(post),
+                            method: :delete,
+                            data: { confirm: 'Are you sure?' }
+                %>
+              </td>
+              <td>
+                <%= link_to 'Manage attachments',
+                            cms_post_documents_path(post)
+                %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

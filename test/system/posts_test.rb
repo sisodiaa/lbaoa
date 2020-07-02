@@ -3,16 +3,17 @@ require 'application_system_test_case'
 class PostsTest < ApplicationSystemTestCase
   setup do
     @draft_post = posts(:plantation)
+    @finished_post = posts(:lotus)
   end
 
   teardown do
-    @draft_post = nil
+    @draft_post = @finished_post = nil
   end
 
   test 'visiting the index' do
-    skip
-    visit posts_url
-    assert_selector 'h1', text: 'Posts'
+    visit cms_posts_url
+    assert_selector 'td', text: 'Draft', count: 1
+    assert_selector 'td', text: 'Finished', count: 2
   end
 
   test 'creating a Post' do
@@ -82,6 +83,18 @@ class PostsTest < ApplicationSystemTestCase
 
     within('.post__attachments') do
       assert_selector '.podlet', count: @draft_post.documents.count
+    end
+  end
+
+  test 'edit controls are not shown for a finished post' do
+    @finished_post.documents.each do |document|
+      attach_file_to_record document.attachment
+    end
+
+    visit cms_post_url(@finished_post)
+
+    within('.post__controls') do
+      assert_no_selector '.btn.btn-outline-primary', text: 'Edit'
     end
   end
 end

@@ -13,8 +13,13 @@
     <%= @post.content %>
   </div>
 
-  <div class="pod col-12 rounded shadow-sm">
-    <%= link_to 'Edit', edit_cms_post_path(@post), class: "btn btn-outline-primary" %>
+  <div class="post__controls pod col-12 rounded shadow-sm">
+    <% if @post.draft? %>
+      <%= link_to 'Edit',
+                  edit_cms_post_path(@post),
+                  class: "btn btn-outline-primary"
+      %>
+    <% end %>
     <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
   </div>
 </div>

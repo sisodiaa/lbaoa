@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  <div class="pod col rounded shadow">
+  <div class="pod col rounded shadow-sm">
     <h1>Posts</h1>
 
     <table class="table">
@@ -9,9 +9,8 @@
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Stauts</th>
-          <th scope="col">Visibility</th>
           <th scope="col">Department</th>
-          <th colspan="3" scope="col"></th>
+          <th colspan="4" scope="col"></th>
         </tr>
       </thead>
 
@@ -20,11 +19,19 @@
           <tr>
             <td><%= post.title %></td>
             <td><%= post.publication_state %></td>
-            <td><%= post.visibility_state %></td>
             <td><%= post.department.title %></td>
             <td><%= link_to 'Show', cms_post_path(post) %></td>
             <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
-            <td><%= link_to 'Destroy', cms_post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= link_to 'Destroy',
+                          cms_post_path(post),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' }
+              %>
+            </td>
+            <td>
+              <%= link_to 'Manage attachments', cms_post_documents_path(post) %>
+            </td>
           </tr>
         <% end %>
       </tbody>

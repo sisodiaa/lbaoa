@@ -36,6 +36,10 @@ module CMS
     end
 
     test 'should show post' do
+      @draft_post.documents.each do |document|
+        attach_file_to_record document.attachment
+      end
+
       get cms_post_url(@draft_post)
       assert_response :success
     end

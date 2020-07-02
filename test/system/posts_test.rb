@@ -19,8 +19,12 @@ class PostsTest < ApplicationSystemTestCase
     visit cms_posts_url
     click_on 'New Post'
 
-    fill_in 'Title', with: 'Do not pluck flowers'
     select 'Horticulture', from: 'post[department_id]'
+    fill_in 'Title', with: 'Do not pluck flowers'
+
+    content = 'Be a responsible resident, and care for flowers & trees.'
+    find(:xpath, "//trix-editor[@id='post_content']").set(content)
+
     click_on 'Create Post'
 
     assert_text 'Post was successfully created'
@@ -33,12 +37,17 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on 'Create Post'
 
-    assert_selector '.is-invalid', count: 2
-    assert_selector '.invalid-feedback', count: 2
+    assert_selector '.is-invalid', count: 3
+    assert_selector '.invalid-feedback', count: 3
     assert_selector '.invalid-feedback', text: "Title can't be blank"
+    assert_selector '.invalid-feedback', text: "Content can't be blank"
   end
 
   test 'updating a Post' do
+    @draft_post.documents.each do |document|
+      attach_file_to_record document.attachment
+    end
+
     visit cms_posts_url
     click_on 'Edit', match: :first
 
@@ -57,5 +66,22 @@ class PostsTest < ApplicationSystemTestCase
     end
 
     assert_text 'Post was successfully destroyed'
+  end
+
+  test 'shows a post' do
+    @draft_post.documents.each do |document|
+      attach_file_to_record document.attachment
+    end
+
+    visit cms_post_url(@draft_post)
+
+    within('.post__title') do
+      assert_selector 'h1', text: @draft_post.title
+      assert_text "Published: #{@draft_post.created_at.strftime('%d %B %Y')}"
+    end
+
+    within('.post__attachments') do
+      assert_selector '.podlet', count: @draft_post.documents.count
+    end
   end
 end

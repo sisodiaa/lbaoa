@@ -7,9 +7,15 @@ require("@rails/ujs").start();
 require("turbolinks").start();
 require("@rails/activestorage").start();
 
+require("trix");
+require("@rails/actiontext");
+
 import "controllers";
 
 import "bootstrap";
+
+import "editor";
+
 import "../stylesheets/application";
 
 document.addEventListener("turbolinks:load", () => {

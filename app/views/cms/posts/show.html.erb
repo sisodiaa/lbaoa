@@ -1,28 +1,29 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  <div class="pod col rounded shadow">
+  <div class="post__title pod col-12 rounded shadow-sm pb-0">
+    <h1 class="mb-4"><%= @post.title %></h1>
     <p>
-    <strong>Title:</strong>
-    <%= @post.title %>
+    <strong>Department</strong>: <%= @post.department.title %><br>
+    <strong>Published:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
     </p>
+  </div>
 
-    <p>
-    <strong>Publication State:</strong>
-    <%= @post.publication_state %>
-    </p>
+  <div class="post__content pod col-12 rounded shadow-sm">
+    <%= @post.content %>
+  </div>
 
-    <p>
-    <strong>Visibility:</strong>
-    <%= @post.visibility_state %>
-    </p>
-
-    <p>
-    <strong>Department:</strong>
-    <%= @post.department.title %>
-    </p>
-
+  <div class="pod col-12 rounded shadow-sm">
     <%= link_to 'Edit', edit_cms_post_path(@post), class: "btn btn-outline-primary" %>
     <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
   </div>
+</div>
+
+<div class="row">
+  <div class="podlet rounded shadow-sm">
+    Attachments
+  </div>
+</div>
+<div class="post__attachments row">
+  <%= render @post.documents %>
 </div>

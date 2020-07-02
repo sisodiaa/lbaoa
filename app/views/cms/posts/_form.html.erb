@@ -23,6 +23,20 @@
   <br />
 
   <div class="form-group">
+    <%= form.label :department_id %>
+    <%= form.collection_select(
+          :department_id,
+          Department.all, :id, :title,
+          {prompt: "Select Department"},
+          class: "form-control w-25",
+          data: {
+            target: 'form-validation-error.attribute',
+            form_attribute: 'department'
+          }
+    )%>
+  </div>
+
+  <div class="form-group">
     <%= form.label :title %>
     <%= form.text_field(
       :title,
@@ -35,20 +49,18 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :department_id %>
-    <%= form.collection_select(
-          :department_id,
-          Department.all, :id, :title,
-          {prompt: "Select Department"},
-          class: "form-control",
-          data: {
-            target: 'form-validation-error.attribute',
-            form_attribute: 'department'
-          }
-    )%>
+    <%= form.label :content %>
+    <%= form.rich_text_area(
+      :content,
+      class: 'form-control',
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'content'
+      }
+    ) %>
   </div>
 
   <div class="actions">
-    <%= form.submit class: "btn btn-primary" %>
+    <%= form.submit class: "btn btn-success" %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<div class="row">
+<div class="posts row">
   <div class="pod col rounded shadow-sm">
-    <h1>Posts</h1>
+    <h1 class='posts__heading'>Posts</h1>
 
-    <table class="table">
+    <table class="posts__table table">
       <thead>
         <tr>
           <th scope="col">Title</th>
@@ -16,7 +16,7 @@
 
       <tbody>
         <% @posts.each do |post| %>
-          <tr>
+          <tr class='posts__table-row'>
             <td><%= post.title %></td>
             <td style="text-transform: capitalize;">
               <%= post.publication_state %>

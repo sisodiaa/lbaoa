@@ -1,6 +1,7 @@
 <%= form_with(
   model: ['cms', post],
   local: true,
+  class: 'post__form',
   data: { controller: 'form-validation-error' }
 ) do |form| %>
   <% if post.errors.any? %>

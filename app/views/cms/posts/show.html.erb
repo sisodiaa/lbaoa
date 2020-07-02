@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<div class="row">
-  <div class="post__title pod col-12 rounded shadow-sm pb-0">
-    <h1 class="mb-4"><%= @post.title %></h1>
+<div class="post row">
+  <div class="post__header pod col-12 rounded shadow-sm pb-0">
+    <h1 class="post__header-title mb-4"><%= @post.title %></h1>
     <p>
     <strong>Department</strong>: <%= @post.department.title %><br>
     <strong>Published:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
@@ -24,11 +24,13 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="podlet rounded shadow-sm">
-    Attachments
+<div class="post__attachments">
+  <div class="row">
+    <div class="podlet rounded shadow-sm">
+      Attachments
+    </div>
   </div>
-</div>
-<div class="post__attachments row">
-  <%= render @post.documents %>
+  <div class="row">
+    <%= render @post.documents %>
+  </div>
 </div>

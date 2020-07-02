@@ -76,13 +76,13 @@ class PostsTest < ApplicationSystemTestCase
 
     visit cms_post_url(@draft_post)
 
-    within('.post__title') do
+    within('.post__header') do
       assert_selector 'h1', text: @draft_post.title
       assert_text "Published: #{@draft_post.created_at.strftime('%d %B %Y')}"
     end
 
     within('.post__attachments') do
-      assert_selector '.podlet', count: @draft_post.documents.count
+      assert_selector '.podlet', count: @draft_post.documents.count + 1
     end
   end
 

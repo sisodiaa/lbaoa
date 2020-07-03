@@ -81,9 +81,21 @@ class PostsTest < ApplicationSystemTestCase
       assert_text "Published: #{@draft_post.created_at.strftime('%d %B %Y')}"
     end
 
-    within('.post__attachments') do
-      assert_selector '.podlet', count: @draft_post.documents.count + 1
+    assert_no_selector '.post__attachments'
+
+    within('.post__controls') do
+      find('.btn', text: /^Show/).click
     end
+
+    within('.post__attachments') do
+      assert_selector '.podlet', count: @draft_post.documents.count
+    end
+
+    within('.post__controls') do
+      find('.btn', text: /^Hide/).click
+    end
+
+    assert_no_selector '.post__attachments'
   end
 
   test 'edit controls are not shown for a finished post' do

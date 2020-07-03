@@ -1,36 +1,50 @@
 <p id="notice"><%= notice %></p>
 
-<div class="post row">
-  <div class="post__header pod col-12 rounded shadow-sm pb-0">
-    <h1 class="post__header-title mb-4"><%= @post.title %></h1>
-    <p>
-    <strong>Department</strong>: <%= @post.department.title %><br>
-    <strong>Published:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
-    </p>
-  </div>
+<div data-controller='toggle-attachments'>
+  <div class="post row">
+    <div class="post__header pod col-12 rounded shadow-sm pb-0">
+      <h1 class="post__header-title mb-4"><%= @post.title %></h1>
+      <p>
+      <strong>Department</strong>: <%= @post.department.title %><br>
+      <strong>Published:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
+      </p>
+    </div>
 
-  <div class="post__content pod col-12 rounded shadow-sm">
-    <%= @post.content %>
-  </div>
+    <div class="post__content pod col-12 rounded shadow-sm">
+      <%= @post.content %>
+    </div>
 
-  <div class="post__controls pod col-12 rounded shadow-sm">
-    <% if @post.draft? %>
-      <%= link_to 'Edit',
-                  edit_cms_post_path(@post),
-                  class: "btn btn-outline-primary"
-      %>
-    <% end %>
-    <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
-  </div>
-</div>
-
-<div class="post__attachments">
-  <div class="row">
-    <div class="podlet rounded shadow-sm">
-      Attachments
+    <div class="post__controls pod col-12 rounded shadow-sm 
+                d-flex justify-content-between">
+      <div>
+        <% if @post.draft? %>
+          <%= link_to 'Edit',
+                      edit_cms_post_path(@post),
+                      class: "btn btn-outline-primary"
+          %>
+        <% end %>
+        <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
+      </div>
+      <% if @post.documents.any? %>
+        <div>
+          <%= link_to '#',
+                      class: 'btn btn-primary',
+                      data: {
+                        action: 'toggle-attachments#toggleAttachments' + ' ' + 
+                                 'toggle-attachments#toggleMessage',
+                        target: 'toggle-attachments.message'
+                      } do
+          %>
+            Show <%= pluralize(@post.documents.count, 'Attachment') %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
-  <div class="row">
-    <%= render @post.documents %>
+
+  <div class="post__attachments" data-target="toggle-attachments.attachments">
+    <div class="row d-flex justify-content-between justify-content-lg-start">
+      <%= render @post.documents %>
+    </div>
   </div>
 </div>

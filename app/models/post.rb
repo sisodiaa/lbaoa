@@ -1,9 +1,6 @@
 class Post < ApplicationRecord
   include AASM
 
-  before_validation :abort_if_finished, on: :update
-  before_destroy :abort_if_finished
-
   belongs_to :department, inverse_of: :posts
 
   has_many :documents, as: :documentable, dependent: :destroy
@@ -53,9 +50,5 @@ class Post < ApplicationRecord
 
   def publication_finished?
     finished?
-  end
-
-  def abort_if_finished
-    throw(:abort) if finished?
   end
 end

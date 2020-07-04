@@ -1,6 +1,6 @@
 module CMS
   class PostsController < ApplicationController
-    before_action :set_post, only: %i[show edit update destroy]
+    before_action :set_post, only: %i[show edit update publish destroy]
     before_action :check_publication_status, only: %i[edit update destroy]
 
     # GET /posts
@@ -41,6 +41,11 @@ module CMS
       else
         render :edit
       end
+    end
+
+    # PATCH/PUT /posts/1
+    def publish
+      @post.publish! if params.dig(:post, :publication_state) == 'finished'
     end
 
     # DELETE /posts/1

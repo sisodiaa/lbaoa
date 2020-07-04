@@ -89,5 +89,19 @@ module CMS
       assert_equal 'This operation is not allowed on finished post',
                    flash[:notice]
     end
+
+    test 'publish a post' do
+      assert @draft_post.draft?
+      assert_not @draft_post.finished?
+
+      patch publish_cms_post_path(@draft_post), params: {
+        post: {
+          publication_state: :finished
+        }
+      }
+
+      assert_not @draft_post.reload.draft?
+      assert @draft_post.reload.finished?
+    end
   end
 end

@@ -5,7 +5,8 @@ module CMS
 
     # GET /posts
     def index
-      @posts = Post.all.order('created_at ASC')
+      @draft_posts = Post.draft.order('created_at ASC')
+      @finished_posts = Post.finished.order('updated_at DESC')
     end
 
     # GET /posts/1
@@ -45,7 +46,13 @@ module CMS
 
     # PATCH/PUT /posts/1
     def publish
-      @post.publish! if params.dig(:post, :publication_state) == 'finished'
+      @post.publish if params.dig(:post, :publication_state) == 'finished'
+
+      if @post.finished? && @post.save
+        redirect_to post_path(@post), notice: 'Post published successfully.'
+      else
+        redirect_to cms_post_path(@post)
+      end
     end
 
     # DELETE /posts/1

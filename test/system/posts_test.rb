@@ -83,7 +83,7 @@ class PostsTest < ApplicationSystemTestCase
 
     assert_no_selector '.post__attachments'
 
-    within('.post__controls') do
+    within('.post__controls.pod') do
       find('.btn', text: /^Show/).click
     end
 
@@ -91,7 +91,7 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.podlet', count: @draft_post.documents.count
     end
 
-    within('.post__controls') do
+    within('.post__controls.pod') do
       find('.btn', text: /^Hide/).click
     end
 
@@ -105,8 +105,26 @@ class PostsTest < ApplicationSystemTestCase
 
     visit cms_post_url(@finished_post)
 
-    within('.post__controls') do
+    within('.post__controls.pod') do
       assert_no_selector '.btn.btn-outline-primary', text: 'Edit'
     end
+  end
+
+  test 'publishing a draft post' do
+    @draft_post.documents.each do |document|
+      attach_file_to_record document.attachment
+    end
+
+    visit cms_post_url(@draft_post)
+
+    click_on 'Publish'
+
+    assert_selector 'p#notice', text: 'Post published successfully.'
+  end
+
+  test 'lists all finished posts' do
+    visit posts_url
+
+    assert_selector 'h1.post__title', count: 2
   end
 end

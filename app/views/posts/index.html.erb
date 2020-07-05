@@ -1,0 +1,13 @@
+<div class="posts row">
+  <% @posts.each do |post| %>
+    <div class="post pod col-12 rounded shadow-sm">
+      <h3 class="post__title">
+        <%= post.title %>
+      </h3>
+      <p class="text-muted">
+        <%= truncate(strip_tags(post.content.to_s), length: 100) %>
+        <%= link_to 'More', post, class: 'text-muted' %>
+      </p>
+    </div>
+  <% end %>
+</div>

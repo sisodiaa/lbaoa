@@ -7,4 +7,8 @@ Rails.application.routes.draw do
       patch 'publish', on: :member
     end
   end
+
+  resources :posts, only: %i[index show]
+
+  root to: 'posts#index'
 end

@@ -102,6 +102,9 @@ module CMS
 
       assert_not @draft_post.reload.draft?
       assert @draft_post.reload.finished?
+
+      assert_redirected_to post_url(@draft_post)
+      assert_equal 'Post published successfully.', flash[:notice]
     end
   end
 end

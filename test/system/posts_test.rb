@@ -12,8 +12,22 @@ class PostsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit cms_posts_url
-    assert_selector 'td', text: 'Draft', count: 1
-    assert_selector 'td', text: 'Finished', count: 2
+
+    within('#posts__draft') do
+      assert_text 'Draft Posts'
+
+      within('tbody') do
+        assert_selector 'tr', count: 1
+      end
+    end
+
+    within('#posts__published') do
+      assert_text 'Published Posts'
+
+      within('tbody') do
+        assert_selector 'tr', count: 2
+      end
+    end
   end
 
   test 'creating a Post' do

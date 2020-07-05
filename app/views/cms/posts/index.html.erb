@@ -1,43 +1,37 @@
 <p id="notice"><%= notice %></p>
 
 <div class="posts row">
-  <div class="pod col rounded shadow-sm">
-    <h1 class='posts__heading'>Posts</h1>
+  <div id='posts__draft' class="pod col-12 rounded shadow-sm">
+    <h1 class='posts__heading'>Draft Posts</h1>
 
     <table class="posts__table table">
       <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="col">Stauts</th>
           <th scope="col">Department</th>
           <th colspan="4" scope="col"></th>
         </tr>
       </thead>
 
       <tbody>
-        <% @posts.each do |post| %>
+        <% @draft_posts.each do |post| %>
           <tr class='posts__table-row'>
             <td><%= post.title %></td>
-            <td style="text-transform: capitalize;">
-              <%= post.publication_state %>
-            </td>
             <td><%= post.department.title %></td>
-            <% if post.draft? %>
-              <td><%= link_to 'Show', cms_post_path(post) %></td>
-              <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
-              <td>
-                <%= link_to 'Destroy',
-                            cms_post_path(post),
-                            method: :delete,
-                            data: { confirm: 'Are you sure?' }
-                %>
-              </td>
-              <td>
-                <%= link_to 'Manage attachments',
-                            cms_post_documents_path(post)
-                %>
-              </td>
-            <% end %>
+            <td><%= link_to 'Preview', cms_post_path(post) %></td>
+            <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
+            <td>
+              <%= link_to 'Destroy',
+                          cms_post_path(post),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' }
+              %>
+            </td>
+            <td>
+              <%= link_to 'Manage attachments',
+                          cms_post_documents_path(post)
+              %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -46,5 +40,27 @@
     <br>
 
     <%= link_to 'New Post', new_cms_post_path, class: "btn btn-outline-primary" %>
+  </div>
+
+  <div id='posts__published' class="pod col-12 rounded shadow-sm">
+    <h1 class='posts__heading'>Published Posts</h1>
+
+    <table class="posts__table table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Department</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @finished_posts.each do |post| %>
+          <tr class='posts__table-row'>
+            <td><%= link_to post.title, post %></td>
+            <td><%= post.department.title %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

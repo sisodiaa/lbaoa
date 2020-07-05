@@ -33,11 +33,13 @@
       rails_blob_path(document.attachment, disposition: 'attachment'),
       class: 'btn btn-sm btn-primary'
     %>
-    <%= link_to 'Delete Attachment',
-      cms_post_document_path(document.documentable, document),
-      method: :delete,
-      class: 'btn btn-sm btn-danger',
-      data: { confirm: 'Are you sure?' }
-    %>
+    <% if document.documentable.draft? %>
+      <%= link_to 'Delete Attachment',
+        cms_post_document_path(document.documentable, document),
+        method: :delete,
+        class: 'btn btn-sm btn-danger',
+        data: { confirm: 'Are you sure?' }
+      %>
+    <% end %>
   </div>
 </div>

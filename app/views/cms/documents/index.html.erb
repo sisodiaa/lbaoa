@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Attachments for <%= @documentable.title %></h3>
+<h3>Attachments for <%= link_to @documentable.title, cms_post_url(@documentable) %></h3>
 
 <div class="row">
   <div class="pod col-12 col-lg-8 rounded order-2 order-lg-1">

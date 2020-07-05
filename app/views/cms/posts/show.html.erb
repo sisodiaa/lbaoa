@@ -47,6 +47,10 @@
                       edit_cms_post_path(@post),
                       class: "btn btn-outline-primary"
           %>
+          <%= link_to 'Manage attachments',
+            cms_post_documents_path(@post),
+            class: "btn btn-outline-primary"
+          %>
         <% end %>
         <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
       </div>

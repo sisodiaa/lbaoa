@@ -78,7 +78,7 @@ class PostsTest < ApplicationSystemTestCase
 
     within('.post__header') do
       assert_selector 'h1', text: @draft_post.title
-      assert_text "Published: #{@draft_post.created_at.strftime('%d %B %Y')}"
+      assert_text "Created: #{@draft_post.created_at.strftime('%d %B %Y')}"
     end
 
     assert_no_selector '.post__attachments'
@@ -125,6 +125,6 @@ class PostsTest < ApplicationSystemTestCase
   test 'lists all finished posts' do
     visit posts_url
 
-    assert_selector 'h1.post__title', count: 2
+    assert_selector 'h3.post__title', count: 2
   end
 end

@@ -28,7 +28,7 @@ module CMS
 
       if @post.save
         redirect_to cms_post_path(@post),
-                    notice: 'Post was successfully created.'
+                    flash: { success: 'Post was successfully created.' }
       else
         render :new
       end
@@ -38,7 +38,7 @@ module CMS
     def update
       if @post.update(post_params)
         redirect_to cms_post_path(@post),
-                    notice: 'Post was successfully updated.'
+                    flash: { success: 'Post was successfully updated.' }
       else
         render :edit
       end
@@ -49,7 +49,8 @@ module CMS
       @post.publish if params.dig(:post, :publication_state) == 'finished'
 
       if @post.finished? && @post.save
-        redirect_to post_path(@post), notice: 'Post published successfully.'
+        redirect_to post_path(@post),
+                    flash: { success: 'Post published successfully.' }
       else
         redirect_to cms_post_path(@post)
       end
@@ -58,7 +59,8 @@ module CMS
     # DELETE /posts/1
     def destroy
       @post.destroy
-      redirect_to cms_posts_url, notice: 'Post was successfully destroyed.'
+      redirect_to cms_posts_url,
+                  flash: { success: 'Post was successfully destroyed.' }
     end
 
     private

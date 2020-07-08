@@ -12,7 +12,7 @@ module CMS
 
       if @document.save
         redirect_to cms_post_documents_url(@documentable),
-                    notice: 'Attachment was successfully created.'
+                    flash: { success: 'Attachment was successfully created.' }
       else
         render :index
       end
@@ -22,7 +22,7 @@ module CMS
       @document = @documentable.documents.find(params[:id])
       @document.destroy
       redirect_to cms_post_documents_url(@documentable),
-                  notice: 'Attachment was successfully destroyed.'
+                  flash: { success: 'Attachment was successfully destroyed.' }
     end
 
     private

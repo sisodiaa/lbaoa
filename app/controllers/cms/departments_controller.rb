@@ -26,7 +26,7 @@ module CMS
 
       if @department.save
         redirect_to cms_department_path(@department),
-                    notice: 'Department was successfully created.'
+                    flash: { success: 'Department was successfully created.' }
       else
         render :new
       end
@@ -36,7 +36,7 @@ module CMS
     def update
       if @department.update(department_params)
         redirect_to cms_department_path(@department),
-                    notice: 'Department was successfully updated.'
+                    flash: { success: 'Department was successfully updated.' }
       else
         render :edit
       end

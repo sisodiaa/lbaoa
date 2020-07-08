@@ -42,7 +42,11 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on 'Create Post'
 
-    assert_text 'Post was successfully created'
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post was successfully created.'
+    end
     click_on 'Back'
   end
 
@@ -69,8 +73,13 @@ class PostsTest < ApplicationSystemTestCase
     fill_in 'Title', with: 'Edited title for system test'
     click_on 'Update Post'
 
-    assert_text 'Post was successfully updated'
     assert_text 'Edited title for system test'
+
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post was successfully updated.'
+    end
     click_on 'Back'
   end
 
@@ -80,7 +89,11 @@ class PostsTest < ApplicationSystemTestCase
       click_on 'Destroy', match: :first
     end
 
-    assert_text 'Post was successfully destroyed'
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post was successfully destroyed.'
+    end
   end
 
   test 'shows a post' do
@@ -133,7 +146,11 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on 'Publish'
 
-    assert_selector 'p#notice', text: 'Post published successfully.'
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post published successfully.'
+    end
   end
 
   test 'lists all finished posts' do

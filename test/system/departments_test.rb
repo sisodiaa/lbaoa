@@ -18,7 +18,12 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Title', with: 'Ensuring residents safety from fire'
     click_on 'Create Department'
 
-    assert_text 'Department was successfully created'
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body',
+                      text: 'Department was successfully created.'
+    end
     click_on 'Back'
   end
 
@@ -29,8 +34,13 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Description', with: 'New description'
     click_on 'Update Department'
 
-    assert_text 'Department was successfully updated'
     assert_text 'New description'
+    assert_no_selector 'p#notice'
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body',
+                      text: 'Department was successfully updated.'
+    end
     click_on 'Back'
   end
 

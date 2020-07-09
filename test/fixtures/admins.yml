@@ -1,0 +1,42 @@
+confirmed_board_admin:
+  email: admin_one@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Admin, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  first_name: Admin
+  last_name: One
+  affiliation: board_member
+  status: active
+
+unconfirmed_board_admin:
+  email: admin_two@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Admin, 'password') %>
+  first_name: Admin
+  last_name: Two
+  affiliation: board_member
+  status: active
+
+confirmed_staff_admin:
+  email: admin_three@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Admin, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  first_name: Admin
+  last_name: Three
+  affiliation: staff_member
+  status: active
+
+unconfirmed_staff_admin:
+  email: admin_four@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Admin, 'password') %>
+  first_name: Admin
+  last_name: Four
+  affiliation: staff_member
+  status: active
+
+inactive_board_admin:
+  email: admin_five@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Admin, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  first_name: Admin
+  last_name: Five
+  affiliation: board_member
+  status: inactive

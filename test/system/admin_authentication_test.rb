@@ -221,6 +221,21 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
     end
   end
 
+  test 'that inactive admin can not log in ' do
+    visit new_cms_admin_session_path
+
+    within('form#new_cms_admin') do
+      fill_in 'cms_admin_email', with: admins(:inactive_board_admin).email
+      fill_in 'cms_admin_password', with: 'password'
+      click_on 'Log in'
+    end
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Alert'
+      assert_selector '.toast-body', text: 'Your account is not active.'
+    end
+  end
+
   private
 
   def confirmation_token

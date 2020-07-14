@@ -16,4 +16,12 @@ class Admin < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :account_inactive
+  end
 end

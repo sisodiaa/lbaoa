@@ -40,7 +40,9 @@ export default class extends Controller {
   get errorMessages() {
     // Creating array of Nodes since Nodes themselves are not itearable
     return this.messageNodes.map(node => {
-      return `${this.errorAttribute.titleize()} ${node.dataset.errorMessage}`;
+      return `${this.errorAttribute.snakecase_to_sentence().titleize()} ${
+        node.dataset.errorMessage
+      }`;
     });
   }
 

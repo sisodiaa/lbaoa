@@ -1,5 +1,7 @@
 module CMS
   class PostsController < ApplicationController
+    layout 'cms'
+
     before_action :set_post, only: %i[show edit update publish destroy]
     before_action :check_publication_status, only: %i[edit update destroy]
 

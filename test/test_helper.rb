@@ -19,4 +19,8 @@ class ActiveSupport::TestCase
       filename: 'square.png'
     )
   end
+
+  def devise_token_generator(klass, token)
+    yield Devise.token_generator.generate(klass, token)
+  end
 end

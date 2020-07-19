@@ -24,3 +24,7 @@ class ActiveSupport::TestCase
     yield Devise.token_generator.generate(klass, token)
   end
 end
+
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+end

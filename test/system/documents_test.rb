@@ -2,17 +2,27 @@ require 'application_system_test_case'
 
 class DocumentsTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
+    @confirmed_board_admin = admins(:confirmed_board_admin)
+
     @draft_post = posts(:plantation)
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
     end
 
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     visit cms_post_documents_url(@draft_post)
   end
 
   teardown do
+    logout :cms_admin
+
     @draft_post = nil
+
+    @confirmed_board_admin = nil
+    Warden.test_reset!
   end
 
   test 'visiting the index' do

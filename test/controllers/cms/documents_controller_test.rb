@@ -3,23 +3,35 @@ require 'test_helper'
 module CMS
   class DocumentsControllerTest < ActionDispatch::IntegrationTest
     setup do
+      @confirmed_board_admin = admins(:confirmed_board_admin)
       @draft_post = posts(:plantation)
     end
 
     teardown do
-      @draft_post = nil
+      @confirmed_board_admin = @draft_post = nil
+    end
+
+    test 'unauthenticated access should redirect' do
+      get cms_post_documents_url(@draft_post)
+      assert_redirected_to new_cms_admin_session_url
     end
 
     test 'should get index' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
       @draft_post.documents.each do |document|
         attach_file_to_record document.attachment
       end
 
       get cms_post_documents_url(@draft_post)
       assert_response :success
+
+      sign_out :cms_admin
     end
 
     test 'should not create document without attachment' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
       @draft_post.documents.each do |document|
         attach_file_to_record document.attachment
       end
@@ -31,9 +43,13 @@ module CMS
           }
         }
       end
+
+      sign_out :cms_admin
     end
 
     test 'should create document' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
       assert_difference('Document.count') do
         post cms_post_documents_url(@draft_post), params: {
           document: {
@@ -46,9 +62,13 @@ module CMS
       assert @draft_post.documents.last.attachment.attached?
       assert_equal ActiveStorage::Attachment.count, 1
       assert_redirected_to cms_post_documents_url(@draft_post)
+
+      sign_out :cms_admin
     end
 
     test 'should not create document for large files' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
       @draft_post.documents.each do |document|
         attach_file_to_record document.attachment
       end
@@ -68,14 +88,20 @@ module CMS
       end
 
       assert_equal ActiveStorage::Attachment.count, 2
+
+      sign_out :cms_admin
     end
 
     test 'should destroy a document' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
       assert_difference('Document.count', -1) do
         delete cms_post_document_url(@draft_post, documents(:image))
       end
 
       assert_redirected_to cms_post_documents_url(@draft_post)
+
+      sign_out :cms_admin
     end
   end
 end

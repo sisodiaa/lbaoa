@@ -2,15 +2,23 @@ require 'application_system_test_case'
 
 class PostsTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
+    @confirmed_board_admin = admins(:confirmed_board_admin)
+
     @draft_post = posts(:plantation)
     @finished_post = posts(:lotus)
   end
 
   teardown do
     @draft_post = @finished_post = nil
+
+    @confirmed_board_admin = nil
+    Warden.test_reset!
   end
 
   test 'visiting the index' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     visit cms_posts_url
 
     within('#posts__draft') do
@@ -28,9 +36,13 @@ class PostsTest < ApplicationSystemTestCase
         assert_selector 'tr', count: 2
       end
     end
+
+    logout :cms_admin
   end
 
   test 'creating a Post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     visit cms_posts_url
     click_on 'New Post'
 
@@ -48,9 +60,13 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Post was successfully created.'
     end
     click_on 'Back'
+
+    logout :cms_admin
   end
 
   test 'creating a Post with insufficient data shows validation errors' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     visit cms_posts_url
     click_on 'New Post'
 
@@ -60,9 +76,13 @@ class PostsTest < ApplicationSystemTestCase
     assert_selector '.invalid-feedback', count: 3
     assert_selector '.invalid-feedback', text: "Title can't be blank"
     assert_selector '.invalid-feedback', text: "Content can't be blank"
+
+    logout :cms_admin
   end
 
   test 'updating a Post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
     end
@@ -81,9 +101,13 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Post was successfully updated.'
     end
     click_on 'Back'
+
+    logout :cms_admin
   end
 
   test 'destroying a Post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     visit cms_posts_url
     page.accept_confirm do
       click_on 'Destroy', match: :first
@@ -94,9 +118,13 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-header strong', text: 'Success'
       assert_selector '.toast-body', text: 'Post was successfully destroyed.'
     end
+
+    logout :cms_admin
   end
 
   test 'shows a post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
     end
@@ -123,9 +151,13 @@ class PostsTest < ApplicationSystemTestCase
     end
 
     assert_no_selector '.post__attachments'
+
+    logout :cms_admin
   end
 
   test 'edit controls are not shown for a finished post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     @finished_post.documents.each do |document|
       attach_file_to_record document.attachment
     end
@@ -135,9 +167,13 @@ class PostsTest < ApplicationSystemTestCase
     within('.post__controls.pod') do
       assert_no_selector '.btn.btn-outline-primary', text: 'Edit'
     end
+
+    logout :cms_admin
   end
 
   test 'publishing a draft post' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
     end
@@ -151,6 +187,8 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-header strong', text: 'Success'
       assert_selector '.toast-body', text: 'Post published successfully.'
     end
+
+    logout :cms_admin
   end
 
   test 'lists all finished posts' do

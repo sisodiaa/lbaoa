@@ -1,5 +1,6 @@
 module CMS
   class DocumentsController < ApplicationController
+    before_action :authenticate_cms_admin!
     before_action :set_documentable
     before_action :set_documents, except: :destroy
 

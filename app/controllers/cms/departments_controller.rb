@@ -1,5 +1,6 @@
 module CMS
   class DepartmentsController < ApplicationController
+    before_action :authenticate_cms_admin!
     before_action :set_department, only: [:show, :edit, :update]
 
     # GET /departments

@@ -2,6 +2,7 @@ module CMS
   class PostsController < ApplicationController
     layout 'cms'
 
+    before_action :authenticate_cms_admin!
     before_action :set_post, only: %i[show edit update publish destroy]
     before_action :check_publication_status, only: %i[edit update destroy]
 

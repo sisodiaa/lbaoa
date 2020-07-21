@@ -102,36 +102,6 @@ module CMS
       sign_out :cms_admin
     end
 
-    test 'should not update finished post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
-
-      patch cms_post_url(@finished_post), params: {
-        post: {
-          title: 'Updating the title of the post'
-        }
-      }
-
-      assert_redirected_to cms_post_url(@finished_post)
-      assert_equal 'This operation is not allowed on finished post',
-                   flash[:notice]
-
-      sign_out :cms_admin
-    end
-
-    test 'should not destroy finished post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
-
-      assert_difference('Post.count', 0) do
-        delete cms_post_url(@finished_post)
-      end
-
-      assert_redirected_to cms_post_url(@finished_post)
-      assert_equal 'This operation is not allowed on finished post',
-                   flash[:notice]
-
-      sign_out :cms_admin
-    end
-
     test 'publish a post' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 

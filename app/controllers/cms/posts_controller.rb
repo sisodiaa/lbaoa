@@ -4,7 +4,6 @@ module CMS
 
     before_action :authenticate_cms_admin!
     before_action :set_post, only: %i[show edit update publish destroy]
-    before_action :check_publication_status, only: %i[edit update destroy]
 
     # GET /posts
     def index
@@ -77,13 +76,6 @@ module CMS
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
-    end
-
-    def check_publication_status
-      return unless @post.finished?
-
-      redirect_to cms_post_path(@post),
-                  notice: 'This operation is not allowed on finished post'
     end
 
     # Only allow a trusted parameter "white list" through.

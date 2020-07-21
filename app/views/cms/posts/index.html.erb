@@ -48,14 +48,29 @@
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Department</th>
+          <th colspan="4" scope="col"></th>
         </tr>
       </thead>
 
       <tbody>
         <% @finished_posts.each do |post| %>
           <tr class='posts__table-row'>
-            <td><%= link_to post.title, post %></td>
+            <td><%= post.title %></td>
             <td><%= post.department.title %></td>
+            <td><%= link_to 'View', cms_post_path(post) %></td>
+            <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
+            <td>
+              <%= link_to 'Destroy',
+                          cms_post_path(post),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' }
+              %>
+            </td>
+            <td>
+              <%= link_to 'Manage attachments',
+                          cms_post_documents_path(post)
+              %>
+            </td>
           </tr>
         <% end %>
       </tbody>

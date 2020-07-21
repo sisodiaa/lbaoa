@@ -191,6 +191,20 @@ class PostsTest < ApplicationSystemTestCase
     logout :cms_admin
   end
 
+  test 'that staff member can not publish a post' do
+    login_as admins(:confirmed_staff_admin), scope: :cms_admin
+
+    @draft_post.documents.each do |document|
+      attach_file_to_record document.attachment
+    end
+
+    visit cms_post_url(@draft_post)
+
+    assert_no_selector 'form.button_to .btn', text: 'Publish'
+
+    logout :cms_admin
+  end
+
   test 'lists all finished posts' do
     visit posts_url
 

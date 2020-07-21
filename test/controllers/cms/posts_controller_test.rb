@@ -152,5 +152,20 @@ module CMS
 
       sign_out :cms_admin
     end
+
+    test 'staff member can not publish a post' do
+      sign_in admins(:confirmed_staff_admin), scope: :cms_admin
+
+      patch publish_cms_post_path(@draft_post), params: {
+        post: {
+          publication_state: :finished
+        }
+      }
+
+      assert_equal 'Only board member can publish a post.', flash[:error]
+      assert_redirected_to cms_root_url
+
+      sign_out :cms_admin
+    end
   end
 end

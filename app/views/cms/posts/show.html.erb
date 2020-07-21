@@ -1,6 +1,6 @@
 <div data-controller='toggle-attachments'>
   <div class="post row">
-    <% if @post.draft? %>
+    <% if policy([:cms, @post]).publish? %>
       <div class="post__controls mb-4">
         <%= button_to 'Publish',
           publish_cms_post_path(@post),

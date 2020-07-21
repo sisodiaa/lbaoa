@@ -1,0 +1,5 @@
+en:
+ pundit:
+   default: 'You cannot perform this action.'
+   cms/post_policy:
+     publish?: 'Only board member can publish a post.'

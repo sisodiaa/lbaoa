@@ -49,6 +49,8 @@ module CMS
 
     # PATCH/PUT /posts/1
     def publish
+      authorize @post, policy_class: CMS::PostPolicy
+
       @post.publish if params.dig(:post, :publication_state) == 'finished'
 
       if @post.finished? && @post.save
@@ -67,6 +69,10 @@ module CMS
     end
 
     private
+
+    def pundit_user
+      current_cms_admin
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_post

@@ -62,6 +62,8 @@ module CMS
 
     # DELETE /posts/1
     def destroy
+      authorize @post, policy_class: CMS::PostPolicy
+
       @post.destroy
       redirect_to cms_posts_url,
                   flash: { success: 'Post was successfully destroyed.' }

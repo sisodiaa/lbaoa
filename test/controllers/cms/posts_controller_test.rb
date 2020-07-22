@@ -4,13 +4,17 @@ module CMS
   class PostsControllerTest < ActionDispatch::IntegrationTest
     setup do
       @confirmed_board_admin = admins(:confirmed_board_admin)
+      @confirmed_staff_admin = admins(:confirmed_staff_admin)
+
       @draft_post = posts(:plantation)
       @finished_post = posts(:lotus)
+
       @department = departments(:horticulture)
     end
 
     teardown do
-      @confirmed_board_admin = @draft_post = @finished_post = @department = nil
+      @confirmed_board_admin = @confirmed_staff_admin = nil
+      @draft_post = @finished_post = @department = nil
     end
 
     test 'unauthenticated access should redirect' do
@@ -90,11 +94,23 @@ module CMS
       sign_out :cms_admin
     end
 
-    test 'should destroy post' do
+    test 'board member can delete draft post' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
       assert_difference('Post.count', -1) do
         delete cms_post_url(@draft_post)
+      end
+
+      assert_redirected_to cms_posts_url
+
+      sign_out :cms_admin
+    end
+
+    test 'board member can delete published post' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
+      assert_difference('Post.count', -1) do
+        delete cms_post_url(@finished_post)
       end
 
       assert_redirected_to cms_posts_url
@@ -124,7 +140,7 @@ module CMS
     end
 
     test 'staff member can not publish a post' do
-      sign_in admins(:confirmed_staff_admin), scope: :cms_admin
+      sign_in @confirmed_staff_admin, scope: :cms_admin
 
       patch publish_cms_post_path(@draft_post), params: {
         post: {
@@ -134,6 +150,31 @@ module CMS
 
       assert_equal 'Only board member can publish a post.', flash[:error]
       assert_redirected_to cms_root_url
+
+      sign_out :cms_admin
+    end
+
+    test 'staff member can not delete a published post' do
+      sign_in @confirmed_staff_admin, scope: :cms_admin
+
+      assert_difference('Post.count', 0) do
+        delete cms_post_url(@finished_post)
+      end
+
+      assert_equal 'Only board member can delete a post.', flash[:error]
+      assert_redirected_to cms_root_url
+
+      sign_out :cms_admin
+    end
+
+    test 'staff member can delete a draft post' do
+      sign_in @confirmed_staff_admin, scope: :cms_admin
+
+      assert_difference('Post.count', -1) do
+        delete cms_post_url(@draft_post)
+      end
+
+      assert_redirected_to cms_posts_url
 
       sign_out :cms_admin
     end

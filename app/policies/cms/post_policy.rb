@@ -9,5 +9,9 @@ module CMS
     def publish?
       record.draft? && user.board_member?
     end
+
+    def destroy?
+      record.draft? || (record.finished? && user.board_member?)
+    end
   end
 end

@@ -4,6 +4,7 @@ class PostsTest < ApplicationSystemTestCase
   setup do
     Warden.test_mode!
     @confirmed_board_admin = admins(:confirmed_board_admin)
+    @confirmed_staff_admin = admins(:confirmed_staff_admin)
 
     @draft_post = posts(:plantation)
     @finished_post = posts(:lotus)
@@ -12,7 +13,7 @@ class PostsTest < ApplicationSystemTestCase
   teardown do
     @draft_post = @finished_post = nil
 
-    @confirmed_board_admin = nil
+    @confirmed_board_admin = @confirmed_staff_admin = nil
     Warden.test_reset!
   end
 
@@ -192,7 +193,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test 'that staff member can not publish a post' do
-    login_as admins(:confirmed_staff_admin), scope: :cms_admin
+    login_as @confirmed_staff_admin, scope: :cms_admin
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
@@ -201,6 +202,25 @@ class PostsTest < ApplicationSystemTestCase
     visit cms_post_url(@draft_post)
 
     assert_no_selector 'form.button_to .btn', text: 'Publish'
+
+    logout :cms_admin
+  end
+
+  test 'that staff member can not delete a published post' do
+    login_as @confirmed_staff_admin, scope: :cms_admin
+
+    visit cms_posts_url
+
+    within('#posts__published') do
+      page.accept_confirm do
+        click_on 'Destroy', match: :first
+      end
+    end
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Error'
+      assert_selector '.toast-body', text: 'Only board member can delete a post.'
+    end
 
     logout :cms_admin
   end

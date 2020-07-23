@@ -156,22 +156,6 @@ class PostsTest < ApplicationSystemTestCase
     logout :cms_admin
   end
 
-  test 'edit controls are not shown for a finished post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
-
-    @finished_post.documents.each do |document|
-      attach_file_to_record document.attachment
-    end
-
-    visit cms_post_url(@finished_post)
-
-    within('.post__controls.pod') do
-      assert_no_selector '.btn.btn-outline-primary', text: 'Edit'
-    end
-
-    logout :cms_admin
-  end
-
   test 'publishing a draft post' do
     login_as @confirmed_board_admin, scope: :cms_admin
 

@@ -24,15 +24,15 @@
   <br />
 
   <div class="form-group">
-    <%= form.label :department_id %>
+    <%= form.label :category_id %>
     <%= form.collection_select(
-          :department_id,
-          Department.all, :id, :title,
-          {prompt: "Select Department"},
+          :category_id,
+          Category.all, :id, :title,
+          {prompt: "Select Category"},
           class: "form-control w-25",
           data: {
             target: 'form-validation-error.attribute',
-            form_attribute: 'department'
+            form_attribute: 'category'
           }
     )%>
   </div>

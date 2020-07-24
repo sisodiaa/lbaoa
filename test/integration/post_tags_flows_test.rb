@@ -8,12 +8,12 @@ class PostTagsFlowsTest < ActionDispatch::IntegrationTest
     @draft_post = posts(:plantation)
     @finished_post = posts(:lotus)
 
-    @department = departments(:horticulture)
+    @category = categories(:horticulture)
   end
 
   teardown do
     @confirmed_board_admin = @confirmed_staff_admin = nil
-    @draft_post = @finished_post = @department = nil
+    @draft_post = @finished_post = @category = nil
   end
 
   test 'creating a post' do
@@ -24,7 +24,7 @@ class PostTagsFlowsTest < ActionDispatch::IntegrationTest
         assert_difference('Tagging.count', 2) do
           post cms_posts_url, params: {
             post: {
-              department_id: @department.id,
+              category_id: @category.id,
               title: 'New title of a new post',
               content: '<h1><em>Rich text</em> using HTML</h1>',
               tag_list: 'new , draft post '

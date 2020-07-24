@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="pod col rounded shadow">
+    <p>
+    <strong>Title:</strong>
+    <%= @category.title %>
+    </p>
+
+    <p>
+    <strong>Description:</strong>
+    <%= @category.description %>
+    </p>
+
+    <%= link_to 'Edit', edit_cms_category_path(@category), class: "btn btn-outline-primary" %>
+    <%= link_to 'Back', cms_categories_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

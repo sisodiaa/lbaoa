@@ -1,11 +1,11 @@
 <%= form_with(
-  model: ['cms', department],
+  model: ['cms', category],
   local: true,
   data: { controller: 'form-validation-error' }
 ) do |form| %>
-  <% if department.errors.any? %>
+  <% if category.errors.any? %>
     <div id="error_explanation">
-      <% department.errors.messages.each do |attribute, error_messages| %>
+      <% category.errors.messages.each do |attribute, error_messages| %>
         <div
           data-target="form-validation-error.error"
           data-error-attribute="<%= attribute %>"

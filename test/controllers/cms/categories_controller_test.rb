@@ -1,10 +1,10 @@
 require 'test_helper'
 
 module CMS
-  class DepartmentsControllerTest < ActionDispatch::IntegrationTest
+  class CategoriesControllerTest < ActionDispatch::IntegrationTest
     setup do
       @confirmed_board_admin = admins(:confirmed_board_admin)
-      @department = departments(:horticulture)
+      @category = categories(:horticulture)
     end
 
     teardown do
@@ -12,14 +12,14 @@ module CMS
     end
 
     test 'unauthenticated access should redirect' do
-      get cms_departments_url
+      get cms_categories_url
       assert_redirected_to new_cms_admin_session_url
     end
 
     test 'should get index' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      get cms_departments_url
+      get cms_categories_url
       assert_response :success
 
       sign_out :cms_admin
@@ -28,33 +28,33 @@ module CMS
     test 'should get new' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      get new_cms_department_url
+      get new_cms_category_url
       assert_response :success
 
       sign_out :cms_admin
     end
 
-    test 'should create department' do
+    test 'should create category' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      assert_difference('Department.count') do
-        post cms_departments_url, params: {
-          department: {
-            description: @department.description,
-            title: @department.title
+      assert_difference('Category.count') do
+        post cms_categories_url, params: {
+          category: {
+            description: @category.description,
+            title: @category.title
           }
         }
       end
 
-      assert_redirected_to cms_department_url(Department.last)
+      assert_redirected_to cms_category_url(Category.last)
 
       sign_out :cms_admin
     end
 
-    test 'should show department' do
+    test 'should show category' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      get cms_department_url(@department)
+      get cms_category_url(@category)
       assert_response :success
 
       sign_out :cms_admin
@@ -63,22 +63,22 @@ module CMS
     test 'should get edit' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      get edit_cms_department_url(@department)
+      get edit_cms_category_url(@category)
       assert_response :success
 
       sign_out :cms_admin
     end
 
-    test 'should update department' do
+    test 'should update category' do
       sign_in @confirmed_board_admin, scope: :cms_admin
 
-      patch cms_department_url(@department), params: {
-        department: {
-          description: @department.description,
-          title: @department.title
+      patch cms_category_url(@category), params: {
+        category: {
+          description: @category.description,
+          title: @category.title
         }
       }
-      assert_redirected_to cms_department_url(@department)
+      assert_redirected_to cms_category_url(@category)
 
       sign_out :cms_admin
     end

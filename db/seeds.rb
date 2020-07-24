@@ -7,25 +7,25 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Post.delete_all
-Department.delete_all
+Category.delete_all
 
-Department.create!(
+Category.create!(
   title: 'Horticulture',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 )
-Department.create!(
+Category.create!(
   title: 'Housekeeping',
   description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
 )
-security = Department.create!(
+security = Category.create!(
   title: 'Security',
   description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco'
 )
-Department.create!(
+Category.create!(
   title: 'Technical',
   description: 'Laboris nisi ut aliquip ex ea commodo consequat'
 )
-helpdesk = Department.create!(
+helpdesk = Category.create!(
   title: 'Helpdesk',
   description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum'
 )

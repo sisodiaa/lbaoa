@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   include AASM
 
-  belongs_to :department, inverse_of: :posts
+  belongs_to :category, inverse_of: :posts
 
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings

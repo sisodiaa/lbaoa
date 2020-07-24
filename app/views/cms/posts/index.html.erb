@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="col">Department</th>
+          <th scope="col">Category</th>
           <th colspan="4" scope="col"></th>
         </tr>
       </thead>
@@ -15,7 +15,7 @@
         <% @draft_posts.each do |post| %>
           <tr class='posts__table-row'>
             <td><%= post.title %></td>
-            <td><%= post.department.title %></td>
+            <td><%= post.category.title %></td>
             <td><%= link_to 'Preview', cms_post_path(post) %></td>
             <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
             <td>
@@ -47,7 +47,7 @@
       <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="col">Department</th>
+          <th scope="col">Category</th>
           <th colspan="4" scope="col"></th>
         </tr>
       </thead>
@@ -56,7 +56,7 @@
         <% @finished_posts.each do |post| %>
           <tr class='posts__table-row'>
             <td><%= post.title %></td>
-            <td><%= post.department.title %></td>
+            <td><%= post.category.title %></td>
             <td><%= link_to 'View', cms_post_path(post) %></td>
             <td><%= link_to 'Edit', edit_cms_post_path(post) %></td>
             <td>

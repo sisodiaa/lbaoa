@@ -47,7 +47,7 @@ class PostsTest < ApplicationSystemTestCase
     visit cms_posts_url
     click_on 'New Post'
 
-    select 'Horticulture', from: 'post[department_id]'
+    select 'Horticulture', from: 'post[category_id]'
     fill_in 'Title', with: 'Do not pluck flowers'
 
     content = 'Be a responsible resident, and care for flowers & trees.'

@@ -48,7 +48,8 @@ module CMS
           post: {
             department_id: @department.id,
             title: 'New title of a new post',
-            content: '<h1><em>Rich text</em> using HTML</h1>'
+            content: '<h1><em>Rich text</em> using HTML</h1>',
+            tag_list: 'new, draft post'
           }
         }
       end

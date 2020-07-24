@@ -82,7 +82,7 @@ module CMS
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :department_id, :content)
+      params.require(:post).permit(:title, :department_id, :content, :tag_list)
     end
   end
 end

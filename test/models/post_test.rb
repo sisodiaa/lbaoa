@@ -26,6 +26,12 @@ class PostTest < ActiveSupport::TestCase
     assert_not @draft_post.valid?, 'Content is missing'
   end
 
+  test 'that a post can not have more than 5 tags' do
+    @draft_post.tag_list = 'one, two, three, four, five, six'
+    assert_not @draft_post.valid?, 'Post can not be more than 5 tags'
+    assert_equal ['should not be more than 5'], @draft_post.errors[:tags]
+  end
+
   test 'that publish event changes the publication_state' do
     assert @draft_post.draft?
     assert_not @draft_post.finished?

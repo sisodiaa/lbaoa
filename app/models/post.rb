@@ -3,6 +3,9 @@ class Post < ApplicationRecord
 
   belongs_to :department, inverse_of: :posts
 
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
   has_many :documents, as: :documentable, dependent: :destroy
 
   has_rich_text :content
@@ -19,6 +22,7 @@ class Post < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 256 }
   validates :content, presence: true
+  validate :number_of_tags
 
   aasm(
     :publication,
@@ -50,5 +54,22 @@ class Post < ApplicationRecord
 
   def publication_finished?
     finished?
+  end
+
+  def tag_list
+    tags.pluck(:name).join(', ')
+  end
+
+  def tag_list=(tags_string)
+    self.tags = tags_string
+                .split(',')
+                .collect(&:strip)
+                .reject(&:empty?)
+                .uniq
+                .collect { |name| Tag.find_or_create_by(name: name) }
+  end
+
+  def number_of_tags
+    errors.add(:tags, "should not be more than 5") if tags.length > 5
   end
 end

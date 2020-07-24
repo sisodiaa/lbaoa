@@ -53,6 +53,8 @@ class PostsTest < ApplicationSystemTestCase
     content = 'Be a responsible resident, and care for flowers & trees.'
     find(:xpath, "//trix-editor[@id='post_content']").set(content)
 
+    fill_in 'post_tag_list', with: '  Horticulture ,  Flower, do not pluck  '
+
     click_on 'Create Post'
 
     assert_no_selector 'p#notice'
@@ -136,6 +138,8 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector 'h1', text: @draft_post.title
       assert_text "Created: #{@draft_post.created_at.strftime('%d %B %Y')}"
     end
+
+    assert_selector '.post__content-tags mark', count: 2
 
     assert_no_selector '.post__attachments'
 

@@ -1,0 +1,17 @@
+plant:
+  name: plant
+
+tree:
+  name: tree
+
+lotus:
+  name: lotus
+
+pond:
+  name: pond
+
+nursery:
+  name: nursery
+
+play_area:
+  name: kids play area

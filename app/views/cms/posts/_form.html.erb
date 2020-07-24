@@ -61,6 +61,18 @@
     ) %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :tags %>
+    <%= form.text_field(
+      :tag_list,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'tags'
+      }
+    ) %>
+  </div>
+
   <div class="actions">
     <%= form.submit class: "btn btn-success" %>
   </div>

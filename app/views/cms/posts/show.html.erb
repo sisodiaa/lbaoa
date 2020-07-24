@@ -13,6 +13,7 @@
 
     <div class="post__header pod col-12 rounded shadow-sm pb-0">
       <h1 class="post__header-title mb-4"><%= @post.title %></h1>
+
       <p>
       <strong>Department</strong>: <%= @post.department.title %><br>
       <strong>Created:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
@@ -21,6 +22,12 @@
 
     <div class="post__content pod col-12 rounded shadow-sm">
       <%= @post.content %>
+
+      <p class="post__content-tags mt-5 mb-0">
+        <% @post.tags.each do |tag| %>
+          <mark class="mr-1 text-primary">#<%= "#{tag.name}" %></mark>
+        <% end %>
+      </p>
     </div>
 
     <div class="post__controls pod col-12 rounded shadow-sm 

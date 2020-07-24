@@ -1,0 +1,23 @@
+plantation_plant:
+  tag: plant
+  post: plantation
+
+plantation_tree:
+  tag: tree
+  post: plantation
+
+lotus_lotus:
+  tag: lotus
+  post: lotus
+
+lotus_pond:
+  tag: pond
+  post: lotus
+
+nursery_nursery:
+  tag: nursery
+  post: nursery
+
+nursery_play_area:
+  tag: play_area
+  post: nursery

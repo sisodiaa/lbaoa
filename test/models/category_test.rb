@@ -28,4 +28,10 @@ class CategoryTest < ActiveSupport::TestCase
     @category.description = 'a' * 1025
     assert_not @category.valid?, 'Description is longer than 1024 characters'
   end
+
+  test 'that title is saved in lowercase' do
+    Category.create!(title: 'Medical', description: 'To provide meical help')
+
+    assert_equal 'medical', Category.last.title
+  end
 end

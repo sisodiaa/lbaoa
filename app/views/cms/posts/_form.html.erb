@@ -27,7 +27,7 @@
     <%= form.label :category_id %>
     <%= form.collection_select(
           :category_id,
-          Category.all, :id, :title,
+          Category.all, :id, :titleized_title,
           {prompt: "Select Category"},
           class: "form-control w-25",
           data: {

@@ -51,6 +51,7 @@ module CMS
       authorize @post, policy_class: CMS::PostPolicy
 
       @post.publish if params.dig(:post, :publication_state) == 'finished'
+      @post.published_at = Time.current
 
       if @post.finished? && @post.save
         redirect_to post_path(@post),

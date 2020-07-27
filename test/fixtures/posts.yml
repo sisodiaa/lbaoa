@@ -7,11 +7,13 @@ plantation:
 lotus:
   title: Setting up a lotus pond in Lotus Boulevard
   publication_state: finished
+  published_at: <%= Time.current %>
   visibility_state: members
   category: horticulture
 
 nursery:
   title: We are setting up a nursery near kids play area
   publication_state: finished
+  published_at: <%= Time.current %>
   visibility_state: visitors
   category: horticulture

@@ -177,6 +177,10 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Post published successfully.'
     end
 
+    within('.post__header') do
+      assert_text "Published: #{@draft_post.reload.published_at.strftime('%d %B %Y')}"
+    end
+
     logout :cms_admin
   end
 

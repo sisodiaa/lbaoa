@@ -16,7 +16,11 @@
 
       <p>
       <strong>Category</strong>: <%= @post.category.title %><br>
-      <strong>Created:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
+      <% if @post.draft? %>
+        <strong>Created:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
+      <% else %>
+        <strong>Published:</strong> <%= @post.published_at.strftime("%d %B %Y") %>
+      <% end %>
       </p>
     </div>
 

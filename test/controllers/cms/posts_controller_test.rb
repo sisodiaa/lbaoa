@@ -124,6 +124,7 @@ module CMS
 
       assert @draft_post.draft?
       assert_not @draft_post.finished?
+      assert_nil @draft_post.published_at
 
       patch publish_cms_post_path(@draft_post), params: {
         post: {
@@ -132,7 +133,8 @@ module CMS
       }
 
       assert_not @draft_post.reload.draft?
-      assert @draft_post.reload.finished?
+      assert @draft_post.finished?
+      assert_not_nil @draft_post.published_at
 
       assert_redirected_to post_url(@draft_post)
       assert_equal 'Post published successfully.', flash[:success]

@@ -34,7 +34,7 @@ class PostsTest < ApplicationSystemTestCase
       assert_text 'Published Posts'
 
       within('tbody') do
-        assert_selector 'tr', count: 2
+        assert_selector 'tr', count: 9
       end
     end
 
@@ -217,9 +217,13 @@ class PostsTest < ApplicationSystemTestCase
     logout :cms_admin
   end
 
-  test 'lists all finished posts' do
+  test 'lists all finished posts with pagination link' do
     visit posts_url
 
-    assert_selector 'h3.post__title', count: 2
+    assert_selector 'h3.post__title', count: 6
+
+    find('.page-item.next a').click
+
+    assert_selector 'h3.post__title', count: 3
   end
 end

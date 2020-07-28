@@ -17,3 +17,52 @@ nursery:
   published_at: <%= Time.current %>
   visibility_state: visitors
   category: horticulture
+
+stray_dogs:
+  title: Stray dog management
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: helpdesk
+
+essay_writing_winners:
+  title: Winners for Paper Bag Making and Essay writing
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: helpdesk
+
+rain_water_harvesting:
+  title: Rain Water Harvesting
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: technical
+
+poster_making_competition:
+  title: Entries to Poster Making Competition on Kargil Divas Day
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: helpdesk
+
+club_chiller:
+  title: Club chiller is operational now
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: technical
+
+pending_work:
+  title: Intimation made to RA for pending work for Lotus Boulevard
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: aoa_board
+
+covid_helpline:
+  title: Launching COVID helpline
+  publication_state: finished
+  published_at: <%= Time.current %>
+  visibility_state: members
+  category: helpdesk

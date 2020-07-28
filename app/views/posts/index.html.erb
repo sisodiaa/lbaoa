@@ -1,7 +1,7 @@
 <div class="posts row">
   <% @posts.each do |post| %>
     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 px-0 mb-4">
-      <div class="p-4 mr-3 h-100 podlet rounded shadow d-flex flex-column
+      <div class="p-4 mr-3 h-100 podlet rounded shadow-sm d-flex flex-column
                   justify-content-between">
         <div class="post__info">
           <div class="mb-3">
@@ -25,4 +25,8 @@
       </div>
     </div>
   <% end %>
+</div>
+
+<div class="d-flex justify-content-center">
+  <%== pagy_bootstrap_nav(@pagy) %>
 </div>

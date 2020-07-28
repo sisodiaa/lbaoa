@@ -3,3 +3,15 @@
 horticulture:
   title: Horticulture
   description: To look after plants and grass in Lotus Boulevard.
+
+helpdesk:
+  title: Helpdesk
+  description: A virtual desk to share general information with residents
+
+technical:
+  title: Technical
+  description: Updates regarding technical stuff like gensets, pumps, etc.
+
+aoa_board:
+  title: A O A Board
+  description: Direct from board members of AOA

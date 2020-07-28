@@ -19,3 +19,99 @@ lotus:
     <h1>Lotus flowers in Lotus Boulevard</h1>
     <br>
     <p>Enjoy tranquility in LB.</p>
+
+nursery:
+  record: nursery (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+stray_dogs:
+  record: stray_dogs (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+essay_writing_winners:
+  record: essay_writing_winners (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+rain_water_harvesting:
+  record: rain_water_harvesting (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+poster_making_competition:
+  record: poster_making_competition (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+club_chiller:
+  record: club_chiller (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+pending_work:
+  record: pending_work (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+covid_helpline:
+  record: covid_helpline (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>

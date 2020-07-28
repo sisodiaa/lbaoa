@@ -1,13 +1,28 @@
 <div class="posts row">
   <% @posts.each do |post| %>
-    <div class="post pod col-12 rounded shadow-sm">
-      <h3 class="post__title">
-        <%= post.title %>
-      </h3>
-      <p class="text-muted">
-        <%= truncate(strip_tags(post.content.to_s), length: 100) %>
-        <%= link_to 'More', post, class: 'text-muted' %>
-      </p>
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 px-0 mb-4">
+      <div class="p-4 mr-3 h-100 podlet rounded shadow d-flex flex-column
+                  justify-content-between">
+        <div class="post__info">
+          <div class="mb-3">
+            <div class="text-capitalize badge badge-info">
+              <%= post.category.title %>
+            </div>
+            <div class="post__info_published_at font-weight-light">
+              <%= post.published_at.strftime("%d %B %Y") %>
+            </div>
+          </div>
+          <h3 class="post__title">
+            <%= post.title %>
+          </h3>
+          <p class="text-muted post__snippet">
+            <%= truncate(strip_tags(post.content.to_s), length: 100) %>
+          </p>
+        </div>
+        <div>
+          <%= link_to 'Read more', post %>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>

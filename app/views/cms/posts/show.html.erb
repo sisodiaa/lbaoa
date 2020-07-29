@@ -1,3 +1,9 @@
+<% if @post.draft? %>
+  <%= render partial: 'cms_sidebar_posts', locals: { status: 'draft' }%>
+<% else %>
+  <%= render partial: 'cms_sidebar_posts', locals: { status: 'published' }%>
+<% end %>
+
 <div data-controller='toggle-attachments'>
   <div class="post row">
     <% if policy([:cms, @post]).publish? %>
@@ -50,7 +56,7 @@
           <% end %>
         </div>
       <% end %>
-      <div>
+      <div class="btn-group">
         <%= link_to 'Edit',
                     edit_cms_post_path(@post),
                     class: "btn btn-outline-primary"
@@ -59,7 +65,7 @@
           cms_post_documents_path(@post),
           class: "btn btn-outline-primary"
         %>
-        <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-dark" %>
+      <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-primary" %>
       </div>
     </div>
   </div>

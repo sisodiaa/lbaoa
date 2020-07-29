@@ -1,30 +1,32 @@
+<%= render partial: 'cms_sidebar_categories', locals: { status: nil } %>
+
 <div class="row">
   <div class="pod col rounded shadow">
-    <h1>Categories</h1>
-
-    <table class="table">
+    <table class="categories__table table">
       <thead>
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
-          <th colspan="2" scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
 
       <tbody>
         <% @categories.each do |category| %>
           <tr>
-            <td><%= category.title %></td>
+            <td class="text-capitalize">
+              <%= link_to category.title, cms_category_path(category) %>
+            </td>
             <td><%= category.description %></td>
-            <td><%= link_to 'Show', cms_category_path(category) %></td>
-            <td><%= link_to 'Edit', edit_cms_category_path(category) %></td>
+            <td>
+              <%= link_to 'Edit',
+                          edit_cms_category_path(category),
+                          class: 'btn btn-sm btn-secondary'
+              %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-
-    <br>
-
-    <%= link_to 'New Category', new_cms_category_path, class: "btn btn-outline-primary" %>
   </div>
 </div>

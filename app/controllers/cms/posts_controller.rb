@@ -7,8 +7,12 @@ module CMS
 
     # GET /posts
     def index
-      @draft_posts = Post.draft.order('created_at ASC')
-      @finished_posts = Post.finished.order('updated_at DESC')
+      @status = params[:status]
+      @posts = if params[:status] == 'draft'
+                 Post.draft.order('created_at ASC')
+               else
+                 Post.finished.order('published_at DESC')
+               end
     end
 
     # GET /posts/1

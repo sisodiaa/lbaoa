@@ -1,0 +1,24 @@
+<% content_for :cms_sidebar do %>
+  <div class="list-group sticky-top">
+    <%= link_to 'Posts',
+      '#collapse-posts',
+      data: { toggle: 'collapse' },
+      class: 'list-group-item list-group-item-action list-group-item-secondary active'
+    %>
+    <div class="list-group list-group-flush collapse show" id="collapse-posts">
+      <%= link_to 'Drafts',
+        drafts_cms_posts_path,
+        class: "list-group-item list-group-item-action #{status == 'draft' ? 'active' : ''}"
+      %>
+      <%= link_to 'Published',
+        published_cms_posts_path,
+        class: "list-group-item list-group-item-action #{status == 'published' ? 'active' : ''}"
+      %>
+    </div>
+    <%= link_to(
+      'Categories',
+      cms_categories_path,
+      class: 'list-group-item list-group-item-action list-group-item-secondary'
+    )%>
+  </div>
+<% end %>

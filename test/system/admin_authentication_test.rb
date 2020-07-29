@@ -79,9 +79,8 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Signed in successfully.'
     end
 
-    within('.posts.row') do
-      assert_selector '#posts__draft'
-      assert_selector '#posts__published'
+    within('.list-group.show') do
+      assert_selector '.list-group-item.active', text: 'Drafts'
     end
 
     within('nav.navbar') do

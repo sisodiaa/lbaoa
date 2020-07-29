@@ -22,19 +22,13 @@ class PostsTest < ApplicationSystemTestCase
 
     visit cms_posts_url
 
-    within('#posts__draft') do
-      assert_text 'Draft Posts'
-
-      within('tbody') do
-        assert_selector 'tr', count: 1
-      end
+    within('.list-group.show') do
+      assert_selector '.list-group-item.active', text: 'Drafts'
     end
 
-    within('#posts__published') do
-      assert_text 'Published Posts'
-
+    within('.posts__table') do
       within('tbody') do
-        assert_selector 'tr', count: 9
+        assert_selector 'tr', count: 1
       end
     end
 
@@ -45,7 +39,11 @@ class PostsTest < ApplicationSystemTestCase
     login_as @confirmed_board_admin, scope: :cms_admin
 
     visit cms_posts_url
-    click_on 'New Post'
+
+    within(:xpath, "//div[@id='navbarCMS']") do
+      find(:xpath, "//a[@id='dashboard-new-dropdown']").click
+      find(:xpath, "//a[@class='dropdown-item'][1]").click
+    end
 
     select 'Horticulture', from: 'post[category_id]'
     fill_in 'Title', with: 'Do not pluck flowers'
@@ -71,7 +69,11 @@ class PostsTest < ApplicationSystemTestCase
     login_as @confirmed_board_admin, scope: :cms_admin
 
     visit cms_posts_url
-    click_on 'New Post'
+
+    within(:xpath, "//div[@id='navbarCMS']") do
+      find(:xpath, "//a[@id='dashboard-new-dropdown']").click
+      find(:xpath, "//a[@class='dropdown-item'][1]").click
+    end
 
     click_on 'Create Post'
 
@@ -201,9 +203,9 @@ class PostsTest < ApplicationSystemTestCase
   test 'that staff member can not delete a published post' do
     login_as @confirmed_staff_admin, scope: :cms_admin
 
-    visit cms_posts_url
+    visit published_cms_posts_url
 
-    within('#posts__published') do
+    within('.posts__table tbody') do
       page.accept_confirm do
         click_on 'Destroy', match: :first
       end

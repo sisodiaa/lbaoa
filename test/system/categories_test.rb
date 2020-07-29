@@ -19,7 +19,11 @@ class CategoriesTest < ApplicationSystemTestCase
     login_as @confirmed_board_admin, scope: :cms_admin
 
     visit cms_categories_url
-    assert_selector 'h1', text: 'Categories'
+
+    assert_selector '.list-group-item.active', text: 'Categories'
+    within('.categories__table') do
+      assert_selector 'tbody tr', count: 4
+    end
 
     logout :cms_admin
   end
@@ -28,7 +32,11 @@ class CategoriesTest < ApplicationSystemTestCase
     login_as @confirmed_board_admin, scope: :cms_admin
 
     visit cms_categories_url
-    click_on 'New Category'
+
+    within(:xpath, "//div[@id='navbarCMS']") do
+      find(:xpath, "//a[@id='dashboard-new-dropdown']").click
+      find(:xpath, "//a[@class='dropdown-item'][2]").click
+    end
 
     fill_in 'Description', with: 'Fire and Safety'
     fill_in 'Title', with: 'Ensuring residents safety from fire'

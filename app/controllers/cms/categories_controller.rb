@@ -1,5 +1,7 @@
 module CMS
   class CategoriesController < ApplicationController
+    layout 'cms'
+
     before_action :authenticate_cms_admin!
     before_action :set_category, only: %i[show edit update]
 

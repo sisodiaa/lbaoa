@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   namespace :cms do
     resources :categories, except: :destroy
-    resources :posts do
+    resources :posts, except: :index do
       resources :documents, only: %i[index create destroy]
       put 'publish', on: :member
       patch 'publish', on: :member
+
+      get 'drafts', to: 'posts#index', status: 'draft', on: :collection
+      get '/', to: 'posts#index', status: 'draft', on: :collection
+      get 'published', to: 'posts#index', status: 'published', on: :collection
     end
 
     devise_for :admins, skip: %i[registrations], controllers: {
@@ -16,7 +20,7 @@ Rails.application.routes.draw do
 
     devise_scope :cms_admin do
       authenticated :cms_admin do
-        root to: 'posts#index', as: :admin_root
+        root to: 'posts#index', as: :admin_root, status: 'draft'
       end
 
       unauthenticated do

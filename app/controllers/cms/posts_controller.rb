@@ -2,7 +2,7 @@ module CMS
   class PostsController < ApplicationController
     include Pagy::Backend
 
-    layout 'cms'
+    layout 'cms_sidebar'
 
     before_action :authenticate_cms_admin!
     before_action :set_post, only: %i[show edit update publish destroy]

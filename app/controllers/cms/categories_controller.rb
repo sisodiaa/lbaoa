@@ -2,7 +2,7 @@ module CMS
   class CategoriesController < ApplicationController
     include Pagy::Backend
 
-    layout 'cms'
+    layout 'cms_sidebar'
 
     before_action :authenticate_cms_admin!
     before_action :set_category, only: %i[show edit update]

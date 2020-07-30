@@ -115,3 +115,135 @@ covid_helpline:
     Donec sed odio operae, eu vulputate felis rhoncus.
     Praeterea iter est quasdam res quas ex communi
     </p>
+
+garbage_segregation:
+  record: garbage_segregation (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+pole_repair:
+  record: pole_repair (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+dogs_collaring:
+  record: dogs_collaring (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+cctv_repair:
+  record: cctv_repair (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+ground_water:
+  record: ground_water (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+fogging:
+  record: fogging (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+thermal_screening:
+  record: thermal_screening (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+mygate_notification:
+  record: mygate_notification (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+parking_stickers:
+  record: parking_stickers (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+club_ac:
+  record: club_ac (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>
+
+wash_basin:
+  record: wash_basin (Post)
+  name: content
+  body: |-
+    <h1>Ambitioni dedisse scripsisse iudicaretur.</h1>
+    <br>
+    <p>
+    Cras mattis iudicium purus sit amet fermentum.
+    Donec sed odio operae, eu vulputate felis rhoncus.
+    Praeterea iter est quasdam res quas ex communi
+    </p>

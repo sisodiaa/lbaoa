@@ -66,3 +66,69 @@ covid_helpline:
   published_at: <%= Time.current %>
   visibility_state: members
   category: helpdesk
+
+garbage_segregation:
+  title: Segregations of garbage
+  publication_state: draft
+  visibility_state: members
+  category: house_keeping
+
+pole_repair:
+  title: Repairing pole lights
+  publication_state: draft
+  visibility_state: members
+  category: technical
+
+dogs_collaring:
+  title: Collaring of dogs
+  publication_state: draft
+  visibility_state: members
+  category: security
+
+cctv_repair:
+  title: CCTV repair scheduled tomorrow
+  publication_state: draft
+  visibility_state: members
+  category: technical
+
+ground_water:
+  title: Depletion of ground water
+  publication_state: draft
+  visibility_state: members
+  category: plumbing
+
+fogging:
+  title: Mosquito fogging
+  publication_state: draft
+  visibility_state: members
+  category: helpdesk
+
+thermal_screening:
+  title: Thermal screening of guests at society gates
+  publication_state: draft
+  visibility_state: members
+  category: security
+
+mygate_notification:
+  title: MyGate notification will show temperature of visitors
+  publication_state: draft
+  visibility_state: members
+  category: security
+
+parking_stickers:
+  title: Issuance of new parking sticker for vehicles parked in basement
+  publication_state: draft
+  visibility_state: members
+  category: security
+
+club_ac:
+  title: AC chiller in club is working now
+  publication_state: draft
+  visibility_state: members
+  category: technical
+
+wash_basin:
+  title: Wash basins installed for visitors
+  publication_state: draft
+  visibility_state: members
+  category: helpdesk

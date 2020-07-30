@@ -22,7 +22,7 @@ class CategoriesTest < ApplicationSystemTestCase
 
     assert_selector '.list-group-item.active', text: 'Categories'
     within('.categories__table') do
-      assert_selector 'tbody tr', count: 4
+      assert_selector 'tbody tr', count: 7
     end
 
     logout :cms_admin

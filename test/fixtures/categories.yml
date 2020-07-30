@@ -15,3 +15,15 @@ technical:
 aoa_board:
   title: A O A Board
   description: Direct from board members of AOA
+
+house_keeping:
+  title: house keeping
+  description: About house keeping
+
+security:
+  title: Security
+  description: Security of residents
+
+plumbing:
+  title: Plumbing
+  description: To look after plumbing needs of the society

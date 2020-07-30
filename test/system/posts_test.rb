@@ -28,7 +28,15 @@ class PostsTest < ApplicationSystemTestCase
 
     within('.posts__table') do
       within('tbody') do
-        assert_selector 'tr', count: 1
+        assert_selector 'tr', count: 10
+      end
+    end
+
+    find('.page-item.next a').click
+
+    within('.posts__table') do
+      within('tbody') do
+        assert_selector 'tr', count: 2
       end
     end
 

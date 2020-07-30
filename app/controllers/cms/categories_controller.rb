@@ -1,5 +1,7 @@
 module CMS
   class CategoriesController < ApplicationController
+    include Pagy::Backend
+
     layout 'cms'
 
     before_action :authenticate_cms_admin!
@@ -7,7 +9,7 @@ module CMS
 
     # GET /categories
     def index
-      @categories = Category.all
+      @pagy, @categories = pagy(Category.all, items: 10)
     end
 
     # GET /categories/1

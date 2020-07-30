@@ -1,5 +1,7 @@
 module CMS
   class PostsController < ApplicationController
+    include Pagy::Backend
+
     layout 'cms'
 
     before_action :authenticate_cms_admin!
@@ -8,11 +10,11 @@ module CMS
     # GET /posts
     def index
       @status = params[:status]
-      @posts = if params[:status] == 'draft'
-                 Post.draft.order('created_at ASC')
-               else
-                 Post.finished.order('published_at DESC')
-               end
+      @pagy, @posts = if params[:status] == 'draft'
+                        pagy(Post.draft.order('created_at ASC'), items: 10)
+                      else
+                        pagy(Post.finished.order('published_at DESC'), items: 10)
+                      end
     end
 
     # GET /posts/1

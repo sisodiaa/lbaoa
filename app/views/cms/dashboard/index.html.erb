@@ -1,0 +1,47 @@
+<%= render partial: 'cms_sidebar_dashboard', locals: { status: nil } %>
+
+<div id="cms-dashboard" class="row">
+  <div class="pod col-12 rounded shadow-sm">
+    <table class="dashboard__table table">
+    <thead>
+      <tr>
+        <th scope="col" class="w-25">Resource</th>
+        <th scope="col" class="w-25">Total</th>
+        <th scope="col" class="w-50">Controls</th>
+      </tr>
+    </thead>
+
+      <tbody>
+        <tr id="post-row" class='dashboard__table-row'>
+          <td>Post</td>
+          <td><%= Post.count %></td>
+          <td class="btn-group btn-group-sm btn-block" role="group">
+            <%= link_to 'Create Post',
+              new_cms_post_path,
+              class: "btn btn-outline-secondary"
+            %>
+            <%= link_to 'Manage Posts',
+              cms_posts_path,
+              class: 'btn btn-secondary'
+            %>
+          </td>
+        </tr>
+
+        <tr id="category-row" class='dashboard__table-row'>
+          <td>Category</td>
+          <td><%= Category.count %></td>
+          <td class="btn-group btn-group-sm btn-block" role="group">
+            <%= link_to 'Create Category',
+              new_cms_category_path,
+              class: "btn btn-outline-secondary"
+            %>
+            <%= link_to 'Manage Categories',
+              cms_categories_path,
+              class: 'btn btn-secondary'
+            %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

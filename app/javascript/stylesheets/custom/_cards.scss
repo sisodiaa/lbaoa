@@ -1,0 +1,18 @@
+.bg-card-dashboard {
+	background-color: #928ad4;
+	border-color: #928ad4;
+
+	&:hover {
+		background-color: #8980d6;
+	}
+
+	& a {
+		color: white;
+		text-decoration: none;
+	}
+
+	&.active {
+		background-color: #746bc1;
+		border-color: #746bc1;
+	}
+}

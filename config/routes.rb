@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   namespace :cms do
+    get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+
     resources :categories, except: :destroy
+
     resources :posts, except: :index do
       resources :documents, only: %i[index create destroy]
       put 'publish', on: :member

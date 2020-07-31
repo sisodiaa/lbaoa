@@ -14,8 +14,8 @@ module CMSNavigationBarHelper
                         { name: 'Category', url: new_cms_category_path }
                       ]
 
-    nav_item name: 'CMS',
-             destination: cms_posts_path
+    nav_item name: 'Dashboard',
+             destination: cms_dashboard_path
 
     nav_item name: 'Settings',
              destination: edit_cms_admin_registration_path

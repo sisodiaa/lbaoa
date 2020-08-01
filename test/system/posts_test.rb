@@ -146,7 +146,7 @@ class PostsTest < ApplicationSystemTestCase
 
     within('.post__header') do
       assert_selector 'h1', text: @draft_post.title
-      assert_text "Created: #{@draft_post.created_at.strftime('%d %B %Y')}"
+      assert_selector 'span', text: @draft_post.created_at.strftime('%d %B %Y')
     end
 
     assert_selector '.post__content-tags mark', count: 2
@@ -188,7 +188,7 @@ class PostsTest < ApplicationSystemTestCase
     end
 
     within('.post__header') do
-      assert_text "Published: #{@draft_post.reload.published_at.strftime('%d %B %Y')}"
+      assert_selector 'span', text: @draft_post.reload.published_at.strftime('%d %B %Y')
     end
 
     logout :cms_admin

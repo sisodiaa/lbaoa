@@ -20,14 +20,23 @@
     <div class="post__header pod col-12 rounded shadow-sm pb-0">
       <h1 class="post__header-title mb-4"><%= @post.title %></h1>
 
-      <p>
-      <strong>Category</strong>: <%= @post.category.title %><br>
-      <% if @post.draft? %>
-        <strong>Created:</strong> <%= @post.created_at.strftime("%d %B %Y") %>
-      <% else %>
-        <strong>Published:</strong> <%= @post.published_at.strftime("%d %B %Y") %>
-      <% end %>
-      </p>
+      <div class="my-3">
+        <span class="text-capitalize badge badge-info">
+          <%= @post.category.title %>
+        </span>
+        &#8226;
+        <span class="post__info_published_at">
+          <% if @post.draft? %>
+            <span data-toggle="tooltip" title="Date of creation">
+              <%= @post.created_at.strftime("%d %B %Y") %>
+            </span>
+          <% else %>
+            <span data-toggle="tooltip" title="Date of publication">
+              <%= @post.published_at.strftime("%d %B %Y") %>
+            </span>
+          <% end %>
+        </span>
+      </div>
     </div>
 
     <div class="post__content pod col-12 rounded shadow-sm">

@@ -79,9 +79,8 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Signed in successfully.'
     end
 
-    within('.list-group.show') do
-      assert_selector '.list-group-item.active', text: 'Drafts'
-    end
+    assert_selector '.card-header.active'
+    assert_selector '#cms-dashboard'
 
     within('nav.navbar') do
       click_on 'Logout'

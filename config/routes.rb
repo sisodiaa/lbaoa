@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     devise_scope :cms_admin do
       authenticated :cms_admin do
-        root to: 'posts#index', as: :admin_root, status: 'draft'
+        root to: 'dashboard#index', as: :admin_root
       end
 
       unauthenticated do

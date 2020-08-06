@@ -1,0 +1,23 @@
+<div class="container-fluid mt-auto">
+  <div class="row">
+    <footer class="text-center text-white w-100 pt-4 pb-3 mt-5">
+      <p>
+        &copy; <%= Date.today.year %>;
+        Lotus Boulevard Apartment Owners Association<br>
+        Contact: +91-9560858999, +91-9891705675, +91-9958990789, +91-9871730903
+      </p>
+
+      <p class="mb-0">
+        Website for LB AOA made by
+        <%= mail_to(
+          'mail.abhishek.sisodia@gmail.com',
+          'Abhishek Sisodia',
+          subject: "Let's collaborate!!",
+          body: "Hi Abhishek,\nI have this amazing idea for which I would like to collaborate with you to develop an app.\nHere is the summary and details of the idea:\n",
+          class: 'text-white',
+          id: 'contact'
+        )%>
+      </p>
+    </footer>
+  </div>
+</div>

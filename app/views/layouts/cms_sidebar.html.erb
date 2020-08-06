@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <%= render 'shared/cms_navbar' %>
     <%= flash_messages %>
     <div class="container">
@@ -23,5 +23,7 @@
         </div>
       </div>
     </div>
+
+    <%= render 'shared/footer' %>
   </body>
 </html>

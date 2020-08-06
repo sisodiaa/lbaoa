@@ -44,6 +44,10 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: %i[index show]
+  get '/pages/*page', to: 'cms/pages#show', as: 'page'
+  get 'public_document',
+      to: 'cms/pages#send_public_document',
+      as: 'public_document'
 
-  root to: 'posts#index'
+  root to: 'cms/pages#show', page: 'home'
 end

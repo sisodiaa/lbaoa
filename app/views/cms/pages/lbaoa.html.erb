@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-12 pod shadow-sm rounded px-5">
+    <h1>
+      Lotus Boulevard
+      Apartment Owners Association
+    </h1>
+
+    <hr class="mt-4">
+    <%= link_to(
+      public_document_path(
+        filename: 'lb_aoa_certified_bye_laws_and_registration_certificate.pdf'
+      ),
+      data: { turbolinks: false }
+    ) do %>
+      <span class="align-text-top mr-2">
+      Certified Bye Laws and Registration Certificate of Lotus Boulevard Apartment Owners Association
+      </span>
+
+      <svg
+        width="1.25em"
+        height="1.25em"
+        viewBox="0 0 16 16"
+        class="bi bi-download"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z"
+        />
+
+        <title>Download</title>
+      </svg>
+    <% end %>
+
+    <hr class="mb-4">
+
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Phasellus enim arcu, venenatis consequat consectetur vitae, aliquam
+    nec orci. Maecenas vitae risus sit amet metus venenatis faucibus. In hac
+    habitasse platea dictumst. Cras eu imperdiet risus. Fusce faucibus
+    tempus nisi. Sed vestibulum nec lectus non porttitor. Aenean dictum
+    ante ac nisl ornare, a auctor massa iaculis. Donec non viverra dui,
+    ac ultricies quam.
+    </p>
+
+    <p>
+    Sed dignissim lorem nisi, euismod tincidunt lectus volutpat eget. 
+    Cras ut pretium tortor. Nam in sapien mi. Nulla facilisi. Mauris 
+    volutpat, tellus sit amet consectetur mollis, ligula eros luctus sem, 
+    nec suscipit urna dui vitae tellus. In faucibus auctor lacus. 
+    Sed a ornare leo, in dignissim magna. Nullam maximus congue posuere.
+    </p>
+
+    <p>
+    Sed ante ex, commodo vitae cursus a, fermentum viverra eros. Nunc 
+    ultrices turpis at ipsum ornare, eu sollicitudin neque dapibus. Ut et 
+    porttitor dolor, sed placerat turpis. Nulla vel euismod enim. 
+    Pellentesque nec laoreet mi. Sed nec laoreet ipsum. Curabitur orci lacus, 
+    lobortis eu finibus ac, semper vitae libero. Praesent laoreet ex non 
+    lorem aliquet, porttitor volutpat magna finibus. Etiam tempus, ante ut 
+    gravida molestie, ipsum risus placerat urna, in semper urna odio ac magna.
+    Ut ultricies condimentum ligula, scelerisque porta risus posuere sit amet.
+    </p>
+
+    <hr class="mt-4">
+
+    <%= link_to('Board members of Lotus Boulevard Apartment Owners Association',
+      page_path('board-members'),
+      class: 'align-text-top'
+    )%>
+
+    <hr>
+  </div>
+</div>

@@ -44,7 +44,13 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: %i[index show]
+
+  namespace :search do
+    get 'posts', to: 'posts#index', as: 'posts'
+  end
+
   get '/pages/*page', to: 'cms/pages#show', as: 'page'
+
   get 'public_document',
       to: 'cms/pages#send_public_document',
       as: 'public_document'

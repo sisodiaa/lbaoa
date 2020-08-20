@@ -1,0 +1,17 @@
+<div class="results-search-post__info mb-2 p-3">
+  <h4 class="my-1"><%= link_to result.title, result %></h4>
+  <div class="my-1">
+    <%= result.published_at.strftime("%d %B %Y") %> &#8226;
+    <span class="text-capitalize"><%= result.category.title %></span>
+  </div>
+  <div class="my-1">
+    <%= truncate(strip_tags(result.content.to_s), length: 100) %>
+  </div>
+  <div class="my-1">
+    <% result.tags.reload.each do |tag| %>
+      <mark class="mr-1">
+        #<%= tag.name %>
+      </mark>
+    <% end %>
+  </div>
+</div>

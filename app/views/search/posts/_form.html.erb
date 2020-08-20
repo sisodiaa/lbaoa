@@ -1,0 +1,75 @@
+<%= form_with(
+  model: post,
+  url: search_posts_path,
+  local: true,
+  method: :get,
+  data: { controller: 'form-validation-error' }
+) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <% post.errors.messages.each do |attribute, error_messages| %>
+        <div
+          data-target="form-validation-error.error"
+          data-error-attribute="<%= attribute %>"
+        >
+          <% error_messages.each do |error_message| %>
+            <div data-error-message="<%= error_message %>"></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render 'shared/invalid_feedback' %>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :category %>
+    <%= form.select(
+      :category,
+      options_for_select(post_categories_options, post.category),
+      {},
+      class: 'form-control'
+    ) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :tags %>
+    <%= form.text_field(
+      :tag_list,
+      class: "form-control",
+      placeholder: 'Enter 3 or fewer tags',
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'tags'
+      }
+    ) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :start_date %>
+    <%= form.date_field(
+      :start_date,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'start_date'
+      }
+    ) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :end_date %>
+    <%= form.date_field(
+      :end_date,
+      class: "form-control",
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'end_date'
+      }
+    ) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Search', class: "btn btn-success" %>
+  </div>
+<% end %>

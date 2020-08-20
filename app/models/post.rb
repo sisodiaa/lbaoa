@@ -70,6 +70,20 @@ class Post < ApplicationRecord
   end
 
   def number_of_tags
-    errors.add(:tags, "should not be more than 5") if tags.length > 5
+    errors.add(:tags, 'should not be more than 5') if tags.length > 5
+  end
+
+  # Query methods
+
+  def self.published_between(start_date, end_date)
+    where(published_at: start_date...end_date)
+  end
+
+  def self.with_category(category)
+    joins(:category).where(categories: { title: category })
+  end
+
+  def self.with_tags(tags)
+    includes(:tags).where(tags: { name: tags })
   end
 end

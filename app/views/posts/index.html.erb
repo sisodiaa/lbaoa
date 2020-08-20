@@ -6,7 +6,11 @@
         <div class="post__info">
           <div class="mb-3">
             <div class="text-capitalize badge badge-info">
-              <%= post.category.title %>
+              <%= search_post_link(
+                post.category.title,
+                'category',
+                'text-white text-decoration-none'
+              )%>
             </div>
             <div class="post__info_published_at font-weight-light">
               <%= post.published_at.strftime("%d %B %Y") %>

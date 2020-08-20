@@ -4,7 +4,11 @@
       <h1 class="post__header-title mb-4"><%= @post.title %></h1>
       <div class="my-3">
         <span class="text-capitalize badge badge-info">
-          <%= @post.category.title %>
+          <%= search_post_link(
+            @post.category.title,
+            'category',
+            'text-white text-decoration-none'
+          )%>
         </span>
         &#8226;
         <span class="post__info_published_at">
@@ -18,7 +22,9 @@
 
       <p class="post__content-tags mt-5 mb-0">
         <% @post.tags.each do |tag| %>
-          <mark class="mr-1 text-primary">#<%= "#{tag.name}" %></mark>
+          <mark class="mr-1 text-primary">
+            #<%= search_post_link(tag.name, 'tag_list') %>
+          </mark>
         <% end %>
       </p>
     </div>

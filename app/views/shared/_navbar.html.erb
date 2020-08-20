@@ -12,11 +12,14 @@
       <li class="nav-item <%= active_nav_item(root_path) %>">
         <%= link_to "Home", root_path, class: 'nav-link' %>
       </li>
-      <li class="nav-item <%= active_nav_item(page_path('lbaoa')) %>">
-        <%= link_to "About Us", page_path('lbaoa'), class: 'nav-link' %>
+      <li class="nav-item <%= active_nav_item(search_posts_path) %>">
+        <%= link_to 'Search', search_posts_path, class: 'nav-link' %>
       </li>
       <li class="nav-item <%= active_nav_item(posts_path) %>">
         <%= link_to 'Posts', posts_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item <%= active_nav_item(page_path('lbaoa')) %>">
+        <%= link_to "About Us", page_path('lbaoa'), class: 'nav-link' %>
       </li>
     </ul>
   </div>

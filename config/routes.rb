@@ -6,8 +6,12 @@ Rails.application.routes.draw do
 
     resources :posts, except: :index do
       resources :documents, only: %i[index create destroy]
+
       put 'publish', on: :member
       patch 'publish', on: :member
+
+      put 'cast', on: :member
+      patch 'cast', on: :member
 
       get 'drafts', to: 'posts#index', status: 'draft', on: :collection
       get '/', to: 'posts#index', status: 'draft', on: :collection

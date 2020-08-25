@@ -62,12 +62,30 @@ class PostTest < ActiveSupport::TestCase
     assert @finished_post.visitors?
   end
 
+  test 'that narrowcast event changes the visibility of a public post' do
+    assert @public_post.visitors?
+    assert_not @public_post.members?
+
+    @public_post.narrowcast
+
+    assert_not @public_post.visitors?
+    assert @public_post.members?
+  end
+
   test 'that broadcast event on a draft post raises InvalidTransition error' do
     assert_raise(AASM::InvalidTransition) { @draft_post.broadcast }
   end
 
   test 'that broadcast event raises error when post is visible to visitors' do
     assert_raise(AASM::InvalidTransition) { @public_post.broadcast }
+  end
+
+  test 'that narrowcast event on a draft post raises InvalidTransition error' do
+    assert_raise(AASM::InvalidTransition) { @draft_post.narrowcast }
+  end
+
+  test 'that narrowcast event raises error when post is visible to members' do
+    assert_raise(AASM::InvalidTransition) { @finished_post.narrowcast }
   end
 
   test 'that manual assignment of visibility_state will raise error' do

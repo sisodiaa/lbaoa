@@ -6,16 +6,33 @@
 
 <div data-controller='toggle-attachments'>
   <div class="post row">
-    <% if policy([:cms, @post]).publish? %>
-      <div class="post__controls mb-4">
+    <div class="post__controls mb-4">
+      <% if policy([:cms, @post]).publish? %>
         <%= button_to 'Publish',
           publish_cms_post_path(@post),
           method: :patch,
           params: { post: { publication_state: 'finished' } },
           class: 'btn btn-success'
         %>
-      </div>
-    <% end %>
+      <% end %>
+      <% if @post.finished? %>
+        <% if @post.members? %>
+          <%= button_to 'Broadcast Post to Visitors',
+            cast_cms_post_path(@post),
+            method: :patch,
+            params: { post: { visibility_state: 'visitors' } },
+            class: 'btn btn-success'
+          %>
+        <% elsif @post.visitors? %>
+          <%= button_to 'Narrowcast to Members',
+            cast_cms_post_path(@post),
+            method: :patch,
+            params: { post: { visibility_state: 'members' } },
+            class: 'btn btn-success'
+          %>
+        <% end %>
+      <% end %>
+    </div>
 
     <div class="post__header pod col-12 rounded shadow-sm pb-0">
       <h1 class="post__header-title mb-4"><%= @post.title %></h1>

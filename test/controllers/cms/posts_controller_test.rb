@@ -8,13 +8,15 @@ module CMS
 
       @draft_post = posts(:plantation)
       @finished_post = posts(:lotus)
+      @public_post = posts(:nursery)
 
       @category = categories(:horticulture)
     end
 
     teardown do
       @confirmed_board_admin = @confirmed_staff_admin = nil
-      @draft_post = @finished_post = @category = nil
+      @draft_post = @finished_post = @public_post = nil
+      @category = nil
     end
 
     test 'unauthenticated access should redirect' do
@@ -115,6 +117,48 @@ module CMS
       end
 
       assert_redirected_to cms_posts_url
+
+      sign_out :cms_admin
+    end
+
+    test 'braodcast a member only post to visitors' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
+      assert @finished_post.members?
+      assert_not @finished_post.visitors?
+
+      patch cast_cms_post_path(@finished_post), params: {
+        post: {
+          visibility_state: :visitors
+        }
+      }
+
+      assert_not @finished_post.reload.members?
+      assert @finished_post.visitors?
+
+      assert_redirected_to cms_post_url(@finished_post)
+      assert_equal 'Post visibility status set for visitors.', flash[:success]
+
+      sign_out :cms_admin
+    end
+
+    test 'narrowcast a public post to members only' do
+      sign_in @confirmed_board_admin, scope: :cms_admin
+
+      assert @public_post.visitors?
+      assert_not @public_post.members?
+
+      patch cast_cms_post_path(@public_post), params: {
+        post: {
+          visibility_state: :members
+        }
+      }
+
+      assert_not @public_post.reload.visitors?
+      assert @public_post.members?
+
+      assert_redirected_to cms_post_url(@public_post)
+      assert_equal 'Post visibility status set for members only.', flash[:success]
 
       sign_out :cms_admin
     end

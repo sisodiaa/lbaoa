@@ -47,8 +47,13 @@ class Post < ApplicationRecord
     state :members, initial: true
     state :visitors
 
+    # Casting can only be performed on a published post
     event :broadcast do
       transitions from: :members, to: :visitors, if: :publication_finished?
+    end
+
+    event :narrowcast do
+      transitions from: :visitors, to: :members, if: :publication_finished?
     end
   end
 

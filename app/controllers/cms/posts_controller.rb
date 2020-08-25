@@ -5,7 +5,7 @@ module CMS
     layout 'cms_sidebar'
 
     before_action :authenticate_cms_admin!
-    before_action :set_post, only: %i[show edit update publish destroy]
+    before_action :set_post, only: %i[show edit update publish cast destroy]
 
     # GET /posts
     def index
@@ -67,6 +67,15 @@ module CMS
       end
     end
 
+    def cast
+      flash_message = cast_and_set_flash_message
+
+      @post.save
+
+      flash[:success] = flash_message if flash_message.present?
+      redirect_to cms_post_path(@post)
+    end
+
     # DELETE /posts/1
     def destroy
       authorize @post, policy_class: CMS::PostPolicy
@@ -90,6 +99,17 @@ module CMS
     # Only allow a trusted parameter "white list" through.
     def post_params
       params.require(:post).permit(:title, :category_id, :content, :tag_list)
+    end
+
+    def cast_and_set_flash_message
+      case params.dig(:post, :visibility_state)
+      when 'visitors'
+        @post.broadcast
+        'Post visibility status set for visitors.'
+      when 'members'
+        @post.narrowcast
+        'Post visibility status set for members only.'
+      end
     end
   end
 end

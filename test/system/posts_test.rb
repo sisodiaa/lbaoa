@@ -194,6 +194,32 @@ class PostsTest < ApplicationSystemTestCase
     logout :cms_admin
   end
 
+  test 'make a post visible to visitors and toggle back to members' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
+    visit cms_post_url(@finished_post)
+
+    click_on 'Broadcast Post to Visitors'
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post visibility status set for visitors.'
+    end
+
+    assert_selector "input.btn[value='Narrowcast to Members']"
+
+    click_on 'Narrowcast to Members'
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Post visibility status set for members only.'
+    end
+
+    assert_selector "input.btn[value='Broadcast Post to Visitors']"
+
+    logout :cms_admin
+  end
+
   test 'that staff member can not publish a post' do
     login_as @confirmed_staff_admin, scope: :cms_admin
 

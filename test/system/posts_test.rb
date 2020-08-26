@@ -6,12 +6,16 @@ class PostsTest < ApplicationSystemTestCase
     @confirmed_board_admin = admins(:confirmed_board_admin)
     @confirmed_staff_admin = admins(:confirmed_staff_admin)
 
+    @confirmed_member = members(:confirmed_member)
+
     @draft_post = posts(:plantation)
     @finished_post = posts(:lotus)
   end
 
   teardown do
     @draft_post = @finished_post = nil
+
+    @confirmed_member = nil
 
     @confirmed_board_admin = @confirmed_staff_admin = nil
     Warden.test_reset!
@@ -254,6 +258,8 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test 'lists all finished posts with pagination link' do
+    login_as @confirmed_member, scope: :member
+
     visit posts_url
 
     assert_selector 'h3.post__title', count: 6
@@ -261,5 +267,13 @@ class PostsTest < ApplicationSystemTestCase
     find('.page-item.next a').click
 
     assert_selector 'h3.post__title', count: 3
+
+    logout :member
+  end
+
+  test 'vistors will only see public posts' do
+    visit posts_url
+
+    assert_selector 'h3.post__title', count: 1
   end
 end

@@ -1,0 +1,49 @@
+<div class='row'>
+  <div class="col-lg-6 col-12">
+    <div class="pod rounded shadow-sm">
+      <h2>Resend unlock instructions</h2>
+
+      <%= form_for(
+        resource,
+        as: resource_name,
+        url: unlock_path(resource_name),
+        html: { method: :post },
+        data: { controller: 'form-validation-error' }
+      ) do |f| %>
+        <%= render "members/shared/error_messages", resource: resource do %>
+          <div class="field_with_errors my-3">
+            <div
+              data-target="form-validation-error.attribute"
+              data-form-attribute="unlock_token"
+            >
+            </div>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field(
+            :email,
+            autofocus: true,
+            autocomplete: "email",
+            class: "form-control",
+            data: {
+              target: 'form-validation-error.attribute',
+              form_attribute: 'email'
+            }
+          ) %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Resend unlock instructions", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <div class="podlet rounded shadow-sm p-3">
+      <%= render "members/shared/links" %>
+    </div>
+  </div>
+</div>

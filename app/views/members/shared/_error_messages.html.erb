@@ -1,0 +1,18 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation">
+    <% resource.errors.messages.each do |attribute, error_messages| %>
+      <div
+        data-target="form-validation-error.error"
+        data-error-attribute="<%= attribute %>"
+      >
+        <% error_messages.each do |error_message| %>
+          <div data-error-message="<%= error_message %>"></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+
+  <%= render 'shared/invalid_feedback' %>
+<% end %>

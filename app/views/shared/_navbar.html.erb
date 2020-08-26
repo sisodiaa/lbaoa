@@ -1,16 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple">
   <%= link_to root_path, class: 'navbar-brand' do %>
-    <%= image_pack_tag 'lb-aoa-logo-3.png', class: 'd-inline-block align-text-bottom', height: 26 %>
+    <%= image_pack_tag 'lb-aoa-logo-3.png',
+                       class: 'd-inline-block align-text-bottom',
+                       height: 26
+    %>
     <span>LB AOA</span>
   <% end %>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button 
+     class="navbar-toggler"
+     type="button"
+     data-toggle="collapse"
+     data-target="#navbarAOA"
+     aria-controls="navbarAOA"
+     aria-expanded="false"
+     aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarAOA">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item <%= active_nav_item(root_path) %>">
-        <%= link_to "Home", root_path, class: 'nav-link' %>
+      <li class="nav-item <%= active_nav_item(page_path('home')) %>">
+        <%= link_to "Home", page_path('home'), class: 'nav-link' %>
       </li>
       <li class="nav-item <%= active_nav_item(search_posts_path) %>">
         <%= link_to 'Search', search_posts_path, class: 'nav-link' %>
@@ -20,6 +31,51 @@
       </li>
       <li class="nav-item <%= active_nav_item(page_path('lbaoa')) %>">
         <%= link_to "About Us", page_path('lbaoa'), class: 'nav-link' %>
+      </li>
+
+      <li class="nav-item dropdown ml-lg-2">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="memberDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <% if member_signed_in? %>
+            <span><%= current_member.email %></span>
+          <% else %>
+            <span>Member</span>
+          <% end %>
+
+          <svg
+            width="1.25em"
+            height="1.25em"
+            viewBox="0 0 16 16"
+            class="bi bi-person"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            style="vertical-align: text-top;"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
+            />
+          </svg>
+        </a>
+        <div
+          class="dropdown-menu dropdown-menu-right"
+          aria-labelledby="memberDropdown"
+        >
+          <% if member_signed_in? %>
+            <%= link_to 'Account', edit_member_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Logout', destroy_member_session_path, method: :delete, class: 'dropdown-item' %>
+          <% else %>
+            <%= link_to 'Log In', new_member_session_path, class: 'dropdown-item' %>
+            <%= link_to 'Sign Up', new_member_registration_path, class: 'dropdown-item' %>
+          <% end %>
+        </div>
       </li>
     </ul>
   </div>

@@ -47,6 +47,26 @@ Rails.application.routes.draw do
           via: %i[put patch]
   end
 
+  devise_for :members, skip: %i[registrations], controllers: {
+    sessions: 'members/sessions',
+    passwords: 'members/passwords',
+    confirmations: 'members/confirmations',
+    unlocks: 'members/unlocks'
+  }
+
+  devise_scope :member do
+    resource :registration,
+             only: %i[new create edit update],
+             path: 'members',
+             path_names: { new: 'sign_up' },
+             controller: 'members/registrations',
+             as: :member_registration
+
+    authenticated :member do
+      root to: 'posts#index', as: :member_root
+    end
+  end
+
   resources :posts, only: %i[index show]
 
   namespace :search do

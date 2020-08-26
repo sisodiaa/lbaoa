@@ -2,12 +2,14 @@ require 'application_system_test_case'
 
 class AdminAuthenticationTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
     @confirmed_board_admin = admins(:confirmed_board_admin)
     @unconfirmed_board_admin = admins(:unconfirmed_board_admin)
   end
 
   teardown do
     @confirmed_board_admin = @unconfirmed_board_admin = nil
+    Warden.test_reset!
   end
 
   test 'that error message is shown for invalid confirmation token' do

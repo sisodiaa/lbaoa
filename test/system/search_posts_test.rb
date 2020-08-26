@@ -2,6 +2,7 @@ require 'application_system_test_case'
 
 class SearchPostsTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
     @confirmed_member = members(:confirmed_member)
     login_as @confirmed_member, scope: :member
   end
@@ -9,6 +10,7 @@ class SearchPostsTest < ApplicationSystemTestCase
   teardown do
     logout :member
     @confirmed_member = nil
+    Warden.test_reset!
   end
 
   test 'search_posts pages without params only show search form' do

@@ -2,12 +2,14 @@ require 'application_system_test_case'
 
 class MemberAuthenticationTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
     @confirmed_member = members(:confirmed_member)
     @unconfirmed_member = members(:unconfirmed_member)
   end
 
   teardown do
     @confirmed_member = @unconfirmed_member = nil
+    Warden.test_reset!
   end
 
   test 'that error message is shown for invalid confirmation token' do

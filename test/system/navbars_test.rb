@@ -2,11 +2,13 @@ require 'application_system_test_case'
 
 class NavbarsTest < ApplicationSystemTestCase
   setup do
+    Warden.test_mode!
     @confirmed_member = members(:confirmed_member)
   end
 
   teardown do
     @confirmed_member = nil
+    Warden.test_reset!
   end
 
   test 'that navbar nav-items get active class apended' do

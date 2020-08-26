@@ -1,6 +1,16 @@
 require 'application_system_test_case'
 
 class SearchPostsTest < ApplicationSystemTestCase
+  setup do
+    @confirmed_member = members(:confirmed_member)
+    login_as @confirmed_member, scope: :member
+  end
+
+  teardown do
+    logout :member
+    @confirmed_member = nil
+  end
+
   test 'search_posts pages without params only show search form' do
     visit search_posts_url
 

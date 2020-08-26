@@ -23,9 +23,11 @@
       <li class="nav-item <%= active_nav_item(page_path('home')) %>">
         <%= link_to "Home", page_path('home'), class: 'nav-link' %>
       </li>
-      <li class="nav-item <%= active_nav_item(search_posts_path) %>">
-        <%= link_to 'Search', search_posts_path, class: 'nav-link' %>
-      </li>
+      <% if member_signed_in? %>
+        <li class="nav-item <%= active_nav_item(search_posts_path) %>">
+          <%= link_to 'Search', search_posts_path, class: 'nav-link' %>
+        </li>
+      <% end %>
       <li class="nav-item <%= active_nav_item(posts_path) %>">
         <%= link_to 'Posts', posts_path, class: 'nav-link' %>
       </li>

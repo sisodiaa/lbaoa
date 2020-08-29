@@ -3,6 +3,7 @@
     <div class="card-header bg-card-dashboard">
       <%= link_to 'Dashboard', cms_dashboard_path %>
     </div>
+
     <div class="list-group list-group-flush">
       <%= link_to 'Posts',
         '#collapse-posts',
@@ -12,18 +13,47 @@
       <div class="list-group list-group-flush collapse" id="collapse-posts">
         <%= link_to 'Drafts',
           drafts_cms_posts_path,
-          class: "list-group-item list-group-item-action #{status == 'draft' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
         <%= link_to 'Published',
           published_cms_posts_path,
-          class: "list-group-item list-group-item-action #{status == 'published' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
       </div>
+
       <%= link_to(
         'Categories',
         cms_categories_path,
         class: 'list-group-item list-group-item-action list-group-item-secondary active'
       )%>
+
+      <%= link_to 'Members',
+        '#collapse-members',
+        data: { toggle: 'collapse' },
+        class: 'list-group-item list-group-item-action list-group-item-secondary'
+      %>
+      <div class="list-group list-group-flush collapse" id="collapse-members">
+        <%= link_to 'Approved',
+          approved_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Pending',
+          pending_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Flagged',
+          flagged_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Archived',
+          archived_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Bogus',
+          bogus_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+      </div>
     </div>
   </div>
 <% end %>

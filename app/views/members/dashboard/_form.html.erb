@@ -1,0 +1,47 @@
+<%= form_with(
+  model: member,
+  local: true,
+  class: 'member__form',
+  data: { controller: 'form-validation-error' }
+) do |form| %>
+  <% if member.errors.any? %>
+    <div id="error_explanation">
+      <% member.errors.messages.each do |attribute, error_messages| %>
+        <div
+          data-target="form-validation-error.error"
+          data-error-attribute="<%= attribute %>"
+        >
+          <% error_messages.each do |error_message| %>
+            <div data-error-message="<%= error_message %>"></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render 'shared/invalid_feedback' %>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: 'form-control', disabled: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status %>
+    <%= form.collection_select(
+          :status,
+          Member.statuses.map{ |s| [s.first, s.first.humanize] },
+          :first, :second,
+          { prompt: "Change status of member" },
+          class: "form-control",
+          data: {
+            target: 'form-validation-error.attribute',
+            form_attribute: 'status'
+          }
+    )%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-success" %>
+  </div>
+<% end %>

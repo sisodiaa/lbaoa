@@ -67,6 +67,37 @@ Rails.application.routes.draw do
     end
   end
 
+  resources(
+    :members,
+    controller: 'members/dashboard',
+    except: %i[new create destroy]
+  ) do
+    get 'pending',
+        to: 'members/dashboard#index',
+        status: 'pending',
+        on: :collection
+
+    get 'approved',
+        to: 'members/dashboard#index',
+        status: 'approved',
+        on: :collection
+
+    get 'flagged',
+        to: 'members/dashboard#index',
+        status: 'flagged',
+        on: :collection
+
+    get 'archived',
+        to: 'members/dashboard#index',
+        status: 'archived',
+        on: :collection
+
+    get 'bogus',
+        to: 'members/dashboard#index',
+        status: 'bogus',
+        on: :collection
+  end
+
   resources :posts, only: %i[index show]
 
   namespace :search do

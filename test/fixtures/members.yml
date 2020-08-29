@@ -2,7 +2,33 @@ confirmed_member:
   email: member_one@example.com
   encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
   confirmed_at: <%= Time.zone.now %>
+  status: approved
 
 unconfirmed_member:
   email: member_two@example.com
   encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
+  status: pending
+
+pending_member:
+  email: member_three@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  status: pending
+
+flagged_member:
+  email: member_four@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  status: flagged
+
+archived_member:
+  email: member_five@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  status: archived
+
+bogus_member:
+  email: member_six@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(Member, 'password') %>
+  confirmed_at: <%= Time.zone.now %>
+  status: bogus

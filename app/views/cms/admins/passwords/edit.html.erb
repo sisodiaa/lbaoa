@@ -10,7 +10,15 @@
         html: { method: :put },
         data: { controller: 'form-validation-error' }
       ) do |f| %>
-        <%= render "cms/admins/shared/error_messages", resource: resource %>
+        <%= render "cms/admins/shared/error_messages", resource: resource do %>
+          <div class="field_with_errors my-3">
+            <div
+              data-target="form-validation-error.attribute"
+              data-form-attribute="reset_password_token"
+            >
+            </div>
+          </div>
+        <% end %>
         <%= f.hidden_field :reset_password_token %>
 
         <div class="form-group">

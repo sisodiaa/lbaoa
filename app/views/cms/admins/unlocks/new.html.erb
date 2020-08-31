@@ -10,7 +10,15 @@
         html: { method: :post },
         data: { controller: 'form-validation-error' }
       ) do |f| %>
-        <%= render "cms/admins/shared/error_messages", resource: resource %>
+        <%= render "cms/admins/shared/error_messages", resource: resource do %>
+          <div class="field_with_errors my-3">
+            <div
+              data-target="form-validation-error.attribute"
+              data-form-attribute="unlock_token"
+            >
+            </div>
+          </div>
+        <% end %>
 
         <div class="form-group">
           <%= f.label :email %>

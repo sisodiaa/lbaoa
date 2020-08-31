@@ -13,7 +13,9 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'that error message is shown for invalid confirmation token' do
-    skip
+    visit 'cms/admins/confirmation?confirmation_token=abc123'
+
+    assert_selector '.invalid-feedback', text: 'Confirmation token is invalid'
   end
 
   test 'confirms an unconfirmed admin' do
@@ -137,6 +139,14 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
     logout :cms_admin
   end
 
+  test 'that error message is shown for invalid reset password token' do
+    visit 'cms/admins/password/edit?reset_password_token=abc123'
+
+    click_on 'Change my password'
+
+    assert_selector '.invalid-feedback', text: 'Reset password token is invalid'
+  end
+
   test 'changes password of an admin who forgot password' do
     visit "cms/admins/password/edit?reset_password_token=#{reset_password_token}"
 
@@ -186,6 +196,12 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
                       text: 'You will receive an email with instructions on '\
                             'how to reset your password in a few minutes.'
     end
+  end
+
+  test 'that error message is shown for invalid unlock token' do
+    visit 'cms/admins/unlock?unlock_token=abc123'
+
+    assert_selector '.invalid-feedback', text: 'Unlock token is invalid'
   end
 
   test 'unlocking an admin account with unlock_token' do

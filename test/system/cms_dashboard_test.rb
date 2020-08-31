@@ -19,6 +19,7 @@ class CMSDashboardTest < ApplicationSystemTestCase
     within('#cms-dashboard') do
       assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][1]/td[2]", text: Post.count
       assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][2]/td[2]", text: Category.count
+      assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][3]/td[2]", text: Member.confirmed.count
     end
 
     logout :cms_admin

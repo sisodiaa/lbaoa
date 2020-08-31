@@ -235,19 +235,45 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
     end
   end
 
-  test 'that inactive member can not log in ' do
-    skip
-    visit new_member_session_path
-
-    within('form#new_member') do
-      fill_in 'member_email', with: members(:inactive_member).email
-      fill_in 'member_password', with: 'password'
-      click_on 'Log in'
-    end
+  test 'that pending member can not log in ' do
+    pending_member_signing_in
 
     within('.toast') do
       assert_selector '.toast-header strong', text: 'Alert'
-      assert_selector '.toast-body', text: 'Your account is not active.'
+      assert_selector '.toast-body',
+                      text: 'Your account has not been approved by administrator yet.'
+    end
+  end
+
+  test 'approving a pending member' do
+    pending_member_signing_in
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Alert'
+      assert_selector '.toast-body',
+                      text: 'Your account has not been approved by administrator yet.'
+    end
+
+    login_as admins(:confirmed_board_admin), scope: :cms_admin
+
+    visit pending_members_url
+
+    within('table.members__table') do
+      click_on 'Edit'
+    end
+
+    within('#memberEditModalBody form') do
+      select 'Approved', from: 'member[status]'
+      click_on 'Update Member'
+    end
+
+    logout :cms_admin
+
+    pending_member_signing_in
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Notice'
+      assert_selector '.toast-body', text: 'Signed in successfully.'
     end
   end
 
@@ -280,6 +306,16 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
       @confirmed_member.save
 
       raw
+    end
+  end
+
+  def pending_member_signing_in
+    visit new_member_session_path
+
+    within('form#new_member') do
+      fill_in 'member_email', with: members(:pending_member).email
+      fill_in 'member_password', with: 'password'
+      click_on 'Log in'
     end
   end
 end

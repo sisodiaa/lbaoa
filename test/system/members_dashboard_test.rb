@@ -19,6 +19,12 @@ class MembersDashboardTest < ApplicationSystemTestCase
     click_on 'Members'
 
     within('#collapse-members') do
+      click_on 'Search'
+    end
+
+    assert_selector '#form-search-member'
+
+    within('#collapse-members') do
       click_on 'Approved'
     end
 
@@ -111,6 +117,57 @@ class MembersDashboardTest < ApplicationSystemTestCase
 
     assert_selector 'table.members__table'
     assert_no_selector '.members__table-row'
+
+    logout :cms_admin
+  end
+
+  test 'search field show no errors when url is not passed any parameter' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
+    visit search_members_url
+
+    within('#form-search-member') do
+      assert_no_selector 'input.is-invalid'
+      assert_no_selector '.invalid-feedback'
+    end
+  end
+
+  test 'search field shows errors when url is passed empty or invaid parameter' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
+    visit search_members_url
+
+    within('#form-search-member') do
+      click_on 'Search'
+
+      assert_selector 'input.is-invalid'
+      assert_selector '.invalid-feedback', text: 'Email is invalid'
+      assert_selector '.invalid-feedback', text: "Email can't be blank"
+    end
+  end
+
+  test 'searching a member' do
+    login_as @confirmed_board_admin, scope: :cms_admin
+
+    visit search_members_url
+
+    assert_no_selector '#results-search-member'
+
+    within('#form-search-member form') do
+      fill_in 'search_member_form_email', with: 'member_three@example.com'
+      click_on 'Search'
+    end
+
+    assert_selector '#results-search-member'
+    within('tbody') do
+      assert_selector :xpath,
+                      "//tr[@class='results-search-member__row']/td[1]",
+                      text: 'member_three@example.com'
+
+      assert_selector :xpath,
+                      "//tr[@class='results-search-member__row']/td[2]",
+                      text: 'Pending'
+    end
 
     logout :cms_admin
   end

@@ -102,6 +102,7 @@ Rails.application.routes.draw do
 
   namespace :search do
     get 'posts', to: 'posts#index', as: 'posts'
+    get 'members', to: 'members#index', as: 'members'
   end
 
   get '/pages/*page', to: 'cms/pages#show', as: 'page'

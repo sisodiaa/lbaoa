@@ -1,0 +1,13 @@
+          <tr class="results-search-member__row">
+            <td><%= result.email %></td>
+            <td class="text-capitalize"><%= result.status %></td>
+            <td class="btn-group btn-group-sm" role="group">
+              <%= link_to(
+                'Edit',
+                edit_member_path(result),
+                remote: true,
+                class: 'btn btn-secondary',
+                data: { toggle: 'modal', target: '#memberEditModal' }
+              )%>
+            </td>
+          </tr>

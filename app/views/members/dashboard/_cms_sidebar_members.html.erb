@@ -33,6 +33,10 @@
         class: 'list-group-item list-group-item-action list-group-item-secondary'
       %>
       <div class="list-group list-group-flush collapse show" id="collapse-members">
+        <%= link_to 'Search',
+          search_members_path,
+          class: "list-group-item list-group-item-action #{status == 'search' ? 'active' : ''}"
+        %>
         <%= link_to 'Approved',
           approved_members_path,
           class: "list-group-item list-group-item-action #{status == 'approved' ? 'active' : ''}"

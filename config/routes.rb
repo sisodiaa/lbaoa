@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
-  namespace :cms do
-    get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  concern :documentable do
+    resources :documents, only: %i[index create destroy]
+  end
 
+  namespace :management do
+    get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  end
+
+  namespace :cms do
     resources :categories, except: :destroy
 
     resources :posts, except: :index do
-      resources :documents, only: %i[index create destroy]
-
       put 'publish', on: :member
       patch 'publish', on: :member
 
@@ -17,85 +21,72 @@ Rails.application.routes.draw do
       get '/', to: 'posts#index', status: 'draft', on: :collection
       get 'published', to: 'posts#index', status: 'published', on: :collection
     end
+  end
 
-    devise_for :admins, skip: %i[registrations], controllers: {
-      sessions: 'cms/admins/sessions',
-      passwords: 'cms/admins/passwords',
-      confirmations: 'cms/admins/confirmations',
-      unlocks: 'cms/admins/unlocks'
-    }
+  resources :posts, only: [], concerns: :documentable, path: '/cms'
 
-    devise_scope :cms_admin do
-      authenticated :cms_admin do
-        root to: 'dashboard#index', as: :admin_root
+  devise_for :admins, skip: %i[registrations], controllers: {
+    sessions: 'account/admins/sessions',
+    passwords: 'account/admins/passwords',
+    confirmations: 'account/admins/confirmations',
+    unlocks: 'account/admins/unlocks'
+  }
+
+  devise_for :members, skip: %i[registrations], controllers: {
+    sessions: 'account/members/sessions',
+    passwords: 'account/members/passwords',
+    confirmations: 'account/members/confirmations',
+    unlocks: 'account/members/unlocks'
+  }
+
+  scope module: 'account' do
+    devise_scope :admin do
+      get '/admins/edit',
+          to: 'admins/registrations#edit',
+          as: 'edit_admin_registration'
+
+      match '/admins',
+            to: 'admins/registrations#update',
+            as: 'admin_registration',
+            via: %i[put patch]
+
+      scope '/management' do
+        unauthenticated do
+          root to: 'admins/sessions#new', as: :management_root
+        end
       end
+    end
 
-      unauthenticated do
-        root to: 'admins/sessions#new'
+    devise_scope :member do
+      resource :registration,
+               only: %i[new create edit update],
+               path: 'members',
+               path_names: { new: 'sign_up' },
+               controller: 'members/registrations',
+               as: :member_registration
+    end
+
+    resources(
+      :members,
+      controller: 'members/dashboard',
+      except: %i[new create destroy]
+    ) do
+      %w[pending approved flagged archived bogus].each do |status|
+        get status, to: 'members/dashboard#index', status: status, on: :collection
       end
     end
   end
 
-  devise_scope :cms_admin do
-    get '/cms/admins/edit',
-        to: 'cms/admins/registrations#edit',
-        as: 'edit_cms_admin_registration'
-
-    match '/cms/admins',
-          to: 'cms/admins/registrations#update',
-          as: 'cms_admin_registration',
-          via: %i[put patch]
+  devise_scope :admin do
+    authenticated :admin do
+      root to: 'management/dashboard#index', as: :admin_root
+    end
   end
 
-  devise_for :members, skip: %i[registrations], controllers: {
-    sessions: 'members/sessions',
-    passwords: 'members/passwords',
-    confirmations: 'members/confirmations',
-    unlocks: 'members/unlocks'
-  }
-
   devise_scope :member do
-    resource :registration,
-             only: %i[new create edit update],
-             path: 'members',
-             path_names: { new: 'sign_up' },
-             controller: 'members/registrations',
-             as: :member_registration
-
     authenticated :member do
       root to: 'posts#index', as: :member_root
     end
-  end
-
-  resources(
-    :members,
-    controller: 'members/dashboard',
-    except: %i[new create destroy]
-  ) do
-    get 'pending',
-        to: 'members/dashboard#index',
-        status: 'pending',
-        on: :collection
-
-    get 'approved',
-        to: 'members/dashboard#index',
-        status: 'approved',
-        on: :collection
-
-    get 'flagged',
-        to: 'members/dashboard#index',
-        status: 'flagged',
-        on: :collection
-
-    get 'archived',
-        to: 'members/dashboard#index',
-        status: 'archived',
-        on: :collection
-
-    get 'bogus',
-        to: 'members/dashboard#index',
-        status: 'bogus',
-        on: :collection
   end
 
   resources :posts, only: %i[index show]

@@ -11,13 +11,13 @@ class DocumentsTest < ApplicationSystemTestCase
       attach_file_to_record document.attachment
     end
 
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
-    visit cms_post_documents_url(@draft_post)
+    visit post_documents_url(@draft_post)
   end
 
   teardown do
-    logout :cms_admin
+    logout :admin
 
     @draft_post = nil
 

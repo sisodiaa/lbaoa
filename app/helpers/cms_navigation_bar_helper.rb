@@ -1,6 +1,6 @@
 module CMSNavigationBarHelper
   def cms_navigation_links
-    cms_admin_signed_in? ? links_for_authenticated_cms_admin : ''
+    admin_signed_in? ? links_for_authenticated_cms_admin : ''
   end
 
   def links_for_authenticated_cms_admin
@@ -15,13 +15,13 @@ module CMSNavigationBarHelper
                       ]
 
     nav_item name: 'Dashboard',
-             destination: cms_dashboard_path
+             destination: management_dashboard_path
 
     nav_item name: 'Settings',
-             destination: edit_cms_admin_registration_path
+             destination: edit_admin_registration_path
 
     nav_item name: 'Logout',
-             destination: destroy_cms_admin_session_path,
+             destination: destroy_admin_session_path,
              method: :delete
   end
 

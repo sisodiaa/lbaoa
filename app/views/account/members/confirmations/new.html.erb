@@ -1,0 +1,54 @@
+<div class='row'>
+  <div class="col-lg-6 col-12">
+    <div class="pod rounded shadow-sm">
+      <h2>Resend confirmation instructions</h2>
+
+      <%= form_for(
+        resource,
+        as: resource_name,
+        url: confirmation_path(resource_name),
+        html: { method: :post },
+        data: { controller: 'form-validation-error' }
+      ) do |f| %>
+        <%= render "account/members/shared/error_messages", resource: resource do %>
+          <div class="field_with_errors my-3">
+            <div
+              data-target="form-validation-error.attribute"
+              data-form-attribute="confirmation_token"
+            >
+            </div>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field(
+            :email,
+            autofocus: true,
+            autocomplete: "email",
+            value: (
+              resource.pending_reconfirmation? ? 
+              resource.unconfirmed_email : 
+              resource.email
+            ),
+            class: 'form-control',
+            data: {
+              target: 'form-validation-error.attribute',
+              form_attribute: 'email'
+            }
+          ) %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Resend confirmation instructions", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <div class="podlet rounded shadow-sm p-3">
+      <%= render "account/members/shared/links" %>
+    </div>
+  </div>
+</div>

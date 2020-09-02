@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_out_path_for(resource)
-    if resource == :cms_admin
-      cms_root_path
+    if resource == :admin
+      management_root_path
     else
       root_path
     end
@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
                       scope: 'pundit',
                       default: :default
 
-    redirect_to(request.referer || cms_root_path)
+    redirect_to(request.referer || admin_root_path)
   end
 end

@@ -4,7 +4,7 @@ module CMS
 
     layout 'cms_sidebar'
 
-    before_action :authenticate_cms_admin!
+    before_action :authenticate_admin!
     before_action :set_category, only: %i[show edit update]
 
     # GET /categories

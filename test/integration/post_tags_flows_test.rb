@@ -17,7 +17,7 @@ class PostTagsFlowsTest < ActionDispatch::IntegrationTest
   end
 
   test 'creating a post' do
-    sign_in @confirmed_board_admin, scope: :cms_admin
+    sign_in @confirmed_board_admin, scope: :admin
 
     assert_difference('Post.count') do
       assert_difference('Tag.count', 2) do
@@ -36,11 +36,11 @@ class PostTagsFlowsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to cms_post_url(Post.last)
 
-    sign_out :cms_admin
+    sign_out :admin
   end
 
   test 'deleting a post' do
-    sign_in @confirmed_board_admin, scope: :cms_admin
+    sign_in @confirmed_board_admin, scope: :admin
 
     assert_difference('Post.count', -1) do
       assert_difference('Tag.count', 0) do
@@ -52,6 +52,6 @@ class PostTagsFlowsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to cms_posts_url
 
-    sign_out :cms_admin
+    sign_out :admin
   end
 end

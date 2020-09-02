@@ -16,7 +16,7 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test 'visiting the index' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_categories_url
 
@@ -25,11 +25,11 @@ class CategoriesTest < ApplicationSystemTestCase
       assert_selector 'tbody tr', count: 7
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'creating a Category' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_categories_url
 
@@ -50,11 +50,11 @@ class CategoriesTest < ApplicationSystemTestCase
     end
     click_on 'Back'
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'updating a Category' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_categories_url
     click_on 'Edit', match: :first
@@ -71,11 +71,11 @@ class CategoriesTest < ApplicationSystemTestCase
     end
     click_on 'Back'
 
-    logout :cms_admin
+    logout :admin
   end
 
-  test 'updating a Category with insufficient data show validation errors' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+  test 'updating a Category with insufficient data shows validation errors' do
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_categories_url
     click_on 'Edit', match: :first
@@ -86,6 +86,6 @@ class CategoriesTest < ApplicationSystemTestCase
     assert_selector '.is-invalid'
     assert_selector '.invalid-feedback', text: "Description can't be blank"
 
-    logout :cms_admin
+    logout :admin
   end
 end

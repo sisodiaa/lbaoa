@@ -7,19 +7,19 @@ module Search
 
       get search_members_url
 
-      assert_redirected_to new_cms_admin_session_url
+      assert_redirected_to new_admin_session_url
 
       sign_out :member
     end
 
     test 'only admins can access search' do
-      sign_in admins(:confirmed_board_admin), scope: :cms_admin
+      sign_in admins(:confirmed_board_admin), scope: :admin
 
       get search_members_url
 
       assert_response :success
 
-      sign_out :cms_admin
+      sign_out :admin
     end
   end
 end

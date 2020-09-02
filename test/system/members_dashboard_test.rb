@@ -12,9 +12,9 @@ class MembersDashboardTest < ApplicationSystemTestCase
   end
 
   test 'sub-menus of member dashboard' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
-    visit cms_dashboard_url
+    visit management_dashboard_url
 
     click_on 'Members'
 
@@ -70,11 +70,11 @@ class MembersDashboardTest < ApplicationSystemTestCase
       assert_selector 'td', text: 'member_six@example.com'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'approve a pending member' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit pending_members_url
 
@@ -107,22 +107,22 @@ class MembersDashboardTest < ApplicationSystemTestCase
       assert_text 'member_three@example.com'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'that no data will be shown for random status parameter' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit members_url(status: 'lol')
 
     assert_selector 'table.members__table'
     assert_no_selector '.members__table-row'
 
-    logout :cms_admin
+    logout :admin
   end
 
-  test 'search field show no errors when url is not passed any parameter' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+  test 'no errors are shown when no parameters are passed to search endpoint' do
+    login_as @confirmed_board_admin, scope: :admin
 
     visit search_members_url
 
@@ -130,10 +130,12 @@ class MembersDashboardTest < ApplicationSystemTestCase
       assert_no_selector 'input.is-invalid'
       assert_no_selector '.invalid-feedback'
     end
+
+    logout :admin
   end
 
-  test 'search field shows errors when url is passed empty or invaid parameter' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+  test 'shows errors when search endpoint is passed empty or invalid parameter' do
+    login_as @confirmed_board_admin, scope: :admin
 
     visit search_members_url
 
@@ -147,7 +149,7 @@ class MembersDashboardTest < ApplicationSystemTestCase
   end
 
   test 'searching a member' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit search_members_url
 
@@ -169,6 +171,6 @@ class MembersDashboardTest < ApplicationSystemTestCase
                       text: 'Pending'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 end

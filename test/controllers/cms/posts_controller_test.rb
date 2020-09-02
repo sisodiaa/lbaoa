@@ -21,29 +21,29 @@ module CMS
 
     test 'unauthenticated access should redirect' do
       get cms_posts_url
-      assert_redirected_to new_cms_admin_session_url
+      assert_redirected_to new_admin_session_url
     end
 
     test 'should get index' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       get cms_posts_url
       assert_response :success
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'should get new' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       get new_cms_post_url
       assert_response :success
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'should create post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert_difference('Post.count') do
         post cms_posts_url, params: {
@@ -58,11 +58,11 @@ module CMS
 
       assert_redirected_to cms_post_url(Post.last)
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'should show post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       @draft_post.documents.each do |document|
         attach_file_to_record document.attachment
@@ -71,20 +71,20 @@ module CMS
       get cms_post_url(@draft_post)
       assert_response :success
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'should get edit' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       get edit_cms_post_url(@draft_post)
       assert_response :success
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'should update post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       patch cms_post_url(@draft_post), params: {
         post: {
@@ -94,11 +94,11 @@ module CMS
 
       assert_redirected_to cms_post_url(@draft_post)
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'board member can delete draft post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert_difference('Post.count', -1) do
         delete cms_post_url(@draft_post)
@@ -106,11 +106,11 @@ module CMS
 
       assert_redirected_to cms_posts_url
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'board member can delete published post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert_difference('Post.count', -1) do
         delete cms_post_url(@finished_post)
@@ -118,11 +118,11 @@ module CMS
 
       assert_redirected_to cms_posts_url
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'braodcast a member only post to visitors' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert @finished_post.members?
       assert_not @finished_post.visitors?
@@ -139,11 +139,11 @@ module CMS
       assert_redirected_to cms_post_url(@finished_post)
       assert_equal 'Post visibility status set for visitors.', flash[:success]
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'narrowcast a public post to members only' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert @public_post.visitors?
       assert_not @public_post.members?
@@ -160,11 +160,11 @@ module CMS
       assert_redirected_to cms_post_url(@public_post)
       assert_equal 'Post visibility status set for members only.', flash[:success]
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'publish a post' do
-      sign_in @confirmed_board_admin, scope: :cms_admin
+      sign_in @confirmed_board_admin, scope: :admin
 
       assert @draft_post.draft?
       assert_not @draft_post.finished?
@@ -183,11 +183,11 @@ module CMS
       assert_redirected_to post_url(@draft_post)
       assert_equal 'Post published successfully.', flash[:success]
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'staff member can not publish a post' do
-      sign_in @confirmed_staff_admin, scope: :cms_admin
+      sign_in @confirmed_staff_admin, scope: :admin
 
       patch publish_cms_post_path(@draft_post), params: {
         post: {
@@ -196,26 +196,26 @@ module CMS
       }
 
       assert_equal 'Only board member can publish a post.', flash[:error]
-      assert_redirected_to cms_root_url
+      assert_redirected_to admin_root_url
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'staff member can not delete a published post' do
-      sign_in @confirmed_staff_admin, scope: :cms_admin
+      sign_in @confirmed_staff_admin, scope: :admin
 
       assert_difference('Post.count', 0) do
         delete cms_post_url(@finished_post)
       end
 
       assert_equal 'Only board member can delete a post.', flash[:error]
-      assert_redirected_to cms_root_url
+      assert_redirected_to admin_root_url
 
-      sign_out :cms_admin
+      sign_out :admin
     end
 
     test 'staff member can delete a draft post' do
-      sign_in @confirmed_staff_admin, scope: :cms_admin
+      sign_in @confirmed_staff_admin, scope: :admin
 
       assert_difference('Post.count', -1) do
         delete cms_post_url(@draft_post)
@@ -223,7 +223,7 @@ module CMS
 
       assert_redirected_to cms_posts_url
 
-      sign_out :cms_admin
+      sign_out :admin
     end
   end
 end

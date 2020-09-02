@@ -13,13 +13,13 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'that error message is shown for invalid confirmation token' do
-    visit 'cms/admins/confirmation?confirmation_token=abc123'
+    visit 'admins/confirmation?confirmation_token=abc123'
 
     assert_selector '.invalid-feedback', text: 'Confirmation token is invalid'
   end
 
   test 'confirms an unconfirmed admin' do
-    visit "cms/admins/confirmation?confirmation_token=#{confirmation_token}"
+    visit "admins/confirmation?confirmation_token=#{confirmation_token}"
 
     assert_no_selector 'p#notice'
 
@@ -31,31 +31,31 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'resend confirmation instructions cases' do
-    visit new_cms_admin_confirmation_path
+    visit new_admin_confirmation_path
 
     # No Input
     click_on 'Resend confirmation instructions'
 
-    assert_selector '#cms_admin_email.form-control.is-invalid'
+    assert_selector '#admin_email.form-control.is-invalid'
     assert_selector '.invalid-feedback', text: "Email can't be blank"
 
     # Fill in an email which is not stored in DB
-    fill_in 'cms_admin_email', with: 'test@example.com'
+    fill_in 'admin_email', with: 'test@example.com'
     click_on 'Resend confirmation instructions'
 
-    assert_selector '#cms_admin_email.form-control.is-invalid'
+    assert_selector '#admin_email.form-control.is-invalid'
     assert_selector '.invalid-feedback', text: 'Email not found'
 
     # Fill in an email which is already confirmed
-    fill_in 'cms_admin_email', with: 'admin_one@example.com'
+    fill_in 'admin_email', with: 'admin_one@example.com'
     click_on 'Resend confirmation instructions'
 
-    assert_selector '#cms_admin_email.form-control.is-invalid'
+    assert_selector '#admin_email.form-control.is-invalid'
     assert_selector '.invalid-feedback',
                     text: 'Email was already confirmed, please try signing in'
 
     # Fill with valid input
-    fill_in 'cms_admin_email', with: @unconfirmed_board_admin.email
+    fill_in 'admin_email', with: @unconfirmed_board_admin.email
     click_on 'Resend confirmation instructions'
 
     within('.toast') do
@@ -66,14 +66,14 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
     end
   end
 
-  test 'authenticated and unauthenticated roots for CMS Admin' do
-    visit cms_root_path
+  test 'authenticated and unauthenticated roots for Management Panel Admin' do
+    visit management_root_path
 
-    assert_selector 'a.navbar-brand', text: 'Lotus Boulevard AOA CMS'
+    assert_selector 'a.navbar-brand', text: 'LBAOA Web Management Panel'
 
-    within('form#new_cms_admin') do
-      fill_in 'cms_admin_email', with: @confirmed_board_admin.email
-      fill_in 'cms_admin_password', with: 'password'
+    within('form#new_admin') do
+      fill_in 'admin_email', with: @confirmed_board_admin.email
+      fill_in 'admin_password', with: 'password'
 
       click_on 'Log in'
     end
@@ -84,7 +84,7 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
     end
 
     assert_selector '.card-header.active'
-    assert_selector '#cms-dashboard'
+    assert_selector '#management-dashboard'
 
     within('nav.navbar') do
       click_on 'Logout'
@@ -95,13 +95,13 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Signed out successfully.'
     end
 
-    assert_selector 'form#new_cms_admin'
+    assert_selector 'form#new_admin'
   end
 
   test 'that sign in form show error for invalid email and/or password' do
-    visit new_cms_admin_session_path
+    visit new_admin_session_path
 
-    within('form#new_cms_admin') do
+    within('form#new_admin') do
       click_on 'Log in'
     end
 
@@ -111,21 +111,21 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
     end
   end
 
-  test 'that current password is required to make changes to admin model' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+  test 'that current password is required to make changes to an admin details' do
+    login_as @confirmed_board_admin, scope: :admin
 
-    visit edit_cms_admin_registration_path
+    visit edit_admin_registration_path
 
-    within('form#edit_cms_admin') do
+    within('form#edit_admin') do
       click_on 'Update'
 
-      assert_selector '#cms_admin_current_password.form-control.is-invalid'
+      assert_selector '#admin_current_password.form-control.is-invalid'
       assert_selector '.invalid-feedback',
                       text: "Current password can't be blank"
 
-      fill_in 'cms_admin_current_password', with: 'password'
-      fill_in 'cms_admin_password', with: 'dassworp'
-      fill_in 'cms_admin_password_confirmation', with: 'dassworp'
+      fill_in 'admin_current_password', with: 'password'
+      fill_in 'admin_password', with: 'dassworp'
+      fill_in 'admin_password_confirmation', with: 'dassworp'
 
       click_on 'Update'
     end
@@ -136,23 +136,23 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
                       text: 'Your account has been updated successfully.'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'that error message is shown for invalid reset password token' do
-    visit 'cms/admins/password/edit?reset_password_token=abc123'
+    visit 'admins/password/edit?reset_password_token=abc123'
 
     click_on 'Change my password'
 
     assert_selector '.invalid-feedback', text: 'Reset password token is invalid'
   end
 
-  test 'changes password of an admin who forgot password' do
-    visit "cms/admins/password/edit?reset_password_token=#{reset_password_token}"
+  test 'changes password of an admin via an password reset link' do
+    visit "admins/password/edit?reset_password_token=#{reset_password_token}"
 
-    within('form#new_cms_admin') do
-      fill_in 'cms_admin_password', with: 'dassworp'
-      fill_in 'cms_admin_password_confirmation', with: 'dassworp'
+    within('form#new_admin') do
+      fill_in 'admin_password', with: 'dassworp'
+      fill_in 'admin_password_confirmation', with: 'dassworp'
       click_on 'Change my password'
     end
 
@@ -165,7 +165,7 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'visiting password reset view without token' do
-    visit edit_cms_admin_password_path
+    visit edit_admin_password_path
 
     within('.toast') do
       toast_body = "You can't access this page without coming from a password "\
@@ -179,14 +179,14 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'when admin forgot the password' do
-    visit new_cms_admin_password_path
+    visit new_admin_password_path
 
-    within('form#new_cms_admin') do
+    within('form#new_admin') do
       click_on 'Send me reset password instructions'
 
-      assert_selector '#cms_admin_email.is-invalid'
+      assert_selector '#admin_email.is-invalid'
 
-      fill_in 'cms_admin_email', with: @confirmed_board_admin.email
+      fill_in 'admin_email', with: @confirmed_board_admin.email
       click_on 'Send me reset password instructions'
     end
 
@@ -199,13 +199,13 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'that error message is shown for invalid unlock token' do
-    visit 'cms/admins/unlock?unlock_token=abc123'
+    visit 'admins/unlock?unlock_token=abc123'
 
     assert_selector '.invalid-feedback', text: 'Unlock token is invalid'
   end
 
   test 'unlocking an admin account with unlock_token' do
-    visit "/cms/admins/unlock?unlock_token=#{unlock_token}"
+    visit "admins/unlock?unlock_token=#{unlock_token}"
 
     within('.toast') do
       assert_selector '.toast-header strong', text: 'Notice'
@@ -216,17 +216,17 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'unlocking an admin account' do
-    visit new_cms_admin_unlock_path
+    visit new_admin_unlock_path
 
-    fill_in 'cms_admin_email', with: @confirmed_board_admin.email
+    fill_in 'admin_email', with: @confirmed_board_admin.email
     click_on 'Resend unlock instructions'
 
-    assert_selector '#cms_admin_email.is-invalid'
+    assert_selector '#admin_email.is-invalid'
     assert_selector '.invalid-feedback', text: 'Email was not locked'
 
     @confirmed_board_admin.lock_access!
 
-    fill_in 'cms_admin_email', with: @confirmed_board_admin.email
+    fill_in 'admin_email', with: @confirmed_board_admin.email
     click_on 'Resend unlock instructions'
 
     within('.toast') do
@@ -238,11 +238,11 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   end
 
   test 'that inactive admin can not log in ' do
-    visit new_cms_admin_session_path
+    visit new_admin_session_path
 
-    within('form#new_cms_admin') do
-      fill_in 'cms_admin_email', with: admins(:inactive_board_admin).email
-      fill_in 'cms_admin_password', with: 'password'
+    within('form#new_admin') do
+      fill_in 'admin_email', with: admins(:inactive_board_admin).email
+      fill_in 'admin_password', with: 'password'
       click_on 'Log in'
     end
 

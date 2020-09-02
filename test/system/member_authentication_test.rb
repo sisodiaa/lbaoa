@@ -109,7 +109,7 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
     end
   end
 
-  test 'that current password is required to make changes to member model' do
+  test 'that current password is required to make changes to member details' do
     login_as @confirmed_member, scope: :member
 
     visit edit_member_registration_path
@@ -145,7 +145,7 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
     assert_selector '.invalid-feedback', text: 'Reset password token is invalid'
   end
 
-  test 'changes password of a member who forgot password' do
+  test 'changes password of a member using a password reset link' do
     visit "members/password/edit?reset_password_token=#{reset_password_token}"
 
     within('form#new_member') do
@@ -254,7 +254,7 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
                       text: 'Your account has not been approved by administrator yet.'
     end
 
-    login_as admins(:confirmed_board_admin), scope: :cms_admin
+    login_as admins(:confirmed_board_admin), scope: :admin
 
     visit pending_members_url
 
@@ -267,7 +267,7 @@ class MemberAuthenticationTest < ApplicationSystemTestCase
       click_on 'Update Member'
     end
 
-    logout :cms_admin
+    logout :admin
 
     pending_member_signing_in
 

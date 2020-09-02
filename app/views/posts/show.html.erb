@@ -54,7 +54,7 @@
   <% if @post.documents.any? %>
     <div class="post__attachments" data-target="toggle-attachments.attachments">
       <div class="row d-flex justify-content-between justify-content-lg-start">
-        <%= render partial: 'cms/documents/document',
+        <%= render partial: 'documents/document',
                    collection: @post.documents
         %>
       </div>

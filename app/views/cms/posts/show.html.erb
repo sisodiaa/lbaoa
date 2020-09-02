@@ -88,7 +88,7 @@
                     class: "btn btn-outline-primary"
         %>
         <%= link_to 'Manage attachments',
-          cms_post_documents_path(@post),
+          post_documents_path(@post),
           class: "btn btn-outline-primary"
         %>
       <%= link_to 'Back', cms_posts_path, class: "btn btn-outline-primary" %>
@@ -98,7 +98,7 @@
 
   <div class="post__attachments" data-target="toggle-attachments.attachments">
     <div class="row d-flex justify-content-between justify-content-lg-start">
-      <%= render @post.documents %>
+      <%= render partial: 'documents/document', collection: @post.documents %>
     </div>
   </div>
 </div>

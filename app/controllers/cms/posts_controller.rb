@@ -4,7 +4,7 @@ module CMS
 
     layout 'cms_sidebar'
 
-    before_action :authenticate_cms_admin!
+    before_action :authenticate_admin!
     before_action :set_post, only: %i[show edit update publish cast destroy]
 
     # GET /posts
@@ -88,7 +88,7 @@ module CMS
     private
 
     def pundit_user
-      current_cms_admin
+      current_admin
     end
 
     # Use callbacks to share common setup or constraints between actions.

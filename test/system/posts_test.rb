@@ -22,7 +22,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test 'visiting the index' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_posts_url
 
@@ -44,11 +44,11 @@ class PostsTest < ApplicationSystemTestCase
       end
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'creating a Post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_posts_url
 
@@ -74,11 +74,11 @@ class PostsTest < ApplicationSystemTestCase
     end
     click_on 'Back'
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'creating a Post with insufficient data shows validation errors' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_posts_url
 
@@ -94,11 +94,11 @@ class PostsTest < ApplicationSystemTestCase
     assert_selector '.invalid-feedback', text: "Title can't be blank"
     assert_selector '.invalid-feedback', text: "Content can't be blank"
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'updating a Post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
@@ -119,11 +119,11 @@ class PostsTest < ApplicationSystemTestCase
     end
     click_on 'Back'
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'destroying a Post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_posts_url
     page.accept_confirm do
@@ -136,11 +136,11 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Post was successfully destroyed.'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'shows a post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
@@ -171,11 +171,11 @@ class PostsTest < ApplicationSystemTestCase
 
     assert_no_selector '.post__attachments'
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'publishing a draft post' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+    login_as @confirmed_board_admin, scope: :admin
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
@@ -195,11 +195,11 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector 'span', text: @draft_post.reload.published_at.strftime('%d %B %Y')
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
-  test 'make a post visible to visitors and toggle back to members' do
-    login_as @confirmed_board_admin, scope: :cms_admin
+  test 'make a post visible to visitors and toggle visibility back to members' do
+    login_as @confirmed_board_admin, scope: :admin
 
     visit cms_post_url(@finished_post)
 
@@ -221,11 +221,11 @@ class PostsTest < ApplicationSystemTestCase
 
     assert_selector "input.btn[value='Broadcast Post to Visitors']"
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'that staff member can not publish a post' do
-    login_as @confirmed_staff_admin, scope: :cms_admin
+    login_as @confirmed_staff_admin, scope: :admin
 
     @draft_post.documents.each do |document|
       attach_file_to_record document.attachment
@@ -235,11 +235,11 @@ class PostsTest < ApplicationSystemTestCase
 
     assert_no_selector 'form.button_to .btn', text: 'Publish'
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'that staff member can not delete a published post' do
-    login_as @confirmed_staff_admin, scope: :cms_admin
+    login_as @confirmed_staff_admin, scope: :admin
 
     visit published_cms_posts_url
 
@@ -254,7 +254,7 @@ class PostsTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Only board member can delete a post.'
     end
 
-    logout :cms_admin
+    logout :admin
   end
 
   test 'lists all finished posts with pagination link' do

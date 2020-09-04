@@ -27,7 +27,15 @@ class Document < ApplicationRecord
   end
 
   def content_type_acceptable?
-    acceptable_types = ['image/jpeg', 'image/png', 'application/pdf']
     acceptable_types.include?(attachment.content_type)
+  end
+
+  def acceptable_types
+    return ['image/jpeg', 'image/png', 'application/pdf'] if documentable.is_a? Post
+
+    [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ]
   end
 end

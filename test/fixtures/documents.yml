@@ -5,3 +5,7 @@ image:
 pdf:
   annotation: A cheatsheet for Vim editor
   documentable: plantation (Post)
+
+excel:
+  annotation: A template for tender
+  documentable: air_quality_monitors (TenderNotice)

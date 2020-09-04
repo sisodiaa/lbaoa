@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_02_141517) do
+ActiveRecord::Schema.define(version: 2020_09_03_124138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,22 @@ ActiveRecord::Schema.define(version: 2020_09_02_141517) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tender_notices", force: :cascade do |t|
+    t.string "reference_token", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.text "specification"
+    t.text "terms_and_conditions"
+    t.datetime "published_at"
+    t.datetime "opening_on"
+    t.datetime "closing_on"
+    t.integer "notice_state", default: 0, null: false
+    t.integer "publication_state", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reference_token"], name: "index_tender_notices_on_reference_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

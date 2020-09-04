@@ -1,0 +1,32 @@
+boom_barriers:
+  reference_token: SEP-tech-49
+  title: boom barriers for the society gates
+  description: |-
+    Society gates are operated manually by guards, we need some automation
+  specification: |-
+    We need automatic boom barrier that would operate upon reading an authorised
+    RFID token, these barrier should also have a manual override switch.
+  terms_and_conditions: |-
+    1. Automatic
+    2. Secure
+  opening_on: <%= Time.current + 1.day %>
+  closing_on: <%= Time.current + 3.day %>
+  notice_state: 0
+  publication_state: 0
+
+air_quality_monitors:
+  reference_token: tech-club_house-0920
+  title: supply air quality monitors
+  description: |-
+    To combat air pollution we need to install air quality monitors in club
+    house of Lotus Boulevard.
+  specification: |-
+    Cost of 1 unit should not be more than INR 10,000
+  terms_and_conditions: |-
+    a. Term 1
+    b. Term 2
+  published_at: <%= Time.current %>
+  opening_on: <%= Time.current + 1.day %>
+  closing_on: <%= Time.current + 3.day %>
+  notice_state: 0
+  publication_state: 1

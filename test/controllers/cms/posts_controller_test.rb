@@ -65,7 +65,7 @@ module CMS
       sign_in @confirmed_board_admin, scope: :admin
 
       @draft_post.documents.each do |document|
-        attach_file_to_record document.attachment
+        attach_file_to_record(document.attachment, 'square.png')
       end
 
       get cms_post_url(@draft_post)

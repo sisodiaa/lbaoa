@@ -23,15 +23,17 @@ class TenderNoticeTest < ActiveSupport::TestCase
     assert_not @draft_tender_notice.valid?, 'Reference Token is required'
   end
 
+  test 'that reference_token is unique' do
+    new_tender_notice = TenderNotice.new(
+      reference_token: @published_tender_notice.reference_token, title: 'abc'
+    )
+
+    assert_not new_tender_notice.valid?, 'Reference Token needs to be unique'
+  end
+
   test 'that title is present' do
     @published_tender_notice.title = ''
     assert_not @published_tender_notice.valid?, 'Title is required'
-  end
-
-  test 'that title is saved in lowercase' do
-    TenderNotice.create!(title: 'TITLE IN CAPS', reference_token: 'a9')
-
-    assert_equal 'title in caps', TenderNotice.last.title
   end
 
   test 'that publish event changes the publication_state' do
@@ -49,8 +51,12 @@ class TenderNoticeTest < ActiveSupport::TestCase
   end
 
   test 'that only an upcoming notice gets published' do
-    @published_tender_notice.opening_on = Time.current - 3.days
-    assert_raise(AASM::InvalidTransition) { @published_tender_notice.publish }
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    @draft_tender_notice.opening_on = Time.current - 3.days
+    assert_raise(AASM::InvalidTransition) { @draft_tender_notice.publish }
   end
 
   test 'that manual assignment of publication_state will raise error' do
@@ -60,6 +66,48 @@ class TenderNoticeTest < ActiveSupport::TestCase
   end
 
   test 'that template is required' do
-    assert_raise(AASM::InvalidTransition) { @draft_tender_notice.publish }
+    assert_not @draft_tender_notice.valid?(:notice_publication),
+               'Attachment is missing'
+  end
+
+  test 'that opening date is required for publishing the notice' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    @draft_tender_notice.opening_on = nil
+
+    assert_not @draft_tender_notice.valid?(:notice_publication), 'Opening date is missing'
+  end
+
+  test 'that closing date is required for publishing the notice' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    @draft_tender_notice.closing_on = nil
+
+    assert_not @draft_tender_notice.valid?(:notice_publication), 'Closing date is missing'
+  end
+
+  test 'that opening_on datetime should be before closing_on' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    @draft_tender_notice.opening_on = @draft_tender_notice.closing_on + 3.days
+
+    assert_not @draft_tender_notice.valid?(:notice_publication),
+               'Opening date should come before closing date'
+  end
+
+  test 'set opening_on to nil for invaid datetime' do
+    @published_tender_notice.opening_on_string = '2001-02-30 14:05'
+    assert_nil @published_tender_notice.opening_on
+  end
+
+  test 'set closing_on to nil for invaid datetime' do
+    @published_tender_notice.closing_on_string = '2001-02-30 14:05'
+    assert_nil @published_tender_notice.closing_on
   end
 end

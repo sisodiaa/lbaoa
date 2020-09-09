@@ -16,6 +16,8 @@ import "bootstrap";
 
 import "editor";
 
+import "datetime";
+
 import "custom";
 
 import "../stylesheets/application";

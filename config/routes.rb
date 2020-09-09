@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
   resources :posts, only: [], concerns: :documentable, path: '/cms'
 
+  namespace :tms do
+    resources :notices, param: :reference_token
+  end
+
   devise_for :admins, skip: %i[registrations], controllers: {
     sessions: 'account/admins/sessions',
     passwords: 'account/admins/passwords',

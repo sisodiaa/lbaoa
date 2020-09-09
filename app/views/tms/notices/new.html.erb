@@ -1,0 +1,11 @@
+<div class="tender-notice-new row">
+  <div class="pod col-12 rounded shadow-sm">
+    <h1>New Notice</h1>
+
+    <div class="my-3">
+      <%= render 'form', notice: @notice %>
+    </div>
+
+    <%= link_to 'Back', tms_notices_path, class: 'btn btn-sm btn-outline-dark' %>
+  </div>
+</div>

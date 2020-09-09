@@ -1,0 +1,42 @@
+<div class="tender-notices row">
+  <div class="pod col-12 rounded shadow-sm">
+    <table class="tender-notices__table table">
+      <thead>
+        <tr>
+          <th scope="col">Reference Token</th>
+          <th scope="col">Title</th>
+          <th scope="col">Publication State</th>
+          <th scope="col">Notice State</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @notices.each do |notice| %>
+          <tr class='tender-notices__table-row'>
+            <td><%= link_to notice.reference_token, tms_notice_path(notice) %></td>
+            <td><%= notice.title %></td>
+            <td><%= notice.publication_state %></td>
+            <td><%= notice.notice_state %></td>
+            <td class="btn-group btn-group-sm" role="group">
+              <%= link_to 'Edit',
+                          edit_tms_notice_path(notice),
+                          class: "btn btn-secondary"
+              %>
+              <%= link_to 'Attachments',
+                          '#',
+                          class: 'btn btn-secondary'
+              %>
+              <%= link_to 'Destroy',
+                          tms_notice_path(notice),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' },
+                          class: 'btn btn-secondary'
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

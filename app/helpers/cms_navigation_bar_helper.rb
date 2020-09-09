@@ -11,7 +11,8 @@ module CMSNavigationBarHelper
     dropdown_nav_item name: 'Create',
                       menu_items: [
                         { name: 'Post', url: new_cms_post_path },
-                        { name: 'Category', url: new_cms_category_path }
+                        { name: 'Category', url: new_cms_category_path },
+                        { name: 'Tender Notice', url: new_tms_notice_path }
                       ]
 
     nav_item name: 'Dashboard',

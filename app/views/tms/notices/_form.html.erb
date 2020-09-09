@@ -1,0 +1,80 @@
+<%= form_with(
+  scope: :notice,
+  url: notice.new_record? ? tms_notices_path : tms_notice_path(notice),
+  model: notice,
+  local: true,
+  class: 'tender-notice__form',
+  data: { controller: 'form-validation-error' }
+) do |form| %>
+  <% if notice.errors.any? %>
+    <div id="error_explanation">
+      <% notice.errors.messages.each do |attribute, error_messages| %>
+        <div
+          data-target="form-validation-error.error"
+          data-error-attribute="<%= attribute %>"
+        >
+          <% error_messages.each do |error_message| %>
+            <div data-error-message="<%= error_message %>"></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render 'shared/invalid_feedback' %>
+  <% end %>
+
+  <br />
+
+  <div class="form-group">
+    <%= form.label :reference_token %>
+    <%= form.text_field(
+      :reference_token,
+      class: 'form-control',
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'reference_token'
+      }
+    ) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field(
+      :title,
+      class: 'form-control',
+      data: {
+        target: 'form-validation-error.attribute',
+        form_attribute: 'title'
+      }
+    ) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :specification %>
+    <%= form.text_area :specification, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :terms_and_conditions %>
+    <%= form.text_area :terms_and_conditions, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :opening_on_string, "Opening On" %><br/>
+    <%= form.text_field :opening_on_string, data: { behavior: 'flatpickr' } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :closing_on_string, "Closing On" %><br/>
+    <%= form.text_field :closing_on_string, data: { behavior: 'flatpickr' } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-success" %>
+  </div>
+<% end %>

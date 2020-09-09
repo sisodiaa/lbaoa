@@ -1,0 +1,43 @@
+<div class="tender-notice row">
+  <div class="tender-notice__content pod col-12 rounded shadow-sm">
+    <h3>
+      <%= @notice.title %>
+    </h3>
+    <p>
+      <strong>Reference Token:</strong> <%= @notice.reference_token %><br />
+      <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
+      <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+    </p>
+
+    <% if @notice.description.present? %>
+      <div class="mt-5">
+        <h6>
+          Desciption
+        </h6>
+        <p><%= @notice.description %></p>
+      </div>
+    <% end %>
+
+    <% if @notice.specification.present? %>
+      <div class="mt-5">
+        <h6>
+          Specification
+        </h6>
+        <p><%= @notice.specification %></p>
+      </div>
+    <% end %>
+
+    <% if @notice.terms_and_conditions.present? %>
+      <div class="mt-5">
+        <h6>
+          Terms and Conditions
+        </h6>
+        <p><%= @notice.terms_and_conditions %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="btn-group">
+    <%= link_to 'Edit', edit_tms_notice_path(@notice), class: 'btn btn-outline-primary' %>
+  </div>
+</div>

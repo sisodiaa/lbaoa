@@ -7,6 +7,7 @@ class DocumentsController < ApplicationController
 
   def index
     @document = @documentable.documents.new
+    render 'main'
   end
 
   def create

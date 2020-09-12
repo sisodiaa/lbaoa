@@ -5,9 +5,13 @@ class TMSNoticesTest < ApplicationSystemTestCase
     Warden.test_mode!
     @confirmed_board_admin = admins(:confirmed_board_admin)
     @draft_tender_notice = tender_notices(:boom_barriers)
+    @published_tender_notice = tender_notices(:air_quality_monitors)
+    @excel_document = documents(:excel)
   end
 
   teardown do
+    @excel_document = nil
+    @published_tender_notice = nil
     @draft_tender_notice = nil
     @confirmed_board_admin = nil
     Warden.test_reset!
@@ -20,6 +24,19 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     sleep 5
     assert_selector '.tender-notices__table-row', count: TenderNotice.count
+
+    logout :admin
+  end
+
+  test 'published tender notice have a download link for the attachment' do
+    attach_file_to_record(@excel_document.attachment, 'tender_notice.xlsx')
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@published_tender_notice)
+
+    assert_selector "a[href$='tender_notice.xlsx?disposition=attachment']"
+    sleep 3
 
     logout :admin
   end

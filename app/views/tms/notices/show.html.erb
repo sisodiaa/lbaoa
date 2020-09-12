@@ -18,7 +18,7 @@
         <h6>
           Desciption
         </h6>
-        <p><%= @notice.description %></p>
+        <p><%= simple_format(@notice.description) %></p>
       </div>
     <% end %>
 
@@ -27,7 +27,7 @@
         <h6>
           Specification
         </h6>
-        <p><%= @notice.specification %></p>
+        <p><%= simple_format(@notice.specification) %></p>
       </div>
     <% end %>
 
@@ -36,12 +36,22 @@
         <h6>
           Terms and Conditions
         </h6>
-        <p><%= @notice.terms_and_conditions %></p>
+        <p><%= simple_format(@notice.terms_and_conditions) %></p>
+      </div>
+    <% end %>
+
+    <% if @notice.document.present? %>
+      <div class="mt-5">
+        <%= link_to rails_blob_path(@notice.document.attachment, disposition: 'attachment') do %>
+          Download <%= @notice.document.attachment.filename.to_s %>
+        <% end %>
       </div>
     <% end %>
   </div>
 
   <div class="btn-group">
     <%= link_to 'Edit', edit_tms_notice_path(@notice), class: 'btn btn-outline-primary' %>
+    <%= link_to 'Manage attachment', tender_notice_document_path(@notice), class: 'btn btn-outline-primary' %>
+    <%= link_to 'Back', :back, class: 'btn btn-outline-primary' %>
   </div>
 </div>

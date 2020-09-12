@@ -24,7 +24,12 @@ Rails.application.routes.draw do
   end
 
   namespace :tms do
-    resources :notices, param: :reference_token
+    resources :notices, param: :reference_token do
+      %w[draft upcoming current archived].each do |status|
+        get status, to: 'notices#index', status: status, on: :collection
+      end
+      get '/', to: 'notices#index', status: 'current', on: :collection
+    end
   end
 
   resources :tender_notices, only: [], path: '/tms/notices', param: :reference_token do

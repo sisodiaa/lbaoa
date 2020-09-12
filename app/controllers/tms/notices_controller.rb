@@ -1,12 +1,15 @@
 module TMS
   class NoticesController < ApplicationController
+    include Pagy::Backend
+
     layout 'cms_sidebar'
 
     before_action :authenticate_admin!
     before_action :set_notice, only: %i[show edit update destroy]
 
     def index
-      @notices = TenderNotice.all.order('created_at ASC')
+      @status = params[:status]
+      @pagy, @notices = set_notices
     end
 
     def show; end
@@ -47,6 +50,20 @@ module TMS
 
     def set_notice
       @notice = TenderNotice.find_by(reference_token: params[:reference_token])
+    end
+
+    def set_notices
+      if params[:status] == 'draft'
+        pagy(TenderNotice.draft.order('created_at ASC'), items: 10)
+      else
+        pagy(published_tender_notices.order('published_at DESC'), items: 10)
+      end
+    end
+
+    def published_tender_notices
+      TenderNotice.published.try!(@status.to_sym)
+    rescue NoMethodError
+      TenderNotice.none
     end
 
     def notice_params

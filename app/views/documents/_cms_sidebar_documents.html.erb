@@ -5,28 +5,6 @@
     </div>
 
     <div class="list-group list-group-flush">
-      <%= link_to 'Posts',
-        '#collapse-posts',
-        data: { toggle: 'collapse' },
-        class: 'list-group-item list-group-item-action list-group-item-secondary'
-      %>
-      <div class="list-group list-group-flush collapse" id="collapse-posts">
-        <%= link_to 'Drafts',
-          drafts_cms_posts_path,
-          class: "list-group-item list-group-item-action"
-        %>
-        <%= link_to 'Published',
-          published_cms_posts_path,
-          class: "list-group-item list-group-item-action"
-        %>
-      </div>
-
-      <%= link_to(
-        'Categories',
-        cms_categories_path,
-        class: 'list-group-item list-group-item-action list-group-item-secondary'
-      )%>
-
       <%= link_to 'Members',
         '#collapse-members',
         data: { toggle: 'collapse' },
@@ -55,6 +33,52 @@
         %>
         <%= link_to 'Bogus',
           bogus_members_path,
+          class: "list-group-item list-group-item-action"
+        %>
+      </div>
+
+      <%= link_to 'Posts',
+        '#collapse-posts',
+        data: { toggle: 'collapse' },
+        class: 'list-group-item list-group-item-action list-group-item-secondary'
+      %>
+      <div class="list-group list-group-flush collapse" id="collapse-posts">
+        <%= link_to 'Drafts',
+          drafts_cms_posts_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Published',
+          published_cms_posts_path,
+          class: "list-group-item list-group-item-action"
+        %>
+      </div>
+
+      <%= link_to(
+        'Categories',
+        cms_categories_path,
+        class: 'list-group-item list-group-item-action list-group-item-secondary'
+      )%>
+
+      <%= link_to 'Tender Notices',
+        '#collapse-tender-notices',
+        data: { toggle: 'collapse' },
+        class: 'list-group-item list-group-item-action list-group-item-secondary'
+      %>
+      <div class="list-group list-group-flush collapse" id="collapse-tender-notices">
+        <%= link_to 'Drafts',
+          draft_tms_notices_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Upcoming',
+          upcoming_tms_notices_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Current',
+          current_tms_notices_path,
+          class: "list-group-item list-group-item-action"
+        %>
+        <%= link_to 'Archived',
+          archived_tms_notices_path,
           class: "list-group-item list-group-item-action"
         %>
       </div>

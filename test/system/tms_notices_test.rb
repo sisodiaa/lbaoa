@@ -22,8 +22,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     visit tms_notices_url
 
-    sleep 5
-    assert_selector '.tender-notices__table-row', count: TenderNotice.count
+    assert_selector '.tender-notices__table-row', count: TenderNotice.current.count
 
     logout :admin
   end
@@ -36,7 +35,6 @@ class TMSNoticesTest < ApplicationSystemTestCase
     visit tms_notice_url(@published_tender_notice)
 
     assert_selector "a[href$='tender_notice.xlsx?disposition=attachment']"
-    sleep 3
 
     logout :admin
   end
@@ -131,6 +129,52 @@ class TMSNoticesTest < ApplicationSystemTestCase
     within('.toast') do
       assert_selector '.toast-header strong', text: 'Success'
       assert_selector '.toast-body', text: 'Tender Notice was successfully destroyed.'
+    end
+
+    logout :admin
+  end
+
+  test 'sub-menus of notices dashboard' do
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit management_dashboard_url
+
+    click_on 'Tender Notices'
+
+    within('#collapse-tender-notices') do
+      click_on 'Draft'
+    end
+
+    within('table.tender-notices__table') do
+      assert_selector '.tender-notices__table-row', count: 2
+      assert_selector 'td', text: 'boom barriers for the society gates'
+    end
+
+    within('#collapse-tender-notices') do
+      click_on 'Upcoming'
+    end
+
+    within('table.tender-notices__table') do
+      assert_selector '.tender-notices__table-row', count: 1
+      assert_selector 'td', text: 'supply air quality monitors'
+    end
+
+    within('#collapse-tender-notices') do
+      click_on 'Current'
+    end
+
+    within('table.tender-notices__table') do
+      assert_selector '.tender-notices__table-row', count: 1
+      assert_selector 'td', text: 'Barb wire for fencing'
+    end
+
+    within('#collapse-tender-notices') do
+      click_on 'Archived'
+    end
+
+    within('table.tender-notices__table') do
+      assert_selector '.tender-notices__table-row', count: 1
+      assert_selector 'td', text: 'Installation for water purifier for each tower'
     end
 
     logout :admin

@@ -8,7 +8,6 @@ class DocumentsController < ApplicationController
 
   def index
     @document = @documentable.documents.new
-    render 'main'
   end
 
   def show
@@ -43,7 +42,7 @@ class DocumentsController < ApplicationController
   end
 
   def template
-    @documentable.is_a?(Post) ? 'main' : 'show'
+    @documentable.is_a?(Post) ? 'index' : 'show'
   end
 
   def set_documentable

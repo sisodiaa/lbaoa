@@ -5,8 +5,12 @@
     </h3>
     <p>
       <strong>Reference Token:</strong> <%= @notice.reference_token %><br />
-      <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
-      <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+      <% if @notice.opening_on.present? %>
+        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
+      <% end %>
+      <% if @notice.closing_on.present? %>
+        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+      <% end %>
     </p>
 
     <% if @notice.description.present? %>

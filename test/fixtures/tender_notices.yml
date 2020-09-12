@@ -14,6 +14,21 @@ boom_barriers:
   notice_state: 0
   publication_state: 0
 
+cctv_cables:
+  reference_token: SEP-tech-79
+  title: CCTV cables
+  description: |-
+    Cables are getting old
+  specification: |-
+    We need to change old cable for CCTVs
+  terms_and_conditions: |-
+    1. Sturdy
+    2. Flexible
+  opening_on: <%= Time.current + 1.day %>
+  closing_on: <%= Time.current + 3.day %>
+  notice_state: 0
+  publication_state: 0
+
 air_quality_monitors:
   reference_token: tech-club_house-0920
   title: supply air quality monitors

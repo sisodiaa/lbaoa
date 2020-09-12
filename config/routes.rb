@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  concern :documentable do
-    resources :documents, only: %i[index create destroy]
-  end
-
   namespace :management do
     get 'dashboard', to: 'dashboard#index', as: 'dashboard'
   end
@@ -23,10 +19,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts, only: [], concerns: :documentable, path: '/cms'
+  resources :posts, only: [], path: '/cms/posts' do
+    resources :documents, only: %i[index create destroy]
+  end
 
   namespace :tms do
     resources :notices, param: :reference_token
+  end
+
+  resources :tender_notices, only: [], path: '/tms/notices', param: :reference_token do
+    resource :document, only: %i[show create destroy]
   end
 
   devise_for :admins, skip: %i[registrations], controllers: {

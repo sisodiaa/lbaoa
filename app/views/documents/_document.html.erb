@@ -26,6 +26,8 @@
               rel: "noopener noreferrer"
             )
         %>
+      <% else %>
+        <small class="mb-5 d-inline-block">Preview generation not supported for this format.</small>
       <% end %>
       <p><%= document.annotation %></p>
     </div>
@@ -36,7 +38,7 @@
       %>
       <% if document.documentable.draft? %>
         <%= link_to 'Delete Attachment',
-          post_document_path(document.documentable, document),
+          url,
           method: :delete,
           class: 'btn btn-sm btn-danger',
           data: { confirm: 'Are you sure?' }

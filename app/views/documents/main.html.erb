@@ -2,7 +2,11 @@
 
 <div class="row">
   <div class="pod col-12 col-lg-8 shadow-sm rounded order-2 order-lg-1">
-    <%= render 'form', document: @document %>
+    <%= render partial: 'form', locals: {
+      documentable: @documentable,
+      document: @document,
+      url: @url
+    } %>
   </div>
   <div class="pod col-12 col-lg-4 rounded order-1 order-lg-2">
     <ul class="list-group list-group-flush">
@@ -27,5 +31,11 @@
 </div>
 
 <div class="row d-flex justify-content-between justify-content-lg-start">
-  <%= render @documents %>
+  <% @documents.each do |document| %>
+    <%= render(
+      partial: 'document',
+      object: document,
+      locals: { url: polymorphic_path([@documentable, document]) }
+    ) %>
+  <% end %>
 </div>

@@ -1,5 +1,6 @@
 <%= form_with(
-  model: ['post', document],
+  scope: :document,
+  url: url,
   local: true,
   multipart: true,
   data: { controller: 'form-validation-error' }

@@ -98,7 +98,13 @@
 
   <div class="post__attachments" data-target="toggle-attachments.attachments">
     <div class="row d-flex justify-content-between justify-content-lg-start">
-      <%= render partial: 'documents/document', collection: @post.documents %>
+      <% @post.documents.each do |document| %>
+        <%= render(
+          partial: 'documents/document',
+          object: document,
+          locals: { url: polymorphic_path([document.documentable, document]) }
+        ) %>
+      <% end %>
     </div>
   </div>
 </div>

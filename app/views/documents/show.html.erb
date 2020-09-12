@@ -1,0 +1,37 @@
+<%= render partial: 'cms_sidebar_documents', locals: { status: nil } %>
+
+<% if @document.new_record? %>
+  <div class="row">
+    <div class="pod col-12 col-lg-8 shadow-sm rounded order-2 order-lg-1">
+      <%= render partial: 'form', locals: {
+        documentable: @documentable,
+        document: @document,
+        url: @url
+      } %>
+    </div>
+    <div class="pod col-12 col-lg-4 rounded order-1 order-lg-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          File size should not be more than 5 MB
+        </li>
+        <li class="list-group-item">
+          Supported file formats are .xls, .xlsx
+        </li>
+        <li class="list-group-item">Annotation is optional</li>
+        <li class="list-group-item">
+          Annotation, if present, should not be more than 50 characters
+        </li>
+      </ul>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <h3 class="pod shadow-sm rounded p-3 w-100">
+      Attachment for <%= link_to @documentable.title, tms_notice_path(@documentable) %>
+    </h3>
+  </div>
+
+  <div class="row d-flex justify-content-between justify-content-lg-start">
+    <%= render partial: 'document', object: @document, locals: { url: @url } %>
+  </div>
+<% end %>

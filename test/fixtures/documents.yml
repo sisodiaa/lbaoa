@@ -9,3 +9,7 @@ pdf:
 excel:
   annotation: A template for tender
   documentable: air_quality_monitors (TenderNotice)
+
+xls:
+  annotation: A template for taps
+  documentable: cctv_cables (TenderNotice)

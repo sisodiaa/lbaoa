@@ -26,12 +26,17 @@ class DocumentsController < ApplicationController
 
   def destroy
     @document = set_document_for_destroy
+    authorize @document, policy_class: DocumentPolicy
 
     @document.destroy
     redirect_to @url, flash: { success: 'Attachment was successfully destroyed.' }
   end
 
   private
+
+  def pundit_user
+    current_admin
+  end
 
   def set_url
     @url = polymorphic_path([@documentable, document])

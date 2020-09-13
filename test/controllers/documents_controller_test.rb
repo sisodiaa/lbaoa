@@ -161,13 +161,23 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy a document - Tender Notice' do
     sign_in @confirmed_board_admin, scope: :admin
+    draft_tender_notice2 = tender_notices(:cctv_cables)
 
     assert_difference('Document.count', -1) do
-      delete tender_notice_document_url(@published_tender_notice)
+      delete tender_notice_document_url(draft_tender_notice2)
     end
 
-    assert_redirected_to tender_notice_document_url(@published_tender_notice)
+    assert_redirected_to tender_notice_document_url(draft_tender_notice2)
 
     sign_out :admin
+  end
+
+  test 'that a document for published tender notice can not be deleted' do
+    sign_in @confirmed_board_admin, scope: :admin
+
+    delete tender_notice_document_url(@published_tender_notice)
+
+    assert_equal 'You cannot perform this action.', flash[:error]
+    assert_redirected_to admin_root_url
   end
 end

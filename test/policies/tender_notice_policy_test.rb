@@ -3,7 +3,6 @@ require 'test_helper'
 class TenderNoticePolicyTest < ActiveSupport::TestCase
   setup do
     @confirmed_board_admin = admins(:confirmed_board_admin)
-    @confirmed_staff_admin = admins(:confirmed_staff_admin)
 
     @draft_tender_notice = tender_notices(:boom_barriers)
     @published_tender_notice = tender_notices(:air_quality_monitors)
@@ -11,6 +10,7 @@ class TenderNoticePolicyTest < ActiveSupport::TestCase
 
   teardown do
     @draft_tender_notice = @published_tender_notice = nil
+    @confirmed_board_admin = nil
   end
 
   test '#edit' do

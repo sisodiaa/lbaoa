@@ -13,3 +13,7 @@ excel:
 xls:
   annotation: A template for taps
   documentable: cctv_cables (TenderNotice)
+
+jpg:
+  annotation: lorem ipsum
+  documentable: club_chiller (Post)

@@ -6,10 +6,11 @@ module TMS
       @confirmed_board_admin = admins(:confirmed_board_admin)
       @confirmed_staff_admin = admins(:confirmed_staff_admin)
       @draft_tender_notice = tender_notices(:boom_barriers)
+      @published_tender_notice = tender_notices(:air_quality_monitors)
     end
 
     teardown do
-      @draft_tender_notice = nil
+      @draft_tender_notice = @published_tender_notice = nil
       @confirmed_board_admin = @confirmed_staff_admin = nil
     end
 
@@ -69,6 +70,43 @@ module TMS
       end
 
       assert_redirected_to tms_notices_url
+
+      sign_out :admin
+    end
+
+    test 'that published tender notice can not be edited' do
+      sign_in @confirmed_board_admin, scope: :admin
+
+      get edit_tms_notice_url(@published_tender_notice)
+
+      assert_equal 'Published Tender Notice can not be edited.', flash[:error]
+      assert_redirected_to admin_root_url
+
+      sign_out :admin
+    end
+
+    test 'that published tender notice can not be updated' do
+      sign_in @confirmed_board_admin, scope: :admin
+
+      patch tms_notice_url(@published_tender_notice), params: {
+        notice: {
+          title: 'updated title'
+        }
+      }
+
+      assert_equal 'Published Tender Notice is not updateable.', flash[:error]
+      assert_redirected_to admin_root_url
+
+      sign_out :admin
+    end
+
+    test 'that published tender notice can not be destroyed' do
+      sign_in @confirmed_board_admin, scope: :admin
+
+      delete tms_notice_url(@published_tender_notice)
+
+      assert_equal 'Published Tender Notice can not be destroyed.', flash[:error]
+      assert_redirected_to admin_root_url
 
       sign_out :admin
     end

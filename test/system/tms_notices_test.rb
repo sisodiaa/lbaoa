@@ -39,6 +39,26 @@ class TMSNoticesTest < ApplicationSystemTestCase
     logout :admin
   end
 
+  test 'show and hide edit controls on show based on publication state' do
+    attach_file_to_record(@excel_document.attachment, 'tender_notice.xlsx')
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@published_tender_notice)
+
+    within('.btn-group') do
+      assert_no_selector 'a', text: 'Edit'
+    end
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('.btn-group') do
+      assert_selector 'a', text: 'Edit'
+    end
+
+    logout :admin
+  end
+
   test 'creating a Tender Notice with insufficient data shows validation errors' do
     login_as @confirmed_board_admin, scope: :admin
 
@@ -120,7 +140,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
   test 'destroying a tender notice' do
     login_as @confirmed_board_admin, scope: :admin
 
-    visit tms_notices_url
+    visit draft_tms_notices_url
 
     page.accept_confirm do
       click_on 'Destroy', match: :first

@@ -18,7 +18,9 @@ module TMS
       @notice = TenderNotice.new
     end
 
-    def edit; end
+    def edit
+      authorize @notice, policy_class: TenderNoticePolicy
+    end
 
     def create
       @notice = TenderNotice.new(notice_params)
@@ -32,6 +34,8 @@ module TMS
     end
 
     def update
+      authorize @notice, policy_class: TenderNoticePolicy
+
       if @notice.update(notice_params)
         redirect_to tms_notice_url(@notice),
                     flash: { success: 'Tender Notice was successfully updated.' }
@@ -41,12 +45,18 @@ module TMS
     end
 
     def destroy
+      authorize @notice, policy_class: TenderNoticePolicy
+
       @notice.destroy
       redirect_to tms_notices_path,
                   flash: { success: 'Tender Notice was successfully destroyed.' }
     end
 
     private
+
+    def pundit_user
+      current_admin
+    end
 
     def set_notice
       @notice = TenderNotice.find_by(reference_token: params[:reference_token])

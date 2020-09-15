@@ -199,4 +199,127 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     logout :admin
   end
+
+  test 'set errors if validations are not passed - missing attachement' do
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('#error_explanation') do
+      assert_selector '.invalid-feedback',
+                      text: 'Document attachment is required for publishing the notice'
+    end
+
+    logout :admin
+  end
+
+  test 'set errors if validations are not passed - missing opening_on' do
+    @draft_tender_notice.opening_on = nil
+    @draft_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('#error_explanation') do
+      assert_selector '.invalid-feedback',
+                      text: 'Opening on is required for publishing the notice'
+    end
+
+    logout :admin
+  end
+
+  test 'set errors if validations are not passed - missing closing_on' do
+    @draft_tender_notice.closing_on = nil
+    @draft_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('#error_explanation') do
+      assert_selector '.invalid-feedback',
+                      text: 'Closing on is required for publishing the notice'
+    end
+
+    logout :admin
+  end
+
+  test 'set errors if timeframe is invalid' do
+    @draft_tender_notice.opening_on = DateTime.current + 10.days
+    @draft_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('#error_explanation') do
+      assert_selector '.invalid-feedback',
+                      text: 'Opening on should be before closing on'
+    end
+
+    logout :admin
+  end
+
+  test 'set error if current date is after opening_on of the tender notice' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+    @draft_tender_notice.opening_on = DateTime.current - 5.days
+    @draft_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('#error_explanation') do
+      assert_selector '.invalid-feedback',
+                      text: 'Opening on should be after current date and time'
+    end
+
+    logout :admin
+  end
+
+  test 'publishing a draft tender notice' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+    @draft_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    within('form.button_to') do
+      click_on 'Publish'
+    end
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body',
+                      text: 'Tender Notice was successfully published.'
+    end
+
+    logout :admin
+  end
 end

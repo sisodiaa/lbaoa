@@ -110,5 +110,55 @@ module TMS
 
       sign_out :admin
     end
+
+    test 'that invalid publishing request renders nothing' do
+      sign_in @confirmed_board_admin, scope: :admin
+
+      patch publish_tms_notice_url(@draft_tender_notice), params: {
+        notice: {
+          publish_notice: 'random_value'
+        }
+      }
+
+      assert_empty response.body
+      assert_response :success
+
+      sign_out :admin
+    end
+
+    test 'that validation failure will render error on show' do
+      sign_in @confirmed_board_admin, scope: :admin
+
+      patch publish_tms_notice_url(@draft_tender_notice), params: {
+        notice: {
+          publish_notice: true
+        }
+      }
+
+      assert_response :success
+
+      sign_out :admin
+    end
+
+    test 'that successful publication redirects to show itself' do
+      attach_file_to_record(
+        @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+      )
+      @draft_tender_notice.save
+
+      sign_in @confirmed_board_admin, scope: :admin
+
+      patch publish_tms_notice_url(@draft_tender_notice), params: {
+        notice: {
+          publish_notice: true
+        }
+      }
+
+      assert_equal 'Tender Notice was successfully published.', flash[:success]
+
+      assert_redirected_to tms_notice_url(@draft_tender_notice)
+
+      sign_out :admin
+    end
   end
 end

@@ -8,11 +8,11 @@ class TenderNoticeTimeFrameValidator < ActiveModel::Validator
   private
 
   def error_for_opening_on(record)
-    record.errors[:opening_on] << 'is required for publishing the notice' if record.opening_on.present?
+    record.errors[:opening_on] << 'is required for publishing the notice' if record.opening_on.blank?
   end
 
   def error_for_closing_on(record)
-    record.errors[:closing_on] << 'is required for publishing the notice' if record.closing_on.present?
+    record.errors[:closing_on] << 'is required for publishing the notice' if record.closing_on.blank?
   end
 
   def error_for_invalid_timeframe(record)

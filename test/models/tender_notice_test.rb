@@ -56,7 +56,11 @@ class TenderNoticeTest < ActiveSupport::TestCase
     )
 
     @draft_tender_notice.opening_on = Time.current - 3.days
-    assert_raise(AASM::InvalidTransition) { @draft_tender_notice.publish }
+
+    @draft_tender_notice.publish
+
+    assert_equal ['should be after current date and time'],
+                 @draft_tender_notice.errors[:opening_on]
   end
 
   test 'that manual assignment of publication_state will raise error' do
@@ -109,5 +113,29 @@ class TenderNoticeTest < ActiveSupport::TestCase
   test 'set closing_on to nil for invaid datetime' do
     @published_tender_notice.closing_on_string = '2001-02-30 14:05'
     assert_nil @published_tender_notice.closing_on
+  end
+
+  test 'that publishing a notice sets the published_at' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    assert_nil @draft_tender_notice.published_at
+
+    @draft_tender_notice.publish
+
+    assert_equal DateTime.current.to_i, @draft_tender_notice.published_at.to_i
+  end
+
+  test 'set error if transition to published state fails' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+
+    @draft_tender_notice.opening_on = Time.current - 3.days
+    @draft_tender_notice.publish
+
+    assert_equal ['should be after current date and time'],
+                 @draft_tender_notice.errors[:opening_on]
   end
 end

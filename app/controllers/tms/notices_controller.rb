@@ -5,7 +5,7 @@ module TMS
     layout 'cms_sidebar'
 
     before_action :authenticate_admin!
-    before_action :set_notice, only: %i[show edit update destroy]
+    before_action :set_notice, only: %i[show edit update publish destroy]
 
     def index
       @status = params[:status]
@@ -26,7 +26,7 @@ module TMS
       @notice = TenderNotice.new(notice_params)
 
       if @notice.save
-        redirect_to tms_notice_url(@notice),
+        redirect_to tms_notice_path(@notice),
                     flash: { success: 'Tender Notice was successfully created.' }
       else
         render :new
@@ -37,10 +37,23 @@ module TMS
       authorize @notice, policy_class: TenderNoticePolicy
 
       if @notice.update(notice_params)
-        redirect_to tms_notice_url(@notice),
+        redirect_to tms_notice_path(@notice),
                     flash: { success: 'Tender Notice was successfully updated.' }
       else
         render :edit
+      end
+    end
+
+    def publish
+      return unless params.dig(:notice, :publish_notice) == 'true'
+
+      @notice.publish if @notice.valid?(:notice_publication)
+
+      if @notice.published? && @notice.save
+        redirect_to tms_notice_path(@notice),
+                    flash: { success: 'Tender Notice was successfully published.' }
+      else
+        render :show
       end
     end
 

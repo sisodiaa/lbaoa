@@ -5,6 +5,29 @@
 <% end %>
 
 <div class="tender-notice row">
+  <% if @notice.draft? %>
+    <div class="tender_notice__control mb-4 col-12">
+      <%= button_to 'Publish',
+        publish_tms_notice_path(@notice),
+        method: :patch,
+        params: { notice: { publish_notice: true } },
+        class: 'btn btn-success'
+      %>
+    </div>
+  <% end %>
+
+  <% if @notice.errors.any? %>
+    <div id="error_explanation" class="col-12 mb-3">
+      <h6>Tender Notice publication unsuccessful for following reason(s):</h6>
+      <% @notice.errors.full_messages.each do |message| %>
+        <div class="is-invalid"></div>
+        <div class="invalid-feedback">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="tender-notice__content pod col-12 rounded shadow-sm">
     <h3>
       <%= @notice.title %>

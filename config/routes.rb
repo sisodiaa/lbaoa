@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 
   namespace :tms do
     resources :notices, param: :reference_token do
+      put 'publish', on: :member
+      patch 'publish', on: :member
+
       %w[draft upcoming current archived].each do |status|
         get status, to: 'notices#index', status: status, on: :collection
       end

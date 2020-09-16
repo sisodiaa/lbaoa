@@ -23,7 +23,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     visit tms_notices_url
 
-    assert_selector '.tender-notices__table-row', count: TenderNotice.current.count
+    assert_selector '.tms-notices__table-row', count: TenderNotice.current.count
 
     logout :admin
   end
@@ -70,7 +70,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
       find(:xpath, "//a[@class='dropdown-item'][3]").click
     end
 
-    within('.tender-notice__form') do
+    within('.tms-notice__form') do
       click_on 'Create Tender notice'
     end
 
@@ -90,7 +90,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     visit new_tms_notice_url
 
-    within('form.tender-notice__form') do
+    within('form.tms-notice__form') do
       fill_in 'notice_reference_token', with: 'abc-98-xy_z'
       fill_in 'notice_title', with: 'title'
       fill_in 'notice_description', with: 'description'
@@ -111,7 +111,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Tender Notice was successfully created.'
     end
 
-    assert_selector '.tender-notice__content'
+    assert_selector '.tms-notice__content'
 
     logout :admin
   end
@@ -121,7 +121,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     visit edit_tms_notice_url(@draft_tender_notice)
 
-    within('form.tender-notice__form') do
+    within('form.tms-notice__form') do
       fill_in 'notice_title', with: 'new title for the tender notice'
       click_on 'Update Tender notice'
     end
@@ -131,7 +131,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
       assert_selector '.toast-body', text: 'Tender Notice was successfully updated.'
     end
 
-    within('.tender-notice__content') do
+    within('.tms-notice__content') do
       assert_text 'new title for the tender notice'
     end
 
@@ -166,8 +166,8 @@ class TMSNoticesTest < ApplicationSystemTestCase
       click_on 'Draft'
     end
 
-    within('table.tender-notices__table') do
-      assert_selector '.tender-notices__table-row', count: 2
+    within('table.tms-notices__table') do
+      assert_selector '.tms-notices__table-row', count: 2
       assert_selector 'td', text: 'boom barriers for the society gates'
     end
 
@@ -175,8 +175,8 @@ class TMSNoticesTest < ApplicationSystemTestCase
       click_on 'Upcoming'
     end
 
-    within('table.tender-notices__table') do
-      assert_selector '.tender-notices__table-row', count: 1
+    within('table.tms-notices__table') do
+      assert_selector '.tms-notices__table-row', count: 1
       assert_selector 'td', text: 'supply air quality monitors'
     end
 
@@ -184,8 +184,8 @@ class TMSNoticesTest < ApplicationSystemTestCase
       click_on 'Current'
     end
 
-    within('table.tender-notices__table') do
-      assert_selector '.tender-notices__table-row', count: 1
+    within('table.tms-notices__table') do
+      assert_selector '.tms-notices__table-row', count: 1
       assert_selector 'td', text: 'Barb wire for fencing'
     end
 
@@ -193,8 +193,8 @@ class TMSNoticesTest < ApplicationSystemTestCase
       click_on 'Archived'
     end
 
-    within('table.tender-notices__table') do
-      assert_selector '.tender-notices__table-row', count: 1
+    within('table.tms-notices__table') do
+      assert_selector '.tms-notices__table-row', count: 1
       assert_selector 'td', text: 'Installation for water purifier for each tower'
     end
 

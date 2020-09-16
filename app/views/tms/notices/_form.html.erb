@@ -3,7 +3,7 @@
   url: notice.new_record? ? tms_notices_path : tms_notice_path(notice),
   model: notice,
   local: true,
-  class: 'tender-notice__form',
+  class: 'tms-notice__form',
   data: { controller: 'form-validation-error' }
 ) do |form| %>
   <% if notice.errors.any? %>

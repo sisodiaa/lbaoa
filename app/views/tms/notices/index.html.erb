@@ -1,8 +1,8 @@
 <%= render partial: 'cms_sidebar_notices', locals: { status: @status } %>
 
-<div class="tender-notices row">
+<div class="tms-notices row">
   <div class="pod col-12 rounded shadow-sm">
-    <table class="tender-notices__table table">
+    <table class="tms-notices__table table">
       <thead>
         <tr>
           <th scope="col">Reference Token</th>
@@ -15,7 +15,7 @@
 
       <tbody>
         <% @notices.each do |notice| %>
-          <tr class='tender-notices__table-row'>
+          <tr class='tms-notices__table-row'>
             <td><%= link_to notice.reference_token, tms_notice_path(notice) %></td>
             <td><%= notice.title %></td>
             <td><%= notice.publication_state %></td>

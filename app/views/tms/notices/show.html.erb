@@ -4,7 +4,7 @@
   <%= render partial: 'cms_sidebar_notices', locals: { status: @notice.notice_state }%>
 <% end %>
 
-<div class="tender-notice row">
+<div class="tms-notice row">
   <% if policy(@notice).publish? %>
     <div class="tender_notice__control mb-4 col-12">
       <%= button_to 'Publish',
@@ -28,7 +28,7 @@
     </div>
   <% end %>
 
-  <div class="tender-notice__content pod col-12 rounded shadow-sm">
+  <div class="tms-notice__content pod col-12 rounded shadow-sm">
     <h3>
       <%= @notice.title %>
     </h3>

@@ -16,4 +16,8 @@ class TenderNoticePolicy < ApplicationPolicy
   def destroy?
     record.draft?
   end
+
+  def publish?
+    record.draft? && user.board_member?
+  end
 end

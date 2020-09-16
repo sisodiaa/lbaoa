@@ -8,3 +8,4 @@ en:
      edit?: 'Published Tender Notice can not be edited.'
      update?: 'Published Tender Notice is not updateable.'
      destroy?: 'Published Tender Notice can not be destroyed.'
+     publish?: 'Only board member can publish a tender notice.'

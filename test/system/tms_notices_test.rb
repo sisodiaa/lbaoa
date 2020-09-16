@@ -4,6 +4,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
   setup do
     Warden.test_mode!
     @confirmed_board_admin = admins(:confirmed_board_admin)
+    @confirmed_staff_admin = admins(:confirmed_staff_admin)
     @draft_tender_notice = tender_notices(:boom_barriers)
     @published_tender_notice = tender_notices(:air_quality_monitors)
     @excel_document = documents(:excel)
@@ -13,7 +14,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
     @excel_document = nil
     @published_tender_notice = nil
     @draft_tender_notice = nil
-    @confirmed_board_admin = nil
+    @confirmed_board_admin = @confirmed_staff_admin = nil
     Warden.test_reset!
   end
 
@@ -319,6 +320,36 @@ class TMSNoticesTest < ApplicationSystemTestCase
       assert_selector '.toast-body',
                       text: 'Tender Notice was successfully published.'
     end
+
+    logout :admin
+  end
+
+  test 'that publish button is not visible to staff' do
+    attach_file_to_record(
+      @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+    @draft_tender_notice.save
+
+    login_as @confirmed_staff_admin, scope: :admin
+
+    visit tms_notice_url(@draft_tender_notice)
+
+    assert_no_selector '.tender_notice__control'
+
+    logout :admin
+  end
+
+  test 'that publish button is not visible for published tender notice' do
+    attach_file_to_record(
+      @published_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+    )
+    @published_tender_notice.save
+
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@published_tender_notice)
+
+    assert_no_selector '.tender_notice__control'
 
     logout :admin
   end

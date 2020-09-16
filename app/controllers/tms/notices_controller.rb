@@ -47,6 +47,8 @@ module TMS
     def publish
       return unless params.dig(:notice, :publish_notice) == 'true'
 
+      authorize @notice, policy_class: TenderNoticePolicy
+
       @notice.publish if @notice.valid?(:notice_publication)
 
       if @notice.published? && @notice.save

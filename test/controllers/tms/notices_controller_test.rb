@@ -160,5 +160,26 @@ module TMS
 
       sign_out :admin
     end
+
+    test 'that staff member can not publish tender notice' do
+      attach_file_to_record(
+        @draft_tender_notice.build_document.attachment, 'tender_notice.xlsx'
+      )
+      @draft_tender_notice.save
+
+      sign_in @confirmed_staff_admin, scope: :admin
+
+      patch publish_tms_notice_url(@draft_tender_notice), params: {
+        notice: {
+          publish_notice: true
+        }
+      }
+
+      assert_equal 'Only board member can publish a tender notice.', flash[:error]
+
+      assert_redirected_to admin_root_url
+
+      sign_out :admin
+    end
   end
 end

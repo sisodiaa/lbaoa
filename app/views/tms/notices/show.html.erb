@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="tender-notice row">
-  <% if @notice.draft? %>
+  <% if policy(@notice).publish? %>
     <div class="tender_notice__control mb-4 col-12">
       <%= button_to 'Publish',
         publish_tms_notice_path(@notice),

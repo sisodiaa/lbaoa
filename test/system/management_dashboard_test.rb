@@ -20,6 +20,7 @@ class ManagementDashboardTest < ApplicationSystemTestCase
       assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][1]/td[2]", text: Post.count
       assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][2]/td[2]", text: Category.count
       assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][3]/td[2]", text: Member.confirmed.count
+      assert_selector :xpath, "//tbody/tr[@class='dashboard__table-row'][4]/td[2]", text: TenderNotice.count
     end
 
     logout :admin

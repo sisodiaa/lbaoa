@@ -56,6 +56,21 @@
             %>
           </td>
         </tr>
+
+        <tr id="member-row" class='dashboard__table-row'>
+          <td>Tender Notice</td>
+          <td><%= TenderNotice.count %></td>
+          <td class="btn-group btn-group-sm btn-block" role="group">
+            <%= link_to 'Create Tender Notice',
+              new_tms_notice_path,
+              class: "btn btn-outline-secondary"
+            %>
+            <%= link_to 'Manage Tender Notices',
+              tms_notices_path,
+              class: 'btn btn-secondary'
+            %>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

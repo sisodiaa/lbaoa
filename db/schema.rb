@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_124138) do
+ActiveRecord::Schema.define(version: 2020_09_17_155644) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -159,8 +161,20 @@ ActiveRecord::Schema.define(version: 2020_09_03_124138) do
     t.index ["reference_token"], name: "index_tender_notices_on_reference_token", unique: true
   end
 
+  create_table "tender_proposals", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.text "remark"
+    t.uuid "token", default: -> { "uuid_generate_v4()" }, null: false
+    t.bigint "tender_notice_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tender_notice_id"], name: "index_tender_proposals_on_tender_notice_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "posts", "categories"
   add_foreign_key "taggings", "posts"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "tender_proposals", "tender_notices"
 end

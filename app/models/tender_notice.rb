@@ -4,6 +4,7 @@ class TenderNotice < ApplicationRecord
   after_update :schedule_jobs_for_opening_and_closing_tender_notice
 
   has_one :document, as: :documentable, dependent: :destroy
+  has_many :proposals, class_name: 'TenderNotice'
 
   validates :reference_token, presence: true, uniqueness: true, format: {
     with: /\A[\w-]+\z/,

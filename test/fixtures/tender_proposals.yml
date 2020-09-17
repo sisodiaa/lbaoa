@@ -1,0 +1,6 @@
+pure_air:
+  name: Pure Air Bazaar
+  email: pure_air@example.com
+  token:  <%= SecureRandom.uuid %>
+  remark: We are simply the best
+  tender_notice: air_quality_monitors

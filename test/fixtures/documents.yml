@@ -17,3 +17,7 @@ xls:
 jpg:
   annotation: lorem ipsum
   documentable: club_chiller (Post)
+
+sheet:
+  annotation: Proposal Sheet
+  documentable: pure_air (TenderProposal)

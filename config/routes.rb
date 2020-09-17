@@ -105,6 +105,15 @@ Rails.application.routes.draw do
 
   resources :posts, only: %i[index show]
 
+  namespace :tender do
+    resources :notices, only: %i[index show], param: :reference_token do
+      %w[upcoming current archived].each do |status|
+        get status, to: 'notices#index', status: status, on: :collection
+      end
+      get '/', to: 'notices#index', status: 'current', on: :collection
+    end
+  end
+
   namespace :search do
     get 'posts', to: 'posts#index', as: 'posts'
     get 'members', to: 'members#index', as: 'members'

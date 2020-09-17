@@ -1,0 +1,70 @@
+<div class="row" data-controller="tender-notice-state-selector">
+  <div class="btn-group mb-3 col-12 px-0" role="group">
+    <%= link_to(
+      'Upcoming',
+      upcoming_tender_notices_path,
+      data: {
+        target: 'tender-notice-state-selector.noticeState',
+        pathname: upcoming_tender_notices_path
+      },
+      class: 'btn btn-secondary'
+    ) %>
+
+    <%= link_to(
+      'Current',
+      current_tender_notices_path,
+      data: {
+        target: 'tender-notice-state-selector.noticeState',
+        pathname: current_tender_notices_path
+      },
+      class: 'btn btn-secondary active'
+    ) %>
+
+    <%= link_to(
+      'Archived',
+      archived_tender_notices_path,
+      data: {
+        target: 'tender-notice-state-selector.noticeState',
+        pathname: archived_tender_notices_path
+      },
+      class: 'btn btn-secondary'
+    ) %>
+  </div>
+</div>
+
+<div class="tender-notices row">
+  <% @tender_notices.each do |tender_notice| %>
+    <div class="col-12">
+      <div class="tender-notice podlet rounded shadow-sm row mb-5">
+        <div class="tender-notice__info p-3 mb-3 mb-lg-0 col-lg-9">
+          <h4>
+            <%= tender_notice.title %><br/>
+            <small class="text-muted"><%= tender_notice.reference_token %></small>
+          </h4>
+          <div class="tender-notice__info-data my-3">
+            <strong>Published:</strong> <%= tender_notice.published_at.strftime("%d %B %Y") %><br/>
+            <strong>Opening On:</strong> <%= tender_notice.opening_on.strftime("%d %B %Y") %>
+             -
+            <strong>Closing On:</strong> <%= tender_notice.closing_on.strftime("%d %B %Y") %>
+          </div>
+          <%= link_to 'View Tender Notice', tender_notice_path(tender_notice), class: 'btn btn-outline-info' %>
+        </div> <!-- .tender-notice__info -->
+
+        <div class="tender-notice-proposals bg-light p-3 col-lg-3 
+                    d-lg-flex flex-lg-column justify-content-lg-between">
+          <p>
+            <strong>Proposal Submitted</strong><br/>
+            10<br/>
+            <strong>Awarded to</strong><br/>
+            Cushman and Wakefield
+          </p>
+          <%= link_to 'View Propsoals', '#', class: 'btn btn-info' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="d-flex justify-content-center">
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>

@@ -1,0 +1,44 @@
+<div class="tender-notice row">
+  <div class="tender-notice__content pod col-12 rounded shadow-sm">
+    <h3><%= @notice.title %></h3>
+
+    <p>
+      <strong>Reference Token:</strong> <%= @notice.reference_token %><br />
+      <% if @notice.opening_on.present? %>
+        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
+      <% end %>
+      <% if @notice.closing_on.present? %>
+        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+      <% end %>
+    </p>
+
+    <% if @notice.description.present? %>
+      <div class="mt-5">
+        <strong>Desciption</strong>
+        <%= simple_format(@notice.description) %>
+      </div>
+    <% end %>
+
+    <% if @notice.specification.present? %>
+      <div class="mt-5">
+        <strong>Specification</strong>
+        <%= simple_format(@notice.specification) %>
+      </div>
+    <% end %>
+
+    <% if @notice.terms_and_conditions.present? %>
+      <div class="mt-5">
+        <strong>Terms and Conditions</strong>
+        <%= simple_format(@notice.terms_and_conditions) %>
+      </div>
+    <% end %>
+
+    <% if @notice.document.present? %>
+      <div class="mt-5">
+        <%= link_to rails_blob_path(@notice.document.attachment, disposition: 'attachment') do %>
+          Download <%= @notice.document.attachment.filename.to_s %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -5,4 +5,5 @@ class TenderProposal < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :document, presence: true
+  validates_associated :document
 end

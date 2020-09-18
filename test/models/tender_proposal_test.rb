@@ -3,6 +3,9 @@ require 'test_helper'
 class TenderProposalTest < ActiveSupport::TestCase
   setup do
     @pure_air = tender_proposals(:pure_air)
+    attach_file_to_record(
+      @pure_air.document.attachment, 'sheet.xlsx'
+    )
   end
 
   teardown do
@@ -42,5 +45,10 @@ class TenderProposalTest < ActiveSupport::TestCase
   test 'that attached sheet is present' do
     @pure_air.document = nil
     assert_not @pure_air.valid?, 'Attached sheet is missing'
+  end
+
+  test 'that sheet is attached to associated document' do
+    @pure_air.document.attachment = nil
+    assert_not @pure_air.valid?, 'Sheet is not attached to the associated document'
   end
 end

@@ -2,24 +2,24 @@ require 'test_helper'
 
 class TenderProposalTest < ActiveSupport::TestCase
   setup do
-    @pure_air = tender_proposals(:pure_air)
+    @wirewala = tender_proposals(:wirewala)
     attach_file_to_record(
-      @pure_air.document.attachment, 'sheet.xlsx'
+      @wirewala.document.attachment, 'sheet.xlsx'
     )
   end
 
   teardown do
-    @pure_air = nil
+    @wirewala = nil
   end
 
   test 'that name is present' do
-    @pure_air.name = ''
-    assert_not @pure_air.valid?, 'Name is required'
+    @wirewala.name = ''
+    assert_not @wirewala.valid?, 'Name is required'
   end
 
   test 'that email is present' do
-    @pure_air.email = ''
-    assert_not @pure_air.valid?, 'Email is required'
+    @wirewala.email = ''
+    assert_not @wirewala.valid?, 'Email is required'
   end
 
   test 'reject invalid email addresses' do
@@ -27,8 +27,8 @@ class TenderProposalTest < ActiveSupport::TestCase
                            foo@bar_baz.com foo@bar+baz.com]
 
     invalid_addresses.each do |invalid_address|
-      @pure_air.email = invalid_address
-      assert_not @pure_air.valid?, "#{invalid_address.inspect} should be invalid"
+      @wirewala.email = invalid_address
+      assert_not @wirewala.valid?, "#{invalid_address.inspect} should be invalid"
     end
   end
 
@@ -37,18 +37,26 @@ class TenderProposalTest < ActiveSupport::TestCase
                          first.last@foo.jp alice+bob@baz.cn]
 
     valid_addresses.each do |valid_address|
-      @pure_air.email = valid_address
-      assert @pure_air.valid?, "#{valid_address.inspect} should be valid"
+      @wirewala.email = valid_address
+      assert @wirewala.valid?, "#{valid_address.inspect} should be valid"
     end
   end
 
   test 'that attached sheet is present' do
-    @pure_air.document = nil
-    assert_not @pure_air.valid?, 'Attached sheet is missing'
+    @wirewala.document = nil
+    assert_not @wirewala.valid?, 'Attached sheet is missing'
   end
 
   test 'that sheet is attached to associated document' do
-    @pure_air.document.attachment = nil
-    assert_not @pure_air.valid?, 'Sheet is not attached to the associated document'
+    @wirewala.document.attachment = nil
+    assert_not @wirewala.valid?, 'Sheet is not attached to the associated document'
+  end
+
+  test 'that only current tender notices can have proposals' do
+    proposal = tender_proposals(:airwala)
+    attach_file_to_record(
+      proposal.build_document.attachment, 'sheet.xlsx'
+    )
+    assert_not proposal.valid?, 'TenderNotice state is not current'
   end
 end

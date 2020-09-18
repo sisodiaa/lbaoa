@@ -1,5 +1,5 @@
 class TenderProposal < ApplicationRecord
-  belongs_to :tender_notice
+  belongs_to :tender_notice, -> { where notice_state: :current }, inverse_of: :proposals
   has_one :document, as: :documentable, dependent: :destroy
 
   validates :name, presence: true

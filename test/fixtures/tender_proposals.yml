@@ -1,6 +1,12 @@
-pure_air:
-  name: Pure Air Bazaar
-  email: pure_air@example.com
+wirewala:
+  name: Wire Wala and Sons
+  email: wirewala@example.com
   token:  <%= SecureRandom.uuid %>
   remark: We are simply the best
+  tender_notice: barb_wire
+
+airwala:
+  name: airwala and sons
+  email: airwala@example.com
+  token:  <%= SecureRandom.uuid %>
   tender_notice: air_quality_monitors

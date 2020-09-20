@@ -6,9 +6,15 @@ class TenderProposal < ApplicationRecord
   accepts_nested_attributes_for :document
 
   validates :name, presence: true
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :token, uniqueness: true
   validates_associated :document
+  validates :email,
+            presence: true,
+            format: { with: URI::MailTo::EMAIL_REGEXP },
+            uniqueness: {
+              scope: :tender_notice_id,
+              message: 'already used before to submit a proposal for this tender notice'
+            }
 
   def to_param
     token

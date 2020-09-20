@@ -58,4 +58,17 @@ class TenderProposalTest < ActiveSupport::TestCase
   test 'that token value is unique' do
     assert_not @wirewala.dup.valid?, 'Token value is not unique'
   end
+
+  test 'that email is unique per notice' do
+    proposal = TenderProposal.new(
+      name: 'abc',
+      email: @wirewala.email,
+      tender_notice_id: @wirewala.tender_notice_id
+    )
+    attach_file_to_record(
+      proposal.build_document.attachment, 'sheet.xlsx'
+    )
+
+    assert_not proposal.valid?, 'Email per notice needs to be unique'
+  end
 end

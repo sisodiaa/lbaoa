@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_122611) do
+ActiveRecord::Schema.define(version: 2020_09_20_174648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_122611) do
     t.bigint "tender_notice_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email", "tender_notice_id"], name: "index_tender_proposals_on_email_and_tender_notice_id", unique: true
     t.index ["tender_notice_id"], name: "index_tender_proposals_on_tender_notice_id"
     t.index ["token"], name: "index_tender_proposals_on_token", unique: true
   end

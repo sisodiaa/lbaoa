@@ -1,0 +1,10 @@
+<tr>
+  <td>
+    <%= link_to proposal.name, tender_proposal_path(proposal), target: "_blank",  rel: "noopener noreferrer" %>
+  </td>
+  <td>
+    <%= link_to rails_blob_path(proposal.document.attachment, disposition: 'attachment') do %>
+      Download Document
+    <% end %>
+  </td>
+</tr>

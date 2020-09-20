@@ -10,3 +10,24 @@ airwala:
   email: airwala@example.com
   token:  <%= SecureRandom.uuid %>
   tender_notice: air_quality_monitors
+
+waterwala:
+  name: waterwala and sons
+  email: waterwala@example.com
+  token:  <%= SecureRandom.uuid %>
+  remark: We are simply the best
+  tender_notice: water_purifier
+
+paaniwala:
+  name: paaniwala and sons
+  email: paaniwala@example.com
+  token:  <%= SecureRandom.uuid %>
+  remark: We are simply the best
+  tender_notice: water_purifier
+
+purifierwala:
+  name: purifierwala and sons
+  email: purifierwala@example.com
+  token:  <%= SecureRandom.uuid %>
+  remark: We are simply the best
+  tender_notice: water_purifier

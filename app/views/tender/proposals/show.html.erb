@@ -1,0 +1,25 @@
+<div class="tender-proposal row">
+  <div class="pod col-12 rounded shadow-sm">
+    <h3 class="text-center">Proposal summary</h3>
+
+    <h5 class="mt-4">Proposal submitted for</h5>
+    <%= link_to @proposal.tender_notice.title, @proposal.tender_notice %>
+
+    <h5 class="mt-4">Vendor Name</h5>
+    <%= @proposal.name %>
+
+    <h5 class="mt-4">Vendor Email</h5>
+    <%= @proposal.email %>
+
+    <% if @proposal.remark %>
+      <h5 class="mt-4">Vendor Remark</h5>
+      <%= @proposal.remark %>
+    <% end %>
+
+    <div class="mt-4">
+      <%= link_to rails_blob_path(@proposal.document.attachment, disposition: 'attachment') do %>
+        Download Proposal
+      <% end %>
+    </div>
+  </div>
+</div>

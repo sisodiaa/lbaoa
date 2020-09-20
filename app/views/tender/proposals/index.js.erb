@@ -1,0 +1,3 @@
+document
+  .getElementById('tenderProposalsTableBody')
+  .innerHTML = "<%= escape_javascript(render partial: 'proposal', collection: @proposals, as: :proposal) %>";

@@ -111,6 +111,10 @@ Rails.application.routes.draw do
         get status, to: 'notices#index', status: status, on: :collection
       end
       get '/', to: 'notices#index', status: 'current', on: :collection
+      resources :proposals,
+                shallow: true,
+                param: :token,
+                except: %w[edit update destroy]
     end
   end
 

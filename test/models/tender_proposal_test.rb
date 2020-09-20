@@ -42,11 +42,6 @@ class TenderProposalTest < ActiveSupport::TestCase
     end
   end
 
-  test 'that attached sheet is present' do
-    @wirewala.document = nil
-    assert_not @wirewala.valid?, 'Attached sheet is missing'
-  end
-
   test 'that sheet is attached to associated document' do
     @wirewala.document.attachment = nil
     assert_not @wirewala.valid?, 'Sheet is not attached to the associated document'

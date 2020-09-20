@@ -1,5 +1,7 @@
 <div class="tender-notice row">
   <div class="tender-notice__content pod col-12 rounded shadow-sm">
+    <h1 class="text-center mb-5">Tender Notice</h1>
+
     <h3><%= @notice.title %></h3>
 
     <p>
@@ -40,5 +42,9 @@
         <% end %>
       </div>
     <% end %>
+  </div>
+
+  <div class="tender-notice__controls">
+    <%= link_to 'Submit your proposal', new_tender_notice_proposal_path(@notice), class: 'btn btn-primary' %>
   </div>
 </div>

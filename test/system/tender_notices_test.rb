@@ -38,4 +38,18 @@ class TenderNoticesTest < ApplicationSystemTestCase
     assert_selector '.tender-notices.row'
     assert_selector '.tender-notice', count: 1
   end
+
+  test 'list proposals for archived tender notice' do
+    tender_notices(:water_purifier).proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+
+    visit archived_tender_notices_url
+
+    click_on 'View Propsoals'
+
+    within('#tenderProposalsTableModalBody') do
+      assert_selector '#tenderProposalsTableBody tr', count: 3
+    end
+  end
 end

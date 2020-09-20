@@ -21,3 +21,15 @@ jpg:
 sheet:
   annotation: Proposal Sheet
   documentable: wirewala (TenderProposal)
+
+archived_sheet1:
+  annotation: Proposal Sheet
+  documentable: waterwala (TenderProposal)
+
+archived_sheet2:
+  annotation: Proposal Sheet
+  documentable: paaniwala (TenderProposal)
+
+archived_sheet3:
+  annotation: Proposal Sheet
+  documentable: purifierwala (TenderProposal)

@@ -17,7 +17,7 @@ export default class extends Controller {
       this.messageNodes = Array.from(element.children);
 
       // Add is-invalid class to highlillght the field
-      this.formField.classList.add("is-invalid");
+      this.formField && this.formField.classList.add("is-invalid");
 
       // Iterate over each error message and assign them to textContent of
       // each node clonded from the template
@@ -51,6 +51,6 @@ export default class extends Controller {
     const clone = this.template.content.cloneNode(true);
     const div = clone.querySelector("div");
     div.textContent = errorMessage;
-    this.formField.after(clone);
+    this.formField && this.formField.after(clone);
   }
 }

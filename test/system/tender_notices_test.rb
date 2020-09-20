@@ -25,18 +25,25 @@ class TenderNoticesTest < ApplicationSystemTestCase
     assert_selector '.active', text: 'Upcoming'
     assert_selector '.tender-notices.row'
     assert_selector '.tender-notice', count: 1
+    assert_no_selector '.tender-notice-proposals'
 
     visit current_tender_notices_url
 
     assert_selector '.active', text: 'Current'
     assert_selector '.tender-notices.row'
     assert_selector '.tender-notice', count: 1
+    within('.tender-notice-proposals') do
+      assert_selector 'a.btn', text: 'Submit your proposal'
+    end
 
     visit archived_tender_notices_url
 
     assert_selector '.active', text: 'Archived'
     assert_selector '.tender-notices.row'
     assert_selector '.tender-notice', count: 1
+    within('.tender-notice-proposals') do
+      assert_selector 'a.btn', text: 'View Propsoals'
+    end
   end
 
   test 'list proposals for archived tender notice' do

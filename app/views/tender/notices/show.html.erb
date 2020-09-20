@@ -44,7 +44,12 @@
     <% end %>
   </div>
 
-  <div class="tender-notice__controls">
-    <%= link_to 'Submit your proposal', new_tender_notice_proposal_path(@notice), class: 'btn btn-primary' %>
-  </div>
+  <% if @notice.current? %>
+    <div class="tender-notice__controls">
+      <%= link_to 'Submit your proposal',
+                  new_tender_notice_proposal_path(@notice),
+                  class: 'btn btn-primary'
+      %>
+    </div>
+  <% end %>
 </div>

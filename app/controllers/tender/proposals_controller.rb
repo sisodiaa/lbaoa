@@ -3,7 +3,7 @@ module Tender
     before_action :set_notice, except: :show
 
     def index
-      @proposals = @notice.proposals
+      @proposals = policy_scope(@notice.proposals)
       respond_to :js
     end
 
@@ -13,11 +13,13 @@ module Tender
 
     def new
       @proposal = @notice.proposals.build
+      authorize @proposal, policy_class: TenderProposalPolicy
       @proposal.build_document
     end
 
     def create
       @proposal = @notice.proposals.build(proposal_params)
+      authorize @proposal, policy_class: TenderProposalPolicy
 
       if @proposal.save
         redirect_to @proposal, flash: { success: flash_message_for_success }
@@ -27,6 +29,10 @@ module Tender
     end
 
     private
+
+    def pundit_user
+      nil
+    end
 
     def set_notice
       @notice = TenderNotice.find_by(reference_token: params[:notice_reference_token])

@@ -54,4 +54,8 @@ class TenderProposalTest < ActiveSupport::TestCase
     )
     assert_not proposal.valid?, 'TenderNotice state is not current'
   end
+
+  test 'that token value is unique' do
+    assert_not @wirewala.dup.valid?, 'Token value is not unique'
+  end
 end

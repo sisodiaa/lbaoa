@@ -1,7 +1,7 @@
 class TenderProposal < ApplicationRecord
   after_commit :reload_token, on: :create
 
-  belongs_to :tender_notice, -> { where notice_state: :current }, inverse_of: :proposals
+  belongs_to :tender_notice, inverse_of: :proposals
   has_one :document, as: :documentable, dependent: :destroy
   accepts_nested_attributes_for :document
 

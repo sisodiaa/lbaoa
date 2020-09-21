@@ -47,14 +47,6 @@ class TenderProposalTest < ActiveSupport::TestCase
     assert_not @wirewala.valid?, 'Sheet is not attached to the associated document'
   end
 
-  test 'that only current tender notices can have proposals' do
-    proposal = tender_proposals(:airwala)
-    attach_file_to_record(
-      proposal.build_document.attachment, 'sheet.xlsx'
-    )
-    assert_not proposal.valid?, 'TenderNotice state is not current'
-  end
-
   test 'that token value is unique' do
     assert_not @wirewala.dup.valid?, 'Token value is not unique'
   end

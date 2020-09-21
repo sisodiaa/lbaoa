@@ -1,9 +1,10 @@
 class TenderProposalPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      raise Pundit::NotAuthorizedError unless scope.first.tender_notice.archived?
+      tender_notice = scope.first.tender_notice
+      return scope.all if tender_notice.under_review? || tender_notice.archived?
 
-      scope.all
+      raise Pundit::NotAuthorizedError
     end
   end
 

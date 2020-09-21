@@ -31,3 +31,10 @@ purifierwala:
   token:  <%= SecureRandom.uuid %>
   remark: We are simply the best
   tender_notice: water_purifier
+
+elevatorwala:
+  name: elevatorwala and sons
+  email: elevatorwala@example.com
+  token:  <%= SecureRandom.uuid %>
+  remark: We are simply the best
+  tender_notice: elevator_buttons

@@ -190,12 +190,21 @@ class TMSNoticesTest < ApplicationSystemTestCase
     end
 
     within('#collapse-tender-notices') do
-      click_on 'Archived'
+      click_on 'Under Review'
     end
 
     within('table.tms-notices__table') do
       assert_selector '.tms-notices__table-row', count: 1
       assert_selector 'td', text: 'Installation for water purifier for each tower'
+    end
+
+    within('#collapse-tender-notices') do
+      click_on 'Archived'
+    end
+
+    within('table.tms-notices__table') do
+      assert_selector '.tms-notices__table-row', count: 1
+      assert_selector 'td', text: 'Replacement of elevator buttons'
     end
 
     logout :admin

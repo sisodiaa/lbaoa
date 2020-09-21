@@ -1,5 +1,5 @@
 <div class="row" data-controller="tender-notice-state-selector">
-  <div class="btn-group mb-3 col-12 px-0" role="group">
+  <div class="btn-group mb-4 col-12 px-0" role="group">
     <%= link_to(
       'Upcoming',
       upcoming_tender_notices_path,
@@ -18,6 +18,16 @@
         pathname: current_tender_notices_path
       },
       class: 'btn btn-secondary active'
+    ) %>
+
+    <%= link_to(
+      'Under Review',
+      under_review_tender_notices_path,
+      data: {
+        target: 'tender-notice-state-selector.noticeState',
+        pathname: under_review_tender_notices_path
+      },
+      class: 'btn btn-secondary'
     ) %>
 
     <%= link_to(

@@ -3,6 +3,6 @@ class CloseTenderNoticeJob < ApplicationJob
 
   def perform(reference_token)
     notice = TenderNotice.find_by(reference_token: reference_token)
-    notice.archived! if notice&.published?
+    notice.under_review! if notice&.published?
   end
 end

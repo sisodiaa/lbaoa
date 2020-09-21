@@ -20,6 +20,9 @@ module Tender
       get current_tender_notices_url
       assert_response :success
 
+      get under_review_tender_notices_url
+      assert_response :success
+
       get archived_tender_notices_url
       assert_response :success
     end

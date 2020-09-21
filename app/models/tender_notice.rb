@@ -24,7 +24,8 @@ class TenderNotice < ApplicationRecord
   enum notice_state: {
     upcoming: 0,
     current: 1,
-    archived: 2
+    under_review: 2,
+    archived: 3
   }
 
   aasm(

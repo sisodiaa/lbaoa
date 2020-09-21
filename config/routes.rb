@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       put 'publish', on: :member
       patch 'publish', on: :member
 
-      %w[draft upcoming current archived].each do |status|
+      %w[draft upcoming current under_review archived].each do |status|
         get status, to: 'notices#index', status: status, on: :collection
       end
       get '/', to: 'notices#index', status: 'current', on: :collection
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
 
   namespace :tender do
     resources :notices, only: %i[index show], param: :reference_token do
-      %w[upcoming current archived].each do |status|
+      %w[upcoming current under_review archived].each do |status|
         get status, to: 'notices#index', status: status, on: :collection
       end
       get '/', to: 'notices#index', status: 'current', on: :collection

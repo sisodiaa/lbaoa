@@ -3,13 +3,9 @@ require 'application_system_test_case'
 class TenderNoticesTest < ApplicationSystemTestCase
   setup do
     Warden.test_mode!
-    @published_tender_notice = tender_notices(:air_quality_monitors)
-    @excel_document = documents(:excel)
   end
 
   teardown do
-    @excel_document = nil
-    @published_tender_notice = nil
     Warden.test_reset!
   end
 
@@ -36,6 +32,15 @@ class TenderNoticesTest < ApplicationSystemTestCase
       assert_selector 'a.btn', text: 'Submit your proposal'
     end
 
+    visit under_review_tender_notices_url
+
+    assert_selector '.active', text: 'Under Review'
+    assert_selector '.tender-notices.row'
+    assert_selector '.tender-notice', count: 1
+    within('.tender-notice-proposals') do
+      assert_selector 'a.btn', text: 'View Propsoals'
+    end
+
     visit archived_tender_notices_url
 
     assert_selector '.active', text: 'Archived'
@@ -46,8 +51,22 @@ class TenderNoticesTest < ApplicationSystemTestCase
     end
   end
 
-  test 'list proposals for archived tender notice' do
+  test 'list proposals for under review tender notice' do
     tender_notices(:water_purifier).proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+
+    visit under_review_tender_notices_url
+
+    click_on 'View Propsoals'
+
+    within('#tenderProposalsTableModalBody') do
+      assert_selector '#tenderProposalsTableBody tr', count: 3
+    end
+  end
+
+  test 'list proposals for archived notice' do
+    tender_notices(:elevator_buttons).proposals.each do |proposal|
       attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
     end
 
@@ -56,7 +75,7 @@ class TenderNoticesTest < ApplicationSystemTestCase
     click_on 'View Propsoals'
 
     within('#tenderProposalsTableModalBody') do
-      assert_selector '#tenderProposalsTableBody tr', count: 3
+      assert_selector '#tenderProposalsTableBody tr', count: 1
     end
   end
 end

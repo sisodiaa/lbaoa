@@ -78,3 +78,19 @@ water_purifier:
   closing_on: <%= Time.current - 1.day %>
   notice_state: 2
   publication_state: 1
+
+elevator_buttons:
+  reference_token: lb-elevator-21
+  title: Replacement of elevator buttons
+  description: |-
+    We will install water purifier for each towetr
+  specification: |-
+    Cost of 1 unit should not be more than INR 10,000
+  terms_and_conditions: |-
+    a. Term 1
+    b. Term 2
+  published_at: <%= Time.current - 6.day %>
+  opening_on: <%= Time.current - 4.day %>
+  closing_on: <%= Time.current - 1.day %>
+  notice_state: 3
+  publication_state: 1

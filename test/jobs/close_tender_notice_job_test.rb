@@ -9,11 +9,11 @@ class CloseTenderNoticeJobTest < ActiveJob::TestCase
     @notice = nil
   end
 
-  test 'tender notice state changes to archived' do
+  test 'tender notice state changes to under_review' do
     assert @notice.current?
 
     CloseTenderNoticeJob.perform_now(@notice.reference_token)
 
-    assert @notice.reload.archived?
+    assert @notice.reload.under_review?
   end
 end

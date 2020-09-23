@@ -3,13 +3,18 @@ require 'test_helper'
 class TenderProposalTest < ActiveSupport::TestCase
   setup do
     @wirewala = tender_proposals(:wirewala)
+    @waterwala = tender_proposals(:waterwala)
+
     attach_file_to_record(
       @wirewala.document.attachment, 'sheet.xlsx'
+    )
+    attach_file_to_record(
+      @waterwala.document.attachment, 'sheet.xlsx'
     )
   end
 
   teardown do
-    @wirewala = nil
+    @wirewala = @waterwala = nil
   end
 
   test 'that name is present' do
@@ -62,5 +67,39 @@ class TenderProposalTest < ActiveSupport::TestCase
     )
 
     assert_not proposal.valid?, 'Email per notice needs to be unique'
+  end
+
+  test 'that manual assignment of proposal_state will raise error' do
+    assert_raise(AASM::NoDirectAssignmentError) do
+      @waterwala.proposal_state = :selected
+    end
+  end
+
+  test 'that selection event will change the proposal_state' do
+    assert @waterwala.pending?
+    assert_not @waterwala.selected?
+
+    @waterwala.selection
+
+    assert_not @waterwala.pending?
+    assert @waterwala.selected?
+  end
+
+  test 'that rejection event will change the proposal_state' do
+    assert @waterwala.pending?
+    assert_not @waterwala.rejected?
+
+    @waterwala.rejection
+
+    assert_not @waterwala.pending?
+    assert @waterwala.rejected?
+  end
+
+  test 'that error is raised upon selection event if notice is not under review' do
+    assert_raise(AASM::InvalidTransition) { @wirewala.selection }
+  end
+
+  test 'that error is raised upon rejection event if notice is not under review' do
+    assert_raise(AASM::InvalidTransition) { @wirewala.rejection }
   end
 end

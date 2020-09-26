@@ -106,12 +106,12 @@ class TenderNoticeTest < ActiveSupport::TestCase
   end
 
   test 'set opening_on to nil for invaid datetime' do
-    @published_tender_notice.opening_on_string = '2001-02-30 14:05'
+    @published_tender_notice.opening_on_string = '2001-02-36 14:05'
     assert_nil @published_tender_notice.opening_on
   end
 
   test 'set closing_on to nil for invaid datetime' do
-    @published_tender_notice.closing_on_string = '2001-02-30 14:05'
+    @published_tender_notice.closing_on_string = '2001-22-30 14:05'
     assert_nil @published_tender_notice.closing_on
   end
 

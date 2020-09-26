@@ -62,7 +62,7 @@ class TenderNotice < ApplicationRecord
   end
 
   def opening_on_string=(opening_on_str)
-    self.opening_on = DateTime.parse(opening_on_str)
+    self.opening_on = Time.zone.parse(opening_on_str)
   rescue ArgumentError
     self.opening_on = nil
   end
@@ -74,7 +74,7 @@ class TenderNotice < ApplicationRecord
   end
 
   def closing_on_string=(closing_on_str)
-    self.closing_on = DateTime.parse(closing_on_str)
+    self.closing_on = Time.zone.parse(closing_on_str)
   rescue ArgumentError
     self.closing_on = nil
   end

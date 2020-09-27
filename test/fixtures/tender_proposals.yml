@@ -37,4 +37,5 @@ elevatorwala:
   email: elevatorwala@example.com
   token:  <%= SecureRandom.uuid %>
   remark: We are simply the best
+  proposal_state: selected
   tender_notice: elevator_buttons

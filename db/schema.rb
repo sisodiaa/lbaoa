@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_182838) do
+ActiveRecord::Schema.define(version: 2020_09_25_080840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_182838) do
     t.integer "publication_state", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "selection_reason"
     t.index ["reference_token"], name: "index_tender_notices_on_reference_token", unique: true
   end
 

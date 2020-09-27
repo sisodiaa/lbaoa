@@ -89,8 +89,11 @@ elevator_buttons:
   terms_and_conditions: |-
     a. Term 1
     b. Term 2
+  selection_reason: |-
+    1. Best service
+    2. Reasonable cost
   published_at: <%= Time.current - 6.day %>
   opening_on: <%= Time.current - 4.day %>
   closing_on: <%= Time.current - 1.day %>
-  notice_state: 3
+  notice_state: archived
   publication_state: 1

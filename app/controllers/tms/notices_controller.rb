@@ -12,7 +12,9 @@ module TMS
       @pagy, @notices = set_notices
     end
 
-    def show; end
+    def show
+      @proposal_selection_form = TMS::ProposalSelectionForm.new if @notice.under_review?
+    end
 
     def new
       @notice = TenderNotice.new

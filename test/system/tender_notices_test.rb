@@ -58,6 +58,8 @@ class TenderNoticesTest < ApplicationSystemTestCase
 
     visit under_review_tender_notices_url
 
+    assert_selector '.tender-notice-proposal-vendor', text: 'Not yet decided'
+
     click_on 'View Propsoals'
 
     within('#tenderProposalsTableModalBody') do
@@ -65,12 +67,16 @@ class TenderNoticesTest < ApplicationSystemTestCase
     end
   end
 
-  test 'list proposals for archived notice' do
-    tender_notices(:elevator_buttons).proposals.each do |proposal|
+  test "list proposals for archived notice and show selected vendor's name" do
+    archived_notice = tender_notices(:elevator_buttons)
+    archived_notice.proposals.each do |proposal|
       attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
     end
 
     visit archived_tender_notices_url
+
+    assert_selector '.tender-notice-proposal-vendor',
+                    text: archived_notice.proposals.selected.first.name
 
     click_on 'View Propsoals'
 

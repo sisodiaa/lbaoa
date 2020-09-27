@@ -53,9 +53,9 @@
           </h4>
           <div class="tender-notice__info-data my-3">
             <strong>Published:</strong> <%= tender_notice.published_at.strftime("%d %B %Y") %><br/>
-            <strong>Opening On:</strong> <%= tender_notice.opening_on.strftime("%d %B %Y") %>
-             -
-            <strong>Closing On:</strong> <%= tender_notice.closing_on.strftime("%d %B %Y") %>
+            <strong>Opening On:</strong> <%= tender_notice.opening_on.strftime("%d %B %Y %I:%M %p") %>
+            <br />
+            <strong>Closing On:</strong> <%= tender_notice.closing_on.strftime("%d %B %Y %I:%M %p") %>
           </div>
           <%= link_to 'View Tender Notice', tender_notice_path(tender_notice), class: 'btn btn-outline-info' %>
         </div> <!-- .tender-notice__info -->
@@ -65,9 +65,20 @@
                       d-lg-flex flex-lg-column justify-content-lg-between">
             <p>
               <strong>Proposal Submitted</strong><br/>
-              <%= tender_notice.proposals.count %><br/>
+              <%= tender_notice.proposals.size %><br/>
+
               <strong>Awarded to</strong><br/>
-              Cushman and Wakefield
+              <span class="tender-notice-proposal-vendor">
+                <% if tender_notice.archived? %>
+                  <%= link_to(
+                    tender_notice.proposals.selected.first.name,
+                    tender_notice_path(tender_notice, anchor: 'tender-notice-selected-proposal'),
+                    target: "_blank", rel: "noopener noreferrer"
+                  ) %>
+                <% else %>
+                  Not yet decided
+                <% end %>
+              </span>
             </p>
             <% if tender_notice.current? %>
               <%= link_to(

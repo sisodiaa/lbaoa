@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       end
       get '/', to: 'notices#index', status: 'current', on: :collection
     end
+
+    post '/notices/:reference_token/proposals/selection',
+         to: 'proposal_selection#create',
+         as: 'proposal_selection'
   end
 
   resources :tender_notices, only: [], path: '/tms/notices', param: :reference_token do

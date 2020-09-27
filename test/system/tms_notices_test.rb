@@ -7,11 +7,17 @@ class TMSNoticesTest < ApplicationSystemTestCase
     @confirmed_staff_admin = admins(:confirmed_staff_admin)
     @draft_tender_notice = tender_notices(:boom_barriers)
     @published_tender_notice = tender_notices(:air_quality_monitors)
+    @under_review_tender_notice = tender_notices(:water_purifier)
+    @archived_tender_notice = tender_notices(:elevator_buttons)
+    @current_tender_notice = tender_notices(:barb_wire)
     @excel_document = documents(:excel)
   end
 
   teardown do
     @excel_document = nil
+    @current_tender_notice = nil
+    @archived_tender_notice = nil
+    @under_review_tender_notice = nil
     @published_tender_notice = nil
     @draft_tender_notice = nil
     @confirmed_board_admin = @confirmed_staff_admin = nil
@@ -359,6 +365,103 @@ class TMSNoticesTest < ApplicationSystemTestCase
     visit tms_notice_url(@published_tender_notice)
 
     assert_no_selector '.tender_notice__control'
+
+    logout :admin
+  end
+
+  test 'that proposals will be shown for under_review tender notices' do
+    @under_review_tender_notice.proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@under_review_tender_notice)
+
+    within('.tms-notice-proposals') do
+      assert_selector 'tr.tms-notice-proposal', count: 3
+    end
+
+    logout :admin
+  end
+
+  test 'that proposals will be shown for archived tender notices' do
+    @archived_tender_notice.proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@archived_tender_notice)
+
+    within('.tms-notice-proposals') do
+      assert_selector 'tr.tms-notice-proposal', count: 1
+    end
+
+    logout :admin
+  end
+
+  test 'that proposals will not be shown for current tender notices' do
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@current_tender_notice)
+
+    assert_no_selector '.tms-notice-proposals'
+
+    logout :admin
+  end
+
+  test 'show errors in proposal selection form when it is not filled' do
+    @under_review_tender_notice.proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@under_review_tender_notice)
+
+    within('form.tms-proposal-selction__form') do
+      click_on "Select Vendor's Proposal"
+    end
+
+    assert_selector '.invalid-feedback', text: "Selection reason can't be blank"
+    assert_selector '.invalid-feedback',
+                    text: 'Email is not found in proposals submitted for the tender notice'
+
+    logout :admin
+  end
+
+  test 'successful proposal selection' do
+    @under_review_tender_notice.proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+    login_as @confirmed_board_admin, scope: :admin
+
+    visit tms_notice_url(@under_review_tender_notice)
+
+    select @under_review_tender_notice.proposals.first.email,
+           from: 'proposal_selection_form[token]'
+    fill_in 'proposal_selection_form_selection_reason', with: 'good offering'
+    click_on "Select Vendor's Proposal"
+
+    within('.toast') do
+      assert_selector '.toast-header strong', text: 'Success'
+      assert_selector '.toast-body', text: 'Proposal selected successfully.'
+    end
+    within('.tms-proposal') do
+      assert_text 'good offering'
+    end
+    assert_selector 'a.list-group-item', text: 'Archived'
+
+    logout :admin
+  end
+
+  test 'that proposal selection form is not visible to staff admin' do
+    @under_review_tender_notice.proposals.each do |proposal|
+      attach_file_to_record(proposal.document.attachment, 'sheet.xlsx')
+    end
+    login_as @confirmed_staff_admin, scope: :admin
+
+    visit tms_notice_url(@under_review_tender_notice)
+
+    assert_no_selector '.tms-proposal-selction'
 
     logout :admin
   end

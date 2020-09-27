@@ -7,10 +7,10 @@
     <p>
       <strong>Reference Token:</strong> <%= @notice.reference_token %><br />
       <% if @notice.opening_on.present? %>
-        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
+        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y %I:%M %p") %><br />
       <% end %>
       <% if @notice.closing_on.present? %>
-        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y %I:%M %p") %><br />
       <% end %>
     </p>
 
@@ -50,6 +50,53 @@
                   new_tender_notice_proposal_path(@notice),
                   class: 'btn btn-primary'
       %>
+    </div>
+  <% end %>
+
+  <% if @notice.archived? %>
+    <div id="tender-notice-selected-proposal" class="tender-proposal pod col-12 rounded shadow-sm">
+      <h3 class="mb-4">Selected Proposal</h3>
+
+      <h5 class="mt-4">Vendor Name</h5>
+      <%= @notice.proposals.selected.first.name %>
+
+      <h5 class="mt-4">Vendor Email</h5>
+      <%= @notice.proposals.selected.first.email %>
+
+      <h5 class="mt-4">Reason(s) for selecting the vendor</h5>
+      <%= simple_format @notice.selection_reason %>
+    </div>
+  <% end %>
+
+  <% if @notice.under_review? || @notice.archived? %>
+    <div class="tender-notice-proposals pod col-12 rounded shadow-sm">
+      <h3 class="mb-4">Proposals submitted</h3>
+
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Vendor Name</th>
+            <th scope="col">Vendor Email</th>
+            <th scope="col">Proposal Document</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @notice.proposals.each do |proposal| %>
+            <tr class="tender-notice-proposal">
+              <td><%= proposal.name %></td>
+              <td><%= proposal.email %></td>
+              <td>
+                <%= link_to rails_blob_path(
+                  proposal.document.attachment,
+                  disposition: 'attachment'
+                ) do %>
+                  Download
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 </div>

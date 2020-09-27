@@ -1,7 +1,7 @@
 <% if @notice.draft? %>
-  <%= render partial: 'cms_sidebar_notices', locals: { status: 'draft' }%>
+  <%= render partial: 'tms/notices/cms_sidebar_notices', locals: { status: 'draft' }%>
 <% else %>
-  <%= render partial: 'cms_sidebar_notices', locals: { status: @notice.notice_state }%>
+  <%= render partial: 'tms/notices/cms_sidebar_notices', locals: { status: @notice.notice_state }%>
 <% end %>
 
 <div class="tms-notice row">
@@ -35,10 +35,10 @@
     <p>
       <strong>Reference Token:</strong> <%= @notice.reference_token %><br />
       <% if @notice.opening_on.present? %>
-        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y") %><br />
+        <strong>Opening On:</strong> <%= @notice.opening_on.strftime("%d %B %y %I:%M %p") %><br />
       <% end %>
       <% if @notice.closing_on.present? %>
-        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y") %><br />
+        <strong>Closing On:</strong> <%= @notice.closing_on.strftime("%d %B %y %I:%M %p") %><br />
       <% end %>
     </p>
 
@@ -76,13 +76,121 @@
         <% end %>
       </div>
     <% end %>
+
+    <div class="btn-group mt-4">
+      <% if policy(@notice).edit? %>
+        <%= link_to 'Edit', edit_tms_notice_path(@notice), class: 'btn btn-outline-primary' %>
+      <% end %>
+      <%= link_to 'Manage attachment', tender_notice_document_path(@notice), class: 'btn btn-outline-primary' %>
+      <%= link_to 'Back', :back, class: 'btn btn-outline-primary' %>
+    </div>
   </div>
 
-  <div class="btn-group">
-    <% if policy(@notice).edit? %>
-      <%= link_to 'Edit', edit_tms_notice_path(@notice), class: 'btn btn-outline-primary' %>
-    <% end %>
-    <%= link_to 'Manage attachment', tender_notice_document_path(@notice), class: 'btn btn-outline-primary' %>
-    <%= link_to 'Back', :back, class: 'btn btn-outline-primary' %>
-  </div>
+  <% if @notice.under_review? && policy(@proposal_selection_form).create? %>
+    <div class="tms-proposal-selction pod col-12 rounded shadow-sm">
+      <h3 class="mb-4">Proposal Selection Form</h3>
+      <%= form_with(
+        model: @proposal_selection_form,
+        scope: :proposal_selection_form,
+        url: tms_proposal_selection_path(@notice),
+        local: true,
+        class: 'tms-proposal-selction__form',
+        data: { controller: 'form-validation-error' }
+      ) do |form| %>
+        <% if @proposal_selection_form.errors.any? %>
+          <div id="error_explanation">
+            <% @proposal_selection_form.errors.messages.each do |attribute, error_messages| %>
+              <div
+                data-target="form-validation-error.error"
+                data-error-attribute="<%= attribute %>"
+              >
+                <% error_messages.each do |error_message| %>
+                  <div data-error-message="<%= error_message %>"></div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <%= render 'shared/invalid_feedback' %>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.collection_select(
+                :token,
+                @notice.proposals, :token, :email,
+                {prompt: "Choose Vendor"},
+                class: "form-control w-50",
+                data: {
+                  target: 'form-validation-error.attribute',
+                  form_attribute: 'email'
+                }
+          )%>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :selection_reason, 'Reason(s) for selecting the vendor' %>
+          <%= form.text_area(
+            :selection_reason,
+            class: "form-control",
+            rows: 4,
+            data: {
+              target: 'form-validation-error.attribute',
+              form_attribute: 'selection_reason'
+            }
+          ) %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit "Select Vendor's Proposal", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @notice.archived? %>
+    <div class="tms-proposal pod col-12 rounded shadow-sm">
+      <h3 class="mb-4">Selected Proposal</h3>
+
+      <h5 class="mt-4">Vendor Name</h5>
+      <%= @notice.proposals.selected.first.name %>
+
+      <h5 class="mt-4">Vendor Email</h5>
+      <%= @notice.proposals.selected.first.email %>
+
+      <h5 class="mt-4">Reason(s) for selecting the vendor</h5>
+      <%= simple_format @notice.selection_reason %>
+    </div>
+  <% end %>
+
+  <% if @notice.under_review? || @notice.archived? %>
+    <div class="tms-notice-proposals pod col-12 rounded shadow-sm">
+      <h3 class="mb-4">Proposals submitted</h3>
+
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Vendor Name</th>
+            <th scope="col">Vendor Email</th>
+            <th scope="col">Proposal Document</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @notice.proposals.each do |proposal| %>
+            <tr class="tms-notice-proposal">
+              <td><%= proposal.name %></td>
+              <td><%= proposal.email %></td>
+              <td>
+                <%= link_to rails_blob_path(
+                  proposal.document.attachment,
+                  disposition: 'attachment'
+                ) do %>
+                  Download
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 </div>

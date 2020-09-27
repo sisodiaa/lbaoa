@@ -47,3 +47,6 @@ yarn-debug.log*
 
 # Ignore .DS_Store
 .DS_Store
+
+# Ignore brakeman report
+scan.html

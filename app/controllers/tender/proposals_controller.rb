@@ -22,7 +22,8 @@ module Tender
       authorize @proposal, policy_class: TenderProposalPolicy
 
       if @proposal.save
-        redirect_to @proposal, flash: { success: flash_message_for_success }
+        redirect_to tender_proposal_path(@proposal),
+                    flash: { success: flash_message_for_success }
       else
         render :new
       end

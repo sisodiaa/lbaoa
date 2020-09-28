@@ -21,7 +21,7 @@ module Search
     end
 
     def results
-      records = Post.finished
+      records = Post.finished.includes(:category, :rich_text_content, :tags, :taggings)
       records = records.published_between(start_date, end_date) if start_date.present?
       records = records.with_category(category) if category.present? && single_category?
       records = records.with_tags(tags) if tags.present?

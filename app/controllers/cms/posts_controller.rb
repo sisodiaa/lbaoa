@@ -11,14 +11,15 @@ module CMS
     def index
       @status = params[:status]
       @pagy, @posts = if params[:status] == 'draft'
-                        pagy(Post.draft.order('created_at ASC'), items: 10)
+                        pagy(Post.draft.includes([:category]).order('created_at ASC'), items: 10)
                       else
-                        pagy(Post.finished.order('published_at DESC'), items: 10)
+                        pagy(Post.finished.includes([:category]).order('published_at DESC'), items: 10)
                       end
     end
 
     # GET /posts/1
     def show
+      @documents = @post.documents.with_attached_attachment
     end
 
     # GET /posts/new
@@ -80,6 +81,7 @@ module CMS
     def destroy
       authorize @post, policy_class: CMS::PostPolicy
 
+      @post.documents.with_attached_attachment.destroy_all
       @post.destroy
       redirect_to cms_posts_url,
                   flash: { success: 'Post was successfully destroyed.' }

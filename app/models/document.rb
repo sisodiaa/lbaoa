@@ -1,7 +1,7 @@
 class Document < ApplicationRecord
   belongs_to :documentable, polymorphic: true
 
-  has_one_attached :attachment
+  has_one_attached :attachment, dependent: :destroy
 
   validates :annotation, length: { maximum: 50 }
   validate :presence_of_attachment

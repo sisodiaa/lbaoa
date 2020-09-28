@@ -13,6 +13,7 @@ module TMS
     end
 
     def show
+      @proposals = @notice.proposals.includes(document: { attachment_attachment: :blob })
       @proposal_selection_form = TMS::ProposalSelectionForm.new if @notice.under_review?
     end
 

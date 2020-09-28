@@ -15,6 +15,7 @@ module TMS
                     flash: { success: 'Proposal selected successfully.' }
       else
         @notice = @proposal_selection_form.notice
+        @proposals = @notice.proposals.includes(document: { attachment_attachment: :blob })
         render 'tms/notices/show'
       end
     end

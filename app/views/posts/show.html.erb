@@ -31,7 +31,7 @@
 
     <div class="post__controls pod col-12 rounded shadow-sm 
                 d-flex justify-content-between">
-      <% if @post.documents.any? %>
+      <% if @documents %>
         <div>
           <%= link_to '#',
                       class: 'btn btn-primary',
@@ -41,7 +41,7 @@
                         target: 'toggle-attachments.message'
                       } do
           %>
-            Show <%= pluralize(@post.documents.count, 'Attachment') %>
+            Show <%= pluralize(@documents.size, 'Attachment') %>
           <% end %>
         </div>
       <% end %>
@@ -51,11 +51,11 @@
     </div>
   </div>
 
-  <% if @post.documents.any? %>
+  <% if @documents %>
     <div class="post__attachments" data-target="toggle-attachments.attachments">
       <div class="row d-flex justify-content-between justify-content-lg-start">
         <%= render partial: 'documents/document',
-                   collection: @post.documents
+                   collection: @documents
         %>
       </div>
     </div>

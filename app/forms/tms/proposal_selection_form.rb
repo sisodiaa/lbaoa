@@ -36,7 +36,11 @@ module TMS
     end
 
     def reject_other_proposals
-      notice.proposals.pending.each(&:rejection!)
+      notice
+        .proposals
+        .pending
+        .includes(document: { attachment_attachment: :blob })
+        .each(&:rejection!)
     end
 
     def update_notice_state_with_selection_reason

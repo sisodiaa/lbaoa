@@ -3,7 +3,7 @@ module Tender
     before_action :set_notice, except: :show
 
     def index
-      @proposals = policy_scope(@notice.proposals)
+      @proposals = policy_scope(@notice.proposals).includes(document: { attachment_attachment: :blob })
       respond_to :js
     end
 

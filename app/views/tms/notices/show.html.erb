@@ -117,7 +117,7 @@
         <div class="form-group">
           <%= form.collection_select(
                 :token,
-                @notice.proposals, :token, :email,
+                @proposals, :token, :email,
                 {prompt: "Choose Vendor"},
                 class: "form-control w-50",
                 data: {
@@ -152,10 +152,10 @@
       <h3 class="mb-4">Selected Proposal</h3>
 
       <h5 class="mt-4">Vendor Name</h5>
-      <%= @notice.proposals.selected.first.name %>
+      <%= @proposals.selected.first.name %>
 
       <h5 class="mt-4">Vendor Email</h5>
-      <%= @notice.proposals.selected.first.email %>
+      <%= @proposals.selected.first.email %>
 
       <h5 class="mt-4">Reason(s) for selecting the vendor</h5>
       <%= simple_format @notice.selection_reason %>
@@ -175,7 +175,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @notice.proposals.each do |proposal| %>
+          <% @proposals.each do |proposal| %>
             <tr class="tms-notice-proposal">
               <td><%= proposal.name %></td>
               <td><%= proposal.email %></td>

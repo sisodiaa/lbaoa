@@ -11,6 +11,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def skip_bullet
+    previous_value = Bullet.enable?
+    Bullet.enable = false
+    yield
+  ensure
+    Bullet.enable = previous_value
+  end
+
   private
 
   def user_not_authorized(exception)

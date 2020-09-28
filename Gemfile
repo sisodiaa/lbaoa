@@ -47,6 +47,7 @@ group :development, :test do
   gem 'rubocop', '~> 0.85.1', require: false
   gem 'rubocop-rails', '~> 2.6'
   gem 'rubocop-minitest', '~> 0.9.0'
+  gem 'bullet', '~> 6.1'
 end
 
 group :development do

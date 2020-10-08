@@ -62,6 +62,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'brakeman', '~> 4.9', '>= 4.9.1'
+
+  gem 'capistrano', '~> 3.14', '>= 3.14.1', require: false
+  gem 'capistrano-bundler', '~> 2.0', '>= 2.0.1', require: false
+  gem 'capistrano-rails', '~> 1.6', '>= 1.6.1', require: false
+  gem 'capistrano-rbenv', '~> 2.2', require: false
+  gem 'capistrano3-puma', '~> 4.0', require: false
 end
 
 group :test do

@@ -69,7 +69,7 @@ class AdminAuthenticationTest < ApplicationSystemTestCase
   test 'authenticated and unauthenticated roots for Management Panel Admin' do
     visit management_root_path
 
-    assert_selector 'a.navbar-brand', text: 'LBAOA Web Management Panel'
+    assert_selector 'a.navbar-brand', text: 'LB AOA Web Management Panelbeta'
 
     within('form#new_admin') do
       fill_in 'admin_email', with: @confirmed_board_admin.email

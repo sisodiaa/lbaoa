@@ -81,5 +81,9 @@ test:
 production:
   <<: *default
   database: lbaoa_production
-  username: lbaoa
-  password: <%= ENV['LBAOA_DATABASE_PASSWORD'] %>
+  username: <%= Rails.application.credentials.dig(:production, :database, :username) %>
+  password: <%= Rails.application.credentials.dig(:production, :database, :password) %>
+  host: <%= Rails.application.credentials.dig(:production, :database, :host) %>
+  port: <%= Rails.application.credentials.dig(:production, :database, :port) %>
+  sslmode: require
+  sslca: <%= Rails.application.credentials.dig(:production, :database, :sslca) %>

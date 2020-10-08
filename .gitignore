@@ -50,3 +50,6 @@ yarn-debug.log*
 
 # Ignore brakeman report
 scan.html
+
+# Ignore certificate for db
+/config/ca-certificate.crt

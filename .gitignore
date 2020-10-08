@@ -53,3 +53,10 @@ scan.html
 
 # Ignore certificate for db
 /config/ca-certificate.crt
+
+# Ignore files used for deployment
+Capfile
+/config/deploy/*
+/config/deploy.rb
+/config/nginx.conf
+/lib/capistrano/*

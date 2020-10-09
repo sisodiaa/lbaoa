@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
-  require 'sidekiq/web'
   if Rails.env.production?
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      username == '<%= Rails.application.credentials.dig(:production, :sidekiq, :username) %>' &&
-        password == '<%= Rails.application.credentials.dig(:production, :sidekiq, :password) %>'
-    end
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
   end
-  mount Sidekiq::Web => '/sidekiq'
 
   namespace :management do
     get 'dashboard', to: 'dashboard#index', as: 'dashboard'

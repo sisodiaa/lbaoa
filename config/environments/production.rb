@@ -68,8 +68,8 @@ Rails.application.configure do
     port: 587,
     domain: 'em5423.lbaoa.com',
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.sendgrid.api_key_id,
-    password: Rails.application.credentials.sendgrid.api_key
+    user_name: Rails.application.credentials.sendgrid[:api_key_id],
+    password: Rails.application.credentials.sendgrid[:api_key]
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

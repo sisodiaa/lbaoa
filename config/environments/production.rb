@@ -68,7 +68,7 @@ Rails.application.configure do
     port: 587,
     domain: 'em5423.lbaoa.com',
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.sendgrid[:api_key_id],
+    user_name: 'apikey',
     password: Rails.application.credentials.sendgrid[:api_key]
   }
 

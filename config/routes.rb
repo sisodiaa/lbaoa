@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   if Rails.env.production?
     require 'sidekiq/web'
-    mount Sidekiq::Web => '/sidekiq'
+    authenticate :admin do
+      mount Sidekiq::Web => '/sidekiq'
+    end
   end
 
   namespace :management do

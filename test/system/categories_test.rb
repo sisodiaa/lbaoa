@@ -33,7 +33,7 @@ class CategoriesTest < ApplicationSystemTestCase
 
     visit cms_categories_url
 
-    within(:xpath, "//div[@id='navbarCMS']") do
+    within(:xpath, "//div[@id='navbarAdmin']") do
       find(:xpath, "//a[@id='dashboard-new-dropdown']").click
       find(:xpath, "//a[@class='dropdown-item'][2]").click
     end

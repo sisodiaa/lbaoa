@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account::Admins::SessionsController < Devise::SessionsController
-  layout 'cms'
+  layout 'admin'
 
   # before_action :configure_sign_in_params, only: [:create]
 

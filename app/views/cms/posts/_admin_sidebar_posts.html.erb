@@ -1,6 +1,6 @@
-<% content_for :cms_sidebar do %>
+<% content_for :admin_sidebar do %>
   <div class="row mx-lg-1 card sticky-top">
-    <div class="card-header bg-card-dashboard active">
+    <div class="card-header bg-card-dashboard">
       <%= link_to 'Dashboard', management_dashboard_path %>
     </div>
 
@@ -42,14 +42,14 @@
         data: { toggle: 'collapse' },
         class: 'list-group-item list-group-item-action list-group-item-secondary'
       %>
-      <div class="list-group list-group-flush collapse" id="collapse-posts">
+      <div class="list-group list-group-flush collapse show" id="collapse-posts">
         <%= link_to 'Drafts',
           drafts_cms_posts_path,
-          class: "list-group-item list-group-item-action"
+          class: "list-group-item list-group-item-action #{status == 'draft' ? 'active' : ''}"
         %>
         <%= link_to 'Published',
           published_cms_posts_path,
-          class: "list-group-item list-group-item-action"
+          class: "list-group-item list-group-item-action #{status == 'published' ? 'active' : ''}"
         %>
       </div>
 
@@ -64,29 +64,28 @@
         data: { toggle: 'collapse' },
         class: 'list-group-item list-group-item-action list-group-item-secondary'
       %>
-      <div class="list-group list-group-flush collapse show" id="collapse-tender-notices">
+      <div class="list-group list-group-flush collapse" id="collapse-tender-notices">
         <%= link_to 'Drafts',
           draft_tms_notices_path,
-          class: "list-group-item list-group-item-action #{status == 'draft' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
         <%= link_to 'Upcoming',
           upcoming_tms_notices_path,
-          class: "list-group-item list-group-item-action #{status == 'upcoming' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
         <%= link_to 'Current',
           current_tms_notices_path,
-          class: "list-group-item list-group-item-action #{status == 'current' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
         <%= link_to 'Under Review',
           under_review_tms_notices_path,
-          class: "list-group-item list-group-item-action  #{status == 'under_review' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
         <%= link_to 'Archived',
           archived_tms_notices_path,
-          class: "list-group-item list-group-item-action #{status == 'archived' ? 'active' : ''}"
+          class: "list-group-item list-group-item-action"
         %>
       </div>
     </div>
   </div>
 <% end %>
-

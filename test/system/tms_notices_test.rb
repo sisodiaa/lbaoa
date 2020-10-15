@@ -71,7 +71,7 @@ class TMSNoticesTest < ApplicationSystemTestCase
 
     visit admin_root_url
 
-    within(:xpath, "//div[@id='navbarCMS']") do
+    within(:xpath, "//div[@id='navbarAdmin']") do
       find(:xpath, "//a[@id='dashboard-new-dropdown']").click
       find(:xpath, "//a[@class='dropdown-item'][3]").click
     end

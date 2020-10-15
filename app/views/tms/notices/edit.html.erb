@@ -1,7 +1,7 @@
 <% if @notice.draft? %>
-  <%= render partial: 'cms_sidebar_notices', locals: { status: 'draft' }%>
+  <%= render partial: 'admin_sidebar_notices', locals: { status: 'draft' }%>
 <% else %>
-  <%= render partial: 'cms_sidebar_notices', locals: { status: @notice.notice_state }%>
+  <%= render partial: 'admin_sidebar_notices', locals: { status: @notice.notice_state }%>
 <% end %>
 
 <div class="tms-notice-edit row">

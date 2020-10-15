@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  layout 'cms_sidebar'
+  layout 'admin_sidebar'
 
   before_action :authenticate_admin!
   before_action :set_documentable

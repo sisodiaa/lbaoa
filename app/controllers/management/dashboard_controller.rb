@@ -1,6 +1,6 @@
 module Management
   class DashboardController < ApplicationController
-    layout 'cms_sidebar'
+    layout 'admin_sidebar'
 
     before_action :authenticate_admin!
 

@@ -2,7 +2,7 @@ module TMS
   class ProposalSelectionController < ApplicationController
     before_action :authenticate_admin!
 
-    layout 'cms_sidebar'
+    layout 'admin_sidebar'
 
     def create
       @proposal_selection_form = TMS::ProposalSelectionForm.new(params)

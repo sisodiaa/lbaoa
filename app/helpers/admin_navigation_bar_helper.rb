@@ -1,5 +1,5 @@
-module CMSNavigationBarHelper
-  def cms_navigation_links
+module AdminNavigationBarHelper
+  def admin_navigation_links
     admin_signed_in? ? links_for_authenticated_cms_admin : ''
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account::Admins::PasswordsController < Devise::PasswordsController
-  layout 'cms'
+  layout 'admin'
 
   # GET /resource/password/new
   # def new

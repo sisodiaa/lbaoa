@@ -11,12 +11,12 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
-    <%= render 'shared/cms_navbar' %>
+    <%= render 'shared/admin_navbar' %>
     <%= flash_messages %>
     <div class="container">
       <div class="row">
         <div class="col-lg-3 mb-4">
-          <%= yield :cms_sidebar %>
+          <%= yield :admin_sidebar %>
         </div>
         <div class="col-lg-9">
           <%= yield %>

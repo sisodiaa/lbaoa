@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account::Admins::ConfirmationsController < Devise::ConfirmationsController
-  layout 'cms'
+  layout 'admin'
 
   # GET /resource/confirmation/new
   # def new

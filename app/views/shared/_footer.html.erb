@@ -1,21 +1,62 @@
 <div class="container-fluid mt-auto">
-  <div class="row">
-    <footer class="text-center text-white w-100 pt-4 pb-3 mt-5">
-      <p>
-        &copy; <%= Date.today.year %>;
-        Lotus Boulevard Apartment Owners Association<br>
-        Contact: +91-9560858999, +91-9891705675, +91-9958990789, +91-9871730903
-      </p>
+  <footer class="row bg-secondary text-white mt-5">
+    <div class="col-12 col-lg-6">
+      <div class="ml-5 pt-4 pb-2">
+        <h5 class="mb-3">
+          Lotus Boulevard Apartment Owners Association<br />
+          <small>Reg No – GBN/00063/20192020</small>
+        </h5>
+        <ul class="list-unstyled font-weight-lighter">
+          <li><%= link_to "About LB AOA", page_path('lbaoa'), class: "text-reset" %></li>
+          <li><%= link_to "LB AOA Board Members", page_path('board-members'), class: "text-reset" %></li>
+        </ul>
 
-      <p class="mb-0">
-        Website for LB AOA made by
-        <%= mail_to(
-          'dev.abhishek.sisodia@gmail.com',
-          'Abhishek Sisodia',
-          class: 'text-white',
-          id: 'contact'
-        )%>
-      </p>
-    </footer>
-  </div>
+        <ul class="list-unstyled font-weight-lighter">
+          <li><%= link_to "Disclaimer", '#', class: "text-reset" %></li>
+          <li><%= link_to "Privacy Policy", '#', class: "text-reset" %></li>
+        </ul>
+
+        <ul class="list-unstyled font-weight-lighter">
+          <li>
+            &copy; <%= Date.today.year %> Lotus Boulevard Apartment Owners Association
+          </li>
+          <li>
+            <%= link_to 'Code of lbaoa.com open sourced under MIT License',
+                        'https://github.com/sisodiaa/lbaoa',
+                        class: "text-reset"
+            %>
+          </li>
+          <li>
+            <%= mail_to 'dev.abhishek.sisodia@gmail.com',
+                        'Developed by Abhishek Sisodia',
+                        class: "text-reset"
+            %>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="ml-5 mr-lg-5 pt-4 pb-2 text-lg-right">
+        <p class="lbaoa-contact font-weight-lighter mb-2">
+          <%= svg_icon_house %><br />
+          Plot No. GH-003, Sector 100,<br />
+          Gautam Budh Nagar,<br />
+          Uttar Pradesh - 201304
+        </p>
+
+        <p class="lbaoa-contact font-weight-lighter mb-2">
+          <%= svg_icon_telephone %><br />
+          +91-981-044-1628<br />
+          +91-987-011-0090<br />
+          +91-981-888-1782
+        </p>
+
+        <p class="lbaoa-contact font-weight-lighter">
+          <%= svg_icon_envelope %><br />
+          <%= mail_to 'lboanoida@gmail.com', 'lboanoida@gmail.com', class: 'text-white' %>
+        </p>
+      </div>
+    </div>
+  </footer>
 </div>

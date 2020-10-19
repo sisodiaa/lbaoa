@@ -15,25 +15,32 @@ class NavbarsTest < ApplicationSystemTestCase
     visit root_url
 
     within('nav.navbar ul.navbar-nav') do
-      assert_selector 'li.nav-item a.nav-link', text: 'Home'
-      assert_selector 'li.nav-item a.nav-link', text: 'About Us'
-      assert_selector 'li.nav-item a.nav-link', text: 'Posts'
+      assert_selector '.active a.nav-link', text: 'Home'
 
       click_on 'About Us'
     end
 
     within('nav.navbar ul.navbar-nav') do
-      assert_selector 'li.nav-item a.nav-link', text: 'Home'
-      assert_selector 'li.nav-item.active a.nav-link', text: 'About Us'
-      assert_selector 'li.nav-item a.nav-link', text: 'Posts'
+      assert_selector '.active a.nav-link', text: 'About Us'
 
       click_on 'Posts'
     end
 
     within('nav.navbar ul.navbar-nav') do
-      assert_selector 'li.nav-item a.nav-link', text: 'Home'
-      assert_selector 'li.nav-item a.nav-link', text: 'About Us'
-      assert_selector 'li.nav-item.active a.nav-link', text: 'Posts'
+      assert_selector '.active a.nav-link', text: 'Posts'
+
+      click_on 'Tender Notices'
+    end
+
+    within('nav.navbar ul.navbar-nav') do
+      assert_selector '.active a.nav-link', text: 'Tender Notices'
+
+      click_on 'Member'
+      click_on 'Log In'
+    end
+
+    within('nav.navbar ul.navbar-nav') do
+      assert_selector '.active a.nav-link', text: 'Member'
     end
   end
 

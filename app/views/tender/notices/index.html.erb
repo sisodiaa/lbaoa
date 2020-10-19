@@ -1,139 +1,141 @@
-<div class="row" data-controller="tender-notice-state-selector">
-  <div class="btn-group mb-4 col-12 px-0" role="group">
-    <%= link_to(
-      'Upcoming',
-      upcoming_tender_notices_path,
-      data: {
-        target: 'tender-notice-state-selector.noticeState',
-        pathname: upcoming_tender_notices_path
-      },
-      class: 'btn btn-secondary'
-    ) %>
+<div data-target="nav-item-activator.item" data-item="tender notices">
+  <div class="row" data-controller="tender-notice-state-selector">
+    <div class="btn-group mb-4 col-12 px-0" role="group">
+      <%= link_to(
+        'Upcoming',
+        upcoming_tender_notices_path,
+        data: {
+          target: 'tender-notice-state-selector.noticeState',
+          pathname: upcoming_tender_notices_path
+        },
+        class: 'btn btn-secondary'
+      ) %>
 
-    <%= link_to(
-      'Current',
-      current_tender_notices_path,
-      data: {
-        target: 'tender-notice-state-selector.noticeState',
-        pathname: current_tender_notices_path
-      },
-      class: 'btn btn-secondary active'
-    ) %>
+      <%= link_to(
+        'Current',
+        current_tender_notices_path,
+        data: {
+          target: 'tender-notice-state-selector.noticeState',
+          pathname: current_tender_notices_path
+        },
+        class: 'btn btn-secondary active'
+      ) %>
 
-    <%= link_to(
-      'Under Review',
-      under_review_tender_notices_path,
-      data: {
-        target: 'tender-notice-state-selector.noticeState',
-        pathname: under_review_tender_notices_path
-      },
-      class: 'btn btn-secondary'
-    ) %>
+      <%= link_to(
+        'Under Review',
+        under_review_tender_notices_path,
+        data: {
+          target: 'tender-notice-state-selector.noticeState',
+          pathname: under_review_tender_notices_path
+        },
+        class: 'btn btn-secondary'
+      ) %>
 
-    <%= link_to(
-      'Archived',
-      archived_tender_notices_path,
-      data: {
-        target: 'tender-notice-state-selector.noticeState',
-        pathname: archived_tender_notices_path
-      },
-      class: 'btn btn-secondary'
-    ) %>
-  </div>
-</div>
-
-<div class="tender-notices row">
-  <% @tender_notices.each do |tender_notice| %>
-    <div class="col-12">
-      <div class="tender-notice podlet rounded shadow-sm row mb-5">
-        <div class="tender-notice__info p-3 mb-3 mb-lg-0 col-lg-9">
-          <h4>
-            <%= tender_notice.title %><br/>
-            <small class="text-muted"><%= tender_notice.reference_token %></small>
-          </h4>
-          <div class="tender-notice__info-data my-3">
-            <strong>Published:</strong> <%= tender_notice.published_at.strftime("%d %B %Y") %><br/>
-            <strong>Opening On:</strong> <%= tender_notice.opening_on.strftime("%d %B %Y %I:%M %p") %>
-            <br />
-            <strong>Closing On:</strong> <%= tender_notice.closing_on.strftime("%d %B %Y %I:%M %p") %>
-          </div>
-          <%= link_to 'View Tender Notice', tender_notice_path(tender_notice), class: 'btn btn-outline-info' %>
-        </div> <!-- .tender-notice__info -->
-
-        <% unless tender_notice.upcoming? %>
-          <div class="tender-notice-proposals bg-light p-3 col-lg-3 
-                      d-lg-flex flex-lg-column justify-content-lg-between">
-            <p>
-              <strong>Proposal Submitted</strong><br/>
-              <%= tender_notice.proposals.size %><br/>
-
-              <strong>Awarded to</strong><br/>
-              <span class="tender-notice-proposal-vendor">
-                <% if tender_notice.archived? %>
-                  <%= link_to(
-                    tender_notice.proposals.selected.first.name,
-                    tender_notice_path(tender_notice, anchor: 'tender-notice-selected-proposal'),
-                    target: "_blank", rel: "noopener noreferrer"
-                  ) %>
-                <% else %>
-                  Not yet decided
-                <% end %>
-              </span>
-            </p>
-            <% if tender_notice.current? %>
-              <%= link_to(
-                'Submit your proposal',
-                new_tender_notice_proposal_path(tender_notice),
-                class: 'btn btn-info'
-              ) %>
-            <% else %>
-              <%= link_to(
-                'View Propsoals',
-                tender_notice_proposals_path(tender_notice),
-                remote: true,
-                class: 'btn btn-info',
-                data: { toggle: 'modal', target: '#tenderProposalsTableModal' }
-              ) %>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+      <%= link_to(
+        'Archived',
+        archived_tender_notices_path,
+        data: {
+          target: 'tender-notice-state-selector.noticeState',
+          pathname: archived_tender_notices_path
+        },
+        class: 'btn btn-secondary'
+      ) %>
     </div>
-  <% end %>
-</div>
+  </div>
 
-<div class="d-flex justify-content-center">
-  <%== pagy_bootstrap_nav(@pagy) %>
-</div>
+  <div class="tender-notices row">
+    <% @tender_notices.each do |tender_notice| %>
+      <div class="col-12">
+        <div class="tender-notice podlet rounded shadow-sm row mb-5">
+          <div class="tender-notice__info p-3 mb-3 mb-lg-0 col-lg-9">
+            <h4>
+              <%= tender_notice.title %><br/>
+              <small class="text-muted"><%= tender_notice.reference_token %></small>
+            </h4>
+            <div class="tender-notice__info-data my-3">
+              <strong>Published:</strong> <%= tender_notice.published_at.strftime("%d %B %Y") %><br/>
+              <strong>Opening On:</strong> <%= tender_notice.opening_on.strftime("%d %B %Y %I:%M %p") %>
+              <br />
+              <strong>Closing On:</strong> <%= tender_notice.closing_on.strftime("%d %B %Y %I:%M %p") %>
+            </div>
+            <%= link_to 'View Tender Notice', tender_notice_path(tender_notice), class: 'btn btn-outline-info' %>
+          </div> <!-- .tender-notice__info -->
 
-<!-- Modal -->
-<div
-  class="modal fade" id="tenderProposalsTableModal"
-  tabindex="-1"
-  aria-labelledby="tenderProposalsTableModalLabel" aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="tenderProposalsTableModalLabel">
-          List of submitted proposals
-        </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <% unless tender_notice.upcoming? %>
+            <div class="tender-notice-proposals bg-light p-3 col-lg-3 
+                        d-lg-flex flex-lg-column justify-content-lg-between">
+              <p>
+                <strong>Proposal Submitted</strong><br/>
+                <%= tender_notice.proposals.size %><br/>
+
+                <strong>Awarded to</strong><br/>
+                <span class="tender-notice-proposal-vendor">
+                  <% if tender_notice.archived? %>
+                    <%= link_to(
+                      tender_notice.proposals.selected.first.name,
+                      tender_notice_path(tender_notice, anchor: 'tender-notice-selected-proposal'),
+                      target: "_blank", rel: "noopener noreferrer"
+                    ) %>
+                  <% else %>
+                    Not yet decided
+                  <% end %>
+                </span>
+              </p>
+              <% if tender_notice.current? %>
+                <%= link_to(
+                  'Submit your proposal',
+                  new_tender_notice_proposal_path(tender_notice),
+                  class: 'btn btn-info'
+                ) %>
+              <% else %>
+                <%= link_to(
+                  'View Propsoals',
+                  tender_notice_proposals_path(tender_notice),
+                  remote: true,
+                  class: 'btn btn-info',
+                  data: { toggle: 'modal', target: '#tenderProposalsTableModal' }
+                ) %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
+    <% end %>
+  </div>
 
-      <div id="tenderProposalsTableModalBody" class="modal-body">
-        <table class="table table-striped">
-          <thead class="bg-info text-white">
-            <tr>
-              <th scope="col">Vendor Name</th>
-              <th scope="col">Vendor Proposal</th>
-            </tr>
-          </thead>
-          <tbody id="tenderProposalsTableBody">
-          </tbody>
-        </table>
+  <div class="d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade" id="tenderProposalsTableModal"
+    tabindex="-1"
+    aria-labelledby="tenderProposalsTableModalLabel" aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tenderProposalsTableModalLabel">
+            List of submitted proposals
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div id="tenderProposalsTableModalBody" class="modal-body">
+          <table class="table table-striped">
+            <thead class="bg-info text-white">
+              <tr>
+                <th scope="col">Vendor Name</th>
+                <th scope="col">Vendor Proposal</th>
+              </tr>
+            </thead>
+            <tbody id="tenderProposalsTableBody">
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

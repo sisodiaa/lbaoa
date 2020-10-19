@@ -1,10 +1,6 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def active_nav_item(path)
-    current_page?(path) ? 'active' : ''
-  end
-
   def flash_messages
     return if flash.empty?
 
